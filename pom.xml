@@ -32,7 +32,7 @@
 		
 		<!-- docker配置 -->
 		<dockerfile.skip>true</dockerfile.skip>
-		<docker.repostory>ccr.ccs.tencentyun.com</docker.repostory>
+		<docker.repostory>xxxxxx.tencentyun.com</docker.repostory>
 		<docker.repostory.user>xxxxxxxx</docker.repostory.user>
 		<docker.repostory.password>xxxxxxxxx</docker.repostory.password>
 		<docker.registry.name>phoenix</docker.registry.name>
