@@ -355,4 +355,32 @@
 		</plugins>
 	</build>
 	
+	<distributionManagement>
+		<!-- 依赖包私服上传 -->
+		<repository>
+			<id>releases</id>
+			<name>internal releases</name>
+			<url>http://maven.bingsheng.tech/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>internal snapshot</name>
+			<url>http://maven.bingsheng.tech/repository/maven-snapshots/</url>
+		</snapshotRepository>
+		
+		<!-- 阿里云效私服上传 -->
+		<!-- 
+		<repository>
+			<id>rdc-releases</id>
+			<name>internal releases</name>
+			<url>https://repo.rdc.aliyun.com/repository/49339-release-Sz60lB/</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+			<name>internal snapshot</name>
+			<url>https://repo.rdc.aliyun.com/repository/49339-snapshot-pXxmSM/</url>
+		</snapshotRepository>
+		-->
+	</distributionManagement>
+	
 </project>
