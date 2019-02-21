@@ -1,0 +1,72 @@
+/**
+ * 
+ */
+package com.beyonds.phoenix.mountain.shackle;
+
+import java.io.Serializable;
+import java.lang.reflect.Type;
+
+/**
+ * @Author: Daniel.Cao
+ * @Date: 2019年1月3日
+ * @Time: 下午7:25:37
+ *
+ */
+public final class MethodMetadata implements Serializable {
+	private static final long serialVersionUID = 2058585297608161171L;
+
+	private String configKey;
+	private transient Type returnType;
+	private transient Class<?>[] argTypes;
+	private DomainTemplate template;
+	
+	MethodMetadata() {
+	}
+
+	/**
+	 * Used as a reference to this method. For example,
+	 * {@link Logger#log(String, String, Object...) logging} or
+	 * {@link ReflectiveShackle reflective dispatch}.
+	 *
+	 * @see Shackle#configKey(Class, java.lang.reflect.Method)
+	 */
+	public String configKey() {
+		return configKey;
+	}
+
+	public MethodMetadata configKey(String configKey) {
+		this.configKey = configKey;
+		
+		return this;
+	}
+	
+	public MethodMetadata argTypes(Class<?>[] argTypes) {
+		 this.argTypes = argTypes;
+		 
+		 return this;
+	}
+	
+	public Class<?>[] argTypes() {
+		return argTypes;
+	}
+
+	public Type returnType() {
+		return returnType;
+	}
+
+	public MethodMetadata returnType(Type returnType) {
+		this.returnType = returnType;
+		
+		return this;
+	}
+	
+	public DomainTemplate template() {
+		return template;
+	}
+	
+	public MethodMetadata template(DomainTemplate template) {
+		this.template = template;
+		
+		return this;
+	}
+}

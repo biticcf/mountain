@@ -1,0 +1,4 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.beyonds.phoenix.mountain.shackle.ShackleAutoConfiguration,\
+com.beyonds.phoenix.mountain.shackle.ShackleTemplatesConfiguration
