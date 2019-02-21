@@ -225,12 +225,18 @@ class FacadeMetaGenerator extends GeneratorBase implements Generator {
 		String javaType = "org.springframework.web.bind.annotation." + requestType;
 		getJavaNameAndImport(javaType, javaNameMap, importList);
 		paramResult += "@" + requestType + "(";
-		String name = param.getName();
-		paramResult += "value = \"" + name + "\"";
+		// 1,required
 		Boolean nullable = param.getNullable();
-		paramResult += ", required = " + (!nullable.booleanValue());
+		paramResult += "required = " + (!nullable.booleanValue());
+		// 2,value
+		String name = param.getName();
+		if (!isEmpty(name) && !"RequestBody".equals(requestType)) { //RequestBody无value
+			paramResult += ", value = \"" + name + "\"";
+		}
+		// 3,defaultValue
 		String defaultValue = param.getDefaultValue();
-		if (!isEmpty(defaultValue) && !"PathVariable".equals(requestType)) { //PathVariable无defaultValue
+		// PathVariable和RequestBody无defaultValue
+		if (!isEmpty(defaultValue) && (!"PathVariable".equals(requestType) && !"RequestBody".equals(requestType))) {
 			paramResult += ", defaultValue = \"" + defaultValue + "\"";
 		}
 		paramResult += ") ";

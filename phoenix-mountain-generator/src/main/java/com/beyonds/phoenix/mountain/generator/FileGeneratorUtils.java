@@ -19,7 +19,15 @@ import java.util.List;
  *
  */
 class FileGeneratorUtils {
-	public static void generatorFile(FileMeta fileMeta, String destDir, boolean needBck) throws Exception {
+	/**
+	 * 
+	 * @param fileMeta
+	 * @param destDir
+	 * @param needBck
+	 * @param clzType 1-类,2-接口
+	 * @throws Exception
+	 */
+	public static void generatorFile(FileMeta fileMeta, String destDir, boolean needBck, int clzType) throws Exception {
 		if (fileMeta == null) {
 			return;
 		}
@@ -134,7 +142,12 @@ class FileGeneratorUtils {
 					List<String> bodyList = _methodMeta.getBodyList();
 					
 					// 方法体第一行
-					String methodFirstLine = "    public ";
+					String methodFirstLine = "";
+					if (clzType == 2) { // 接口内的方法省略public
+						methodFirstLine = "    ";
+					} else {
+						methodFirstLine = "    public ";
+					}
 					if (returnType != null) {
 						methodFirstLine += returnType + " ";
 					}
