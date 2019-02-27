@@ -3,6 +3,10 @@
  */
 package com.beyonds.phoenix.mountain.generator;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +15,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ValueConstants;
+
+import com.beyonds.phoenix.mountain.generator.annotation.FacadeConfig;
+import com.beyonds.phoenix.mountain.generator.annotation.MethodConfig;
 
 /**
  * @Author: Daniel.Cao
@@ -48,6 +58,273 @@ abstract class GeneratorBase {
 	public static final Map<String, String> MODEL_PACKAGE_MAP = new HashMap<>();
 	// 完整路径
 	public static final Map<String, String> MODEL_ALL_DIR_MAP = new HashMap<>();
+	
+	protected void initFacade(Facade facade, Class<?> facadeClass) {
+		FacadeConfig fc = facadeClass.getAnnotation(FacadeConfig.class);
+		if (fc != null) {
+			facade.setDescription(fc.description());
+			facade.setExecGenerator(fc.execGenerator());
+			facade.setUseSwagger(fc.useSwagger());
+		} else {
+			facade.setDescription("接口定义说明");
+			facade.setExecGenerator(false);
+			facade.setUseSwagger(true);
+		}
+	}
+	
+	// 查找Facade类的Annotations
+	protected List<String> findAnnotations(Class<?> facadeClz) {
+		List<String> annotations = new ArrayList<>();
+		
+		Annotation[] annos = facadeClz.getAnnotations();
+		if (annos != null && annos.length > 0) {
+			for (Annotation _an : annos) {
+				if (_an instanceof FacadeConfig || _an instanceof org.springframework.web.bind.annotation.RequestMapping) {
+					continue;
+				}
+				
+				annotations.add(_an.annotationType().getName());
+			}
+		}
+		
+		return annotations;
+	}
+	
+	// 查找Facade类的RequestMapping
+	protected RequestMapping findRequestMapping(org.springframework.web.bind.annotation.RequestMapping rm) {
+		RequestMapping requestMapping = new RequestMapping();
+		
+		// requestPaths
+		String[] paths = rm.path();
+		if (paths == null || paths.length <= 0) {
+			paths = rm.value();
+		}
+		List<String> requestPaths = new ArrayList<>();
+		if (paths != null && paths.length > 0) {
+			for (String _s : paths) {
+				requestPaths.add(_s.trim());
+			}
+		}
+		requestMapping.setRequestPaths(requestPaths);
+		
+		// requestMethods
+		RequestMethod[] rmethods = rm.method();
+		List<String> requestMethods = new ArrayList<>();
+		if (rmethods != null && rmethods.length > 0) {
+			for (RequestMethod _rmd : rmethods) {
+				requestMethods.add(_rmd.name());
+			}
+		}
+		requestMapping.setRequestMethods(requestMethods);
+		
+		// requestConsumes
+		String[] consumes = rm.consumes();
+		List<String> requestConsumes = new ArrayList<>();
+		if (consumes != null && consumes.length > 0) {
+			for (String _s : consumes) {
+				requestConsumes.add(_s);
+			}
+		}
+		requestMapping.setRequestConsumes(requestConsumes);
+		
+		// requestProduces
+		String[] produces = rm.produces();
+		List<String> requestProduces = new ArrayList<>();
+		if (produces != null && produces.length > 0) {
+			for (String _s : produces) {
+				requestProduces.add(_s);
+			}
+		}
+		requestMapping.setRequestProduces(requestProduces);
+		
+		// requestHeaders
+		String[] headers = rm.headers();
+		List<String> requestHeaders = new ArrayList<>();
+		if (headers != null && headers.length > 0) {
+			for (String _s : headers) {
+				requestHeaders.add(_s);
+			}
+		}
+		requestMapping.setRequestHeaders(requestHeaders);
+		
+		// requestParams
+		String[] params = rm.params();
+		List<String> requestParams = new ArrayList<>();
+		if (params != null && params.length > 0) {
+			for (String _s : params) {
+				requestParams.add(_s);
+			}
+		}
+		requestMapping.setRequestParams(requestParams);
+		
+		return requestMapping;
+	}
+	
+	// 查找Facade类的Methods
+	protected List<Method> findMethods(Class<?> facadeClz) {
+		List<Method> list = new ArrayList<>();
+		
+		java.lang.reflect.Method[] mds = facadeClz.getMethods();
+		if (mds == null || mds.length <= 0) {
+			throw new RuntimeException("Facade[" + facadeClz.getName() + "]定义的方法不能空!");
+		}
+		for (java.lang.reflect.Method _md : mds) {
+			Method method = new Method();
+			
+			MethodConfig mc = _md.getAnnotation(MethodConfig.class);
+			if (mc == null) {
+				method.setDescription("方法定义说明");
+				method.setListResultFlag(false);
+				method.setPagination(false);
+				method.setWithTransaction(true);
+			} else {
+				method.setDescription(mc.description());
+				method.setListResultFlag(mc.listResultFlag());
+				method.setPagination(mc.paginationFlag());
+				method.setWithTransaction(mc.withTransaction());
+			}
+			method.setName(_md.getName());
+			method.setExecGenerator(true);
+			
+			// return
+			Type rtType = _md.getGenericReturnType();
+			if (!(rtType instanceof ParameterizedType)) {
+				throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法返回类型错误!");
+			}
+			ParameterizedType type1 = (ParameterizedType) rtType;
+			Type[] rts = type1.getActualTypeArguments();
+			method.setReturnRealType(rts[0].getTypeName());
+			
+			// exceptions
+			Class<?>[] exceptions = _md.getExceptionTypes();
+			List<String> exceptionsList = new ArrayList<>();
+			if (exceptions == null || exceptions.length <= 0) {
+				exceptionsList.add("java.lang.Exception");
+			} else {
+				for (Class<?> _c : exceptions) {
+					exceptionsList.add(_c.getName());
+				}
+			}
+			method.setExceptions(exceptionsList);
+			
+			// requestMapping
+			org.springframework.web.bind.annotation.RequestMapping rm = _md.getAnnotation(org.springframework.web.bind.annotation.RequestMapping.class);
+			RequestMapping requestMapping = findRequestMapping(rm);
+			if (requestMapping == null) {
+				throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法没有RequestMapping!");
+			}
+			method.setRequestMapping(requestMapping);
+			
+			// params
+			Parameter[] params = _md.getParameters();
+			List<Param> paramList = new ArrayList<>();
+			if (params != null && params.length > 0) {
+				for (Parameter _param : params) {
+					Param param = new Param();
+					
+					param.setName(_param.getName());
+					Class<?> _paramType = _param.getType();
+					if (_paramType.isArray()) {
+						String tmpName = _paramType.getName().substring(2);
+						tmpName = tmpName.substring(0, tmpName.length() - 1);
+						param.setType(tmpName + "[]");
+					} else if (_paramType.isPrimitive()) { 
+						param.setType(getWrappeType(_paramType));
+					} else {
+						param.setType(_paramType.getName());
+					}
+					
+					param.setDescription(_param.getName() + "参数说明");
+					
+					Annotation[] annotations = _param.getAnnotations();
+					List<String> annotationList = new ArrayList<>();
+					if (annotations != null && annotations.length > 0) {
+						for (Annotation _an : annotations) {
+							if (_an instanceof org.springframework.web.bind.annotation.RequestBody || 
+								_an instanceof org.springframework.web.bind.annotation.RequestHeader || 
+								_an instanceof org.springframework.web.bind.annotation.RequestParam ||
+								_an instanceof org.springframework.web.bind.annotation.PathVariable) {
+								continue;
+							}
+							
+							annotationList.add(_an.annotationType().getName());
+						}
+						
+						param.setAnnotations(annotationList);
+					}
+					
+					org.springframework.web.bind.annotation.RequestBody _requestBody = _param.getAnnotation(org.springframework.web.bind.annotation.RequestBody.class);
+					if (_requestBody != null) {
+						param.setRequestType("RequestBody");
+						param.setNullable(false);
+					}
+					
+					org.springframework.web.bind.annotation.RequestHeader _requestHeader = _param.getAnnotation(org.springframework.web.bind.annotation.RequestHeader.class);
+					if (_requestHeader != null) {
+						param.setName(_requestHeader.value());
+						param.setDescription(_requestHeader.value() + "参数说明");
+						param.setRequestType("RequestHeader");
+						param.setNullable(!_requestHeader.required());
+						String _defaultValue = _requestHeader.defaultValue();
+						if (_defaultValue != null && !ValueConstants.DEFAULT_NONE.equals(_defaultValue)) {
+							param.setDefaultValue(_defaultValue.trim());
+						}
+					}
+					
+					org.springframework.web.bind.annotation.RequestParam _requestParam = _param.getAnnotation(org.springframework.web.bind.annotation.RequestParam.class);
+					if (_requestParam != null) {
+						param.setName(_requestParam.value());
+						param.setDescription(_requestParam.value() + "参数说明");
+						param.setRequestType("RequestParam");
+						param.setNullable(!_requestParam.required());
+						String _defaultValue = _requestParam.defaultValue();
+						if (_defaultValue != null && !ValueConstants.DEFAULT_NONE.equals(_defaultValue)) {
+							param.setDefaultValue(_defaultValue.trim());
+						}
+					}
+					
+					org.springframework.web.bind.annotation.PathVariable _pathVariable = _param.getAnnotation(org.springframework.web.bind.annotation.PathVariable.class);
+					if (_pathVariable != null) {
+						param.setName(_pathVariable.value());
+						param.setDescription(_pathVariable.value() + "参数说明");
+						param.setRequestType("PathVariable");
+						param.setNullable(!_pathVariable.required());
+					}
+					
+					paramList.add(param);
+				}
+				method.setParams(paramList);
+			}
+			
+			list.add(method);
+		}
+		
+		return list;
+	}
+	
+	// boolean, byte, char, short, int, long, float, and double
+	private String getWrappeType(Class<?> primitiveClass) {
+		String clzName = primitiveClass.getName();
+		if ("boolean".equals(clzName)) {
+			return "java.lang.Boolean";
+		} else if ("byte".equals(clzName)) {
+			return "java.lang.Byte";
+		} else if ("char".equals(clzName)) {
+			return "java.lang.Character";
+		} else if ("short".equals(clzName)) {
+			return "java.lang.Short";
+		} else if ("int".equals(clzName)) {
+			return "java.lang.Integer";
+		} else if ("long".equals(clzName)) {
+			return "java.lang.Long";
+		} else if ("float".equals(clzName)) {
+			return "java.lang.Float";
+		} else if ("double".equals(clzName)) {
+			return "java.lang.Double";
+		}
+		
+		return null;
+	}
 	
 	protected List<String> generatorClassContent(String message, String defaultMsg){
 		List<String> classContentList = new ArrayList<>();

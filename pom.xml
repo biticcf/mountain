@@ -41,7 +41,7 @@
 		<java.version>8</java.version>
 		
 		<!-- 定义版本号 -->
-		<phoenix-mountain.version>1.0.0.20190220</phoenix-mountain.version>
+		<phoenix-mountain.version>1.0.0.20190227</phoenix-mountain.version>
 		
 		<!-- asm version -->
 		<asm.version>6.1.1</asm.version>
@@ -339,12 +339,12 @@
         			<cleanupDaemonThreads>false</cleanupDaemonThreads>
         			<arguments>
             			<argument>dir=${basedir}</argument>
-            			<argument>file=/src/main/generator/facades-define.xml</argument>
+            			<argument>file=/src/generator/facades-define.xml</argument>
         			</arguments>
         			<mainClass>com.beyonds.phoenix.mountain.generator.MainGenerator</mainClass>
     			</configuration>
     			<dependencies>
-    				<dependency>
+					<dependency>
 						<groupId>com.beyonds.phoenix.mountain</groupId>
 						<artifactId>phoenix-mountain-generator</artifactId>
 						<version>${phoenix-mountain.version}</version>

@@ -5,8 +5,6 @@ package com.beyonds.phoenix.mountain.generator;
 
 import java.util.List;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
@@ -21,14 +19,10 @@ class Method {
 	private String description; //可空
 	private Boolean execGenerator; //可空,默认true
 	private String  returnRealType; //返回值结果实际类型(不考虑ReturnResult的外层封装)
-	@JacksonXmlProperty(localName = "param")
-    @JacksonXmlElementWrapper(useWrapping = true, localName = "params")
 	private List<Param> params; //可空
 	private Boolean listResultFlag; //可空,默认false
 	private Boolean pagination; //可空,默认false
 	private Boolean withTransaction; //可空,默认true
-	@JacksonXmlProperty(localName = "exception")
-    @JacksonXmlElementWrapper(useWrapping = true, localName = "exceptions")
 	private List<String> exceptions; //可空,默认Exception
 	private RequestMapping requestMapping; //非空
 	

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.springframework.http.MediaType;
 
 /**
  * @Author: Daniel.Cao
@@ -21,9 +20,6 @@ public class MainGenerator extends GeneratorBase {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		//args = new String[] {"dir=C:/User/workspaces_core/phoenix-mountain-platform.git/phoenix-mountain-server",
-		//		"file=/src/generator/facades-define-min.xml"};
-		
 		if (args == null || args.length < 2) {
 			throw new Exception("[Arguments] Not Correct!");
 		}
@@ -292,318 +288,43 @@ public class MainGenerator extends GeneratorBase {
 			throw new Exception("[<facades>] Cannot Empty!");
 		}
 		
-		List<String> facadeNameList = new ArrayList<>();
-		
 		for (Facade _facade : facades) {
-			// name
-			String name = _facade.getName();
-			if (isEmpty(name) || !name.trim().matches("^[a-zA-Z][a-zA-Z0-9]*$")) {
-				throw new Exception("[facades.facade.name[" + name + "]] Cannot Empty Or Not Correct!");
+			// 查找Facade文件
+			String facadeName = MODEL_PACKAGE_MAP.get(PROJECT_MODEL_FACADE) + "." + _facade.getName() + "Facade";
+			System.out.println("开始查找Facade[" + facadeName + "]...");
+			Class<?> facadeClass = null;
+			try {
+				facadeClass = this.getClass().getClassLoader().loadClass(facadeName);
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
-			if (facadeNameList.contains(name)) {
-				throw new Exception("[facades.facade.name[" + name + "]] Cannot Dumplicate!");
+			if (facadeClass == null) {
+				throw new Exception("[Facade[" + facadeName + "]] Cannot Found!");
 			}
-			facadeNameList.add(name);
-			_facade.setName(name.trim());
+			System.out.println("查找到Facade[" + facadeName + "].");
 			
-			// description
-			// 不做检查
-			
-			// execGenerator
-			Boolean execGenerator = _facade.getExecGenerator();
-			_facade.setExecGenerator(execGenerator == null ? true : execGenerator);
-			
-			// useSwagger
-			Boolean useSwagger = _facade.getUseSwagger();
-			_facade.setUseSwagger(useSwagger == null ? false : useSwagger);
+			// init
+			initFacade(_facade, facadeClass);
 			
 			// annotations确保填写完整路径
-			List<String> annotations = _facade.getAnnotations();
-			List<String> newAnnotations = new ArrayList<>();
+			List<String> annotations = findAnnotations(facadeClass);
 			if (annotations != null && !annotations.isEmpty()) {
-				for (String _annotation : annotations) {
-					if (isEmpty(_annotation)) {
-						continue;
-					}
-					// 忽略mvc注解和swagger注解
-					if (_annotation.indexOf("org.springframework.web.bind.annotation") >= 0 
-					 || _annotation.indexOf("io.swagger.annotations") >= 0) {
-						continue;
-					}
-					if (_annotation.indexOf(".") <= 0) {
-						throw new Exception("[facades.facade.annotations.annotation[" + _annotation + "]] Not Correct!");
-					}
-					if (!newAnnotations.contains(_annotation.trim())) {
-						newAnnotations.add(_annotation.trim());
-					}
-				}
+				_facade.setAnnotations(annotations);
 			}
-			_facade.setAnnotations(newAnnotations);
 			
 			// requestMapping可空
-			RequestMapping requestMapping = _facade.getRequestMapping();
+			org.springframework.web.bind.annotation.RequestMapping rm = facadeClass.getAnnotation(org.springframework.web.bind.annotation.RequestMapping.class);
+			RequestMapping requestMapping = findRequestMapping(rm);
 			if (requestMapping != null) {
-				checkRequestMapping(requestMapping);
+				_facade.setRequestMapping(requestMapping);
 			}
 			
 			// methods非空
-			List<Method> methods = _facade.getMethods();
-			checkMethods(methods);
+			List<Method> methods = findMethods(facadeClass);
+			if (methods == null || methods.isEmpty()) {
+				throw new Exception("[facades.facade.name[" + _facade.getName() + "]] Cannot find mothods!");
+			}
+			_facade.setMethods(methods);
 		}
 	}
-	// 2.3.1,检查requestMapping
-	private void checkRequestMapping(RequestMapping requestMapping) throws Exception {
-		if (requestMapping == null) {
-			throw new Exception("[facades.facade.methods.method.requestMapping] Cannot Empty!");
-		}
-		
-		// requestPaths,非空
-		List<String> requestPaths = requestMapping.getRequestPaths();
-		if (requestPaths == null || requestPaths.isEmpty()) {
-			throw new Exception("[requestMapping.requestPaths] Cannot Empty!");
-		}
-		
-		// requestMethods,可空
-		List<String> requestMethods = requestMapping.getRequestMethods();
-		if (requestMethods != null && !requestMethods.isEmpty()) {
-			List<String> newRequestMethods = new ArrayList<>();
-			for (String _method : requestMethods) {
-				if (isEmpty(_method)) {
-					continue;
-				}
-				if (!isMethodValid(_method.trim())) {
-					throw new Exception("[requestMapping.requestMethods.requestMethod[" + _method + "]] Not Correct!");
-				}
-				String _newMethod = _method.trim().toUpperCase();
-				if (!newRequestMethods.contains(_newMethod)) {
-					newRequestMethods.add(_newMethod);
-				}
-			}
-			requestMapping.setRequestMethods(newRequestMethods);
-		}
-		
-		// requestConsumes,可空
-		List<String> requestConsumes = requestMapping.getRequestConsumes();
-		if (requestConsumes != null && !requestConsumes.isEmpty()) {
-			List<String> newRequestConsumes = new ArrayList<>();
-			for (String _consume : requestConsumes) {
-				if (isEmpty(_consume)) {
-					continue;
-				}
-				MediaType mediaType = null;
-				try {
-					mediaType = MediaType.parseMediaType(_consume.trim());
-				} catch (Exception e) {
-					mediaType = null;
-				}
-				if (mediaType == null) {
-					throw new Exception("[requestMapping.requestConsumes.requestConsume[" + _consume + "]] Not Correct!");
-				}
-				if (!newRequestConsumes.contains(_consume.trim())) {
-					newRequestConsumes.add(_consume.trim());
-				}
-			}
-			requestMapping.setRequestConsumes(newRequestConsumes);
-		}
-		
-		// requestProduces,可空
-		List<String> requestProduces = requestMapping.getRequestProduces();
-		List<String> newRequestProduces = new ArrayList<>();
-		if (requestProduces != null && !requestProduces.isEmpty()) {
-			for (String _produce : requestProduces) {
-				if (isEmpty(_produce)) {
-					continue;
-				}
-				MediaType mediaType = null;
-				try {
-					mediaType = MediaType.parseMediaType(_produce.trim());
-				} catch (Exception e) {
-					mediaType = null;
-				}
-				if (mediaType == null) {
-					throw new Exception("[requestMapping.requestProduces.requestProduce[" + _produce + "]] Not Correct!");
-				}
-				if (!newRequestProduces.contains(_produce.trim())) {
-					newRequestProduces.add(_produce.trim());
-				}
-			}
-		}
-		if (newRequestProduces.isEmpty()) {
-			newRequestProduces.add("application/json");
-		}
-		requestMapping.setRequestProduces(newRequestProduces);
-		
-		// requestHeaders,可空
-		// 不做校验
-		
-		// requestParams,可空
-		// 不做校验
-	}
-	// 2.3.1.1 检查Method是否合法
-	private boolean isMethodValid(String method) {
-		for (String _s : SUPPORT_METHODS) {
-			if (_s.equalsIgnoreCase(method.trim())) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	// 2.3.2,检查methods
-	private void checkMethods(List<Method> methods) throws Exception {
-		if (methods == null || methods.isEmpty()) {
-			throw new Exception("[facades.facade.methods] Cannot Empty!");
-		}
-		
-		List<String> methodNameList = new ArrayList<>();
-		for (Method _method : methods) {
-			// name,非空
-			String name = _method.getName();
-			if (isEmpty(name) || !name.trim().matches("^[a-z][A-Za-z0-9]*$")) {
-				throw new Exception("[facades.facade.methods.method.name[" + name + "]] Cannot Empty Or Not Correct!");
-			}
-			String _newName = name.trim().toLowerCase();
-			if (methodNameList.contains(_newName)) {
-				throw new Exception("[facades.facade.methods.method.name[" + name + "]] Cannot Dumplicate!");
-			}
-			methodNameList.add(_newName);
-			_method.setName(name.trim());
-			
-			// description,可空
-			// 不检查
-			
-			// execGenerator可空,默认true
-			Boolean execGenerator = _method.getExecGenerator();
-			_method.setExecGenerator(execGenerator == null ? true : execGenerator);
-			
-			// 返回值结果实际类型(不考虑ReturnResult的外层封装)
-			String returnRealType = _method.getReturnRealType();
-			if (isEmpty(returnRealType) || returnRealType.trim().indexOf(".") <= 0) {
-				throw new Exception("[facades.facade.methods.method.returnRealType[" + returnRealType + "]] Cannot Empty Or Not Correct!");
-			}
-			_method.setReturnRealType(returnRealType.trim());
-			
-			// listResultFlag查询结果是否列表,可空,默认false
-			Boolean listResultFlag = _method.getListResultFlag();
-			_method.setListResultFlag(listResultFlag == null ? false : listResultFlag);
-			
-			// pagination查询结果是否分页,可空,默认false
-			Boolean pagination = _method.getPagination();
-			_method.setPagination(pagination == null? false : pagination);
-			
-			// withTransaction该方法涉及的业务是否需要开启事务,可空,默认true
-			Boolean withTransaction = _method.getWithTransaction();
-			_method.setWithTransaction(withTransaction == null ? true : withTransaction);
-			
-			// requestMapping,非空
-			RequestMapping requestMapping = _method.getRequestMapping();
-			checkRequestMapping(requestMapping);
-			
-			// exceptions,可空,默认是java.lang.Exception,需要填写完整java类名
-			List<String> exceptions = _method.getExceptions();
-			List<String> newExceptions = new ArrayList<>();
-			if (exceptions != null && !exceptions.isEmpty()) {
-				for (String _exception : exceptions) {
-					if (isEmpty(_exception)) {
-						continue;
-					}
-					if (_exception.trim().indexOf(".") <= 0) {
-						throw new Exception("[facades.facade.methods.method.exceptions.exception[" + _exception + "]] Not Correct!");
-					}
-					if (!newExceptions.contains(_exception.trim())) {
-						newExceptions.add(_exception.trim());
-					}
-				}
-			}
-			if (newExceptions.isEmpty()) {
-				newExceptions.add("java.lang.Exception");
-			}
-			_method.setExceptions(newExceptions);
-			
-			// params可空
-			List<Param> params = _method.getParams();
-			checkParams(params);
-		}
-	}
-	// 2.3.2.1,检查params可空
-	private void checkParams(List<Param> params) throws Exception {
-		if (params == null || params.isEmpty()) {
-			return;
-		}
-		
-		List<String> paramList = new ArrayList<>();
-		for (Param _param : params) {
-			// name
-			String name = _param.getName();
-			if (isEmpty(name) || !name.trim().matches("^[a-z][A-Za-z0-9]*$")) {
-				throw new Exception("[facades.facade.methods.method.params.param.name[" + name + "]] Cannot Empty Or Not Correct!");
-			}
-			String _newName = name.trim().toLowerCase();
-			if (paramList.contains(_newName)) {
-				throw new Exception("[facades.facade.methods.method.params.param.name[" + name + "]] Cannot Dumplicate!");
-			}
-			paramList.add(_newName);
-			
-			_param.setName(name.trim());
-			
-			// type完整java类型路径,基础类型请用封装类型替代
-			String type = _param.getType();
-			if (isEmpty(type) || type.trim().indexOf(".") <= 0) {
-				throw new Exception("[facades.facade.methods.method.params.param.type[" + type + "]] Cannot Empty Or Not Correct!");
-			}
-			_param.setType(type.trim());
-			
-			// description可空
-			// 无需检查
-			
-			// nullable可空,默认false
-			Boolean nullable = _param.getNullable();
-			_param.setNullable(nullable == null ? false : nullable);
-			
-			// defaultValue可空
-			// 不检查
-			
-			// requestType可空,默认RequestParam
-			String requestType = _param.getRequestType();//SUPPORT_REQUEST_TYPE
-			if (isEmpty(requestType)) {
-				requestType = "RequestParam";
-			} else {
-				boolean checked = false;
-				for (String _ss : SUPPORT_REQUEST_TYPE) {
-					if (_ss.equalsIgnoreCase(requestType.trim())) {
-						checked = true;
-						requestType = _ss;
-						break;
-					}
-				}
-				if (!checked) {
-					throw new Exception("[facades.facade.methods.method.params.param.requestType[" + requestType + "]] Not Correct!");
-				}
-			}
-			_param.setRequestType(requestType);
-			
-			// annotations可空,参数前可能带的注解,不包含Mvc和Swagger注解,填写完整java路径
-			List<String> annotations = _param.getAnnotations();
-			List<String> newAnnotations = new ArrayList<>();
-			if (annotations != null && !annotations.isEmpty()) {
-				for (String annotation : annotations) {
-					if (isEmpty(annotation)) {
-						continue;
-					}
-					annotation = annotation.trim();
-					// 忽略mvc注解和swagger注解
-					if (annotation.indexOf("org.springframework.web.bind.annotation") >= 0 
-					 || annotation.indexOf("io.swagger.annotations") >= 0) {
-						continue;
-					}
-					if (annotation.indexOf(".") <= 0) {
-						throw new Exception("[facades.facade.methods.method.params.param.annotations.annotation[" + annotation + "]] Not Correct!");
-					}
-					newAnnotations.add(annotation);
-				}
-			}
-			_param.setAnnotations(newAnnotations);
-		}
-	}
-
 }

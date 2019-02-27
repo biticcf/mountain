@@ -200,6 +200,8 @@ class FileGeneratorUtils {
 			bw.write("}");
 			writeNewLine(bw);
 		}
+		
+		System.out.println("生成文件[" + destFile.getName() + "]成功.");
 	}
 	
 	private static String makeClassFirstLine(FileMeta fileMeta) throws Exception {

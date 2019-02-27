@@ -2,12 +2,19 @@
 <project xmlns="http://www.biticcf.com" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://www.biticcf.com generator.xsd">
+  <!-- 非空 -->
   <properties>
+    <!-- 非空,项目名称 -->
     <name>MyProj</name>
+    <!-- 非空,只允许出现小写字母 -->
     <company>beyonds</company>
+    <!-- 非空 -->
     <scope>phoenix</scope>
+    <!-- 非空 -->
     <template>mountain</template>
+    <!-- 可空,默认是false,true表示覆盖已存在的文件,false表示先做备份再做覆盖 -->
     <override>false</override>
+    <!-- 可空,慎重填写,会覆盖默认定义的文件夹 -->
     <dirs>
       <dir>
         <name>model</name>
@@ -32,6 +39,7 @@
     </dirs>
   </properties>
   
+  <!-- 可空,采用默认方案(建议保持默认) -->
   <models>
     <model>
       <name>api</name>
@@ -52,84 +60,8 @@
   
   <facades>
     <facade>
+      <!-- Facade名称前缀,只允许大写字母开头,后面跟小写字母 -->
       <name>Mydemo</name>
-      <description>Demo接口定义说明</description>
-      <execGenerator>true</execGenerator>
-      <useSwagger>true</useSwagger>
-      <annotations>
-        <annotation>org.springframework.validation.annotation.Validated</annotation>
-      </annotations>
-      <requestMapping>
-        <requestPaths>
-          <requestPath>/phoenix/mountain/v1</requestPath>
-        </requestPaths>
-        <requestMethods>
-          <requestMethod></requestMethod>
-        </requestMethods>
-        <requestConsumes>
-          <requestConsume></requestConsume>
-        </requestConsumes>
-        <requestProduces>
-          <requestProduce></requestProduce>
-        </requestProduces>
-        <requestHeaders>
-          <requestHeader></requestHeader>
-        </requestHeaders>
-        <requestParams>
-          <requestParam></requestParam>
-        </requestParams>
-      </requestMapping>
-      <methods>
-        <method>
-          <name>queryBy</name>
-          <description>方法定义说明</description>
-          <returnRealType><![CDATA[java.util.List<com.beyonds.phoenix.mountain.model.DemoModel>]]></returnRealType>
-          <params>
-            <param>
-              <name>page</name>
-              <type><![CDATA[java.lang.Integer]]></type>
-              <description>参数定义说明</description>
-              <nullable>false</nullable>
-              <defaultValue>0</defaultValue>
-              <requestType>RequestParam</requestType>
-              <annotations>
-                <annotation>javax.validation.Valid</annotation>
-              </annotations>
-            </param>
-            <param>
-              <name>name</name>
-              <type><![CDATA[java.lang.String]]></type>
-              <description>用户名称</description>
-            </param>
-          </params>
-          <listResultFlag>true</listResultFlag>
-          <pagination>false</pagination>
-          <withTransaction>true</withTransaction>
-          <exceptions>
-            <exception>java.lang.Exception</exception>
-          </exceptions>
-          <requestMapping>
-            <requestPaths>
-              <requestPath>/demo</requestPath>
-            </requestPaths>
-            <requestMethods>
-              <requestMethod>GET</requestMethod>
-            </requestMethods>
-            <requestConsumes>
-              <requestConsume>application/json</requestConsume>
-            </requestConsumes>
-            <requestProduces>
-              <requestProduce>application/json</requestProduce>
-            </requestProduces>
-            <requestHeaders>
-              <requestHeader></requestHeader>
-            </requestHeaders>
-            <requestParams>
-              <requestParam></requestParam>
-            </requestParams>
-          </requestMapping>
-        </method>
-      </methods>
     </facade>
   </facades>
 </project>
