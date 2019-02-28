@@ -5,8 +5,6 @@ package com.beyonds.phoenix.mountain.generator;
 
 import java.util.List;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
@@ -21,12 +19,9 @@ class Facade {
 	private String description; //可空
 	private Boolean execGenerator; //可空,默认true
 	private Boolean useSwagger; //可空,默认false
-	@JacksonXmlProperty(localName = "annotation")
-    @JacksonXmlElementWrapper(useWrapping = true, localName = "annotations")
+	private Boolean reGenerator; //是否重新生成Facade文件,true重新生成,false不重新生成
 	private List<String> annotations; //可空
 	private RequestMapping requestMapping; //可空
-	@JacksonXmlProperty(localName = "method")
-    @JacksonXmlElementWrapper(useWrapping = true, localName = "methods")
 	private List<Method> methods; //非空
 	
 	public String getName() {
@@ -52,6 +47,12 @@ class Facade {
 	}
 	public void setUseSwagger(Boolean useSwagger) {
 		this.useSwagger = useSwagger;
+	}
+	public Boolean getReGenerator() {
+		return reGenerator;
+	}
+	public void setReGenerator(Boolean reGenerator) {
+		this.reGenerator = reGenerator;
 	}
 	public List<String> getAnnotations() {
 		return annotations;

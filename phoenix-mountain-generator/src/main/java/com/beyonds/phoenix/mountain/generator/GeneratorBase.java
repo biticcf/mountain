@@ -65,10 +65,12 @@ abstract class GeneratorBase {
 			facade.setDescription(fc.description());
 			facade.setExecGenerator(fc.execGenerator());
 			facade.setUseSwagger(fc.useSwagger());
+			facade.setReGenerator(fc.reGenerator());
 		} else {
-			facade.setDescription("接口定义说明");
+			facade.setDescription(facade.getName() + "Facade接口定义说明");
 			facade.setExecGenerator(false);
 			facade.setUseSwagger(true);
+			facade.setReGenerator(false);
 		}
 	}
 	

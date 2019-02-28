@@ -31,4 +31,7 @@ public @interface FacadeConfig {
 	
 	// 是否生成Swagger文档 
 	boolean useSwagger() default true;
+	
+	// 是否重新生成Facade文件,true重新生成,false不重新生成
+	boolean reGenerator() default false;
 }

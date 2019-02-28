@@ -31,6 +31,8 @@ class FacadeMetaGenerator extends GeneratorBase implements Generator {
 			FileMeta fileMeta = new FileMeta();
 			
 			fileMeta.setClassType(1); //接口
+			Boolean reGenerator = _facade.getReGenerator();
+			fileMeta.setReGenerator(reGenerator == null ? true : reGenerator);
 			
 			// className
 			String className = _facade.getName() + "Facade";

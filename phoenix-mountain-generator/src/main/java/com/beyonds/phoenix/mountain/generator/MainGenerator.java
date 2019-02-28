@@ -84,22 +84,30 @@ public class MainGenerator extends GeneratorBase {
 		// 7,使用元文件生成实际文件
 		// 生成Facade文件
 		for (FileMeta fileMeta : facadeFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_FACADE), true, 2);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_FACADE), true, 2);
+			}
 		}
 		
 		// 生成Controller文件
 		for (FileMeta fileMeta : controllerFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_CONTROLLER), true, 1);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_CONTROLLER), true, 1);
+			}
 		}
 		
 		// 生成Service文件
 		for (FileMeta fileMeta : serviceFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_SERVICE), true, 2);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_SERVICE), true, 2);
+			}
 		}
 		
 		// 生成Domain文件
 		for (FileMeta fileMeta : domainFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN), true, 1);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN), true, 1);
+			}
 		}
 		
 		System.out.println("xml生成成功!");
@@ -306,7 +314,7 @@ public class MainGenerator extends GeneratorBase {
 			// init
 			initFacade(_facade, facadeClass);
 			
-			// annotations确保填写完整路径
+			// annotations
 			List<String> annotations = findAnnotations(facadeClass);
 			if (annotations != null && !annotations.isEmpty()) {
 				_facade.setAnnotations(annotations);

@@ -30,6 +30,8 @@ class FileMeta {
 	private List<String> headerContentList; //文件头注释列表,每个值一行代码
 	private List<String> classContentList; //类注释列表,每个值一行代码
 	
+	private boolean reGenerator = true; //是否重新生成文件
+	
 	public String getClassName() {
 		return className;
 	}
@@ -107,5 +109,11 @@ class FileMeta {
 	}
 	public void setClassContentList(List<String> classContentList) {
 		this.classContentList = classContentList;
+	}
+	public boolean isReGenerator() {
+		return reGenerator;
+	}
+	public void setReGenerator(boolean reGenerator) {
+		this.reGenerator = reGenerator;
 	}
 }
