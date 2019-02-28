@@ -369,7 +369,7 @@
 		</snapshotRepository>
 		
 		<!-- 阿里云效私服上传 -->
-		<!-- 
+		<!--
 		<repository>
 			<id>rdc-releases</id>
 			<name>internal releases</name>

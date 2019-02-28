@@ -263,8 +263,17 @@ abstract class GeneratorBase {
 					
 					org.springframework.web.bind.annotation.RequestHeader _requestHeader = _param.getAnnotation(org.springframework.web.bind.annotation.RequestHeader.class);
 					if (_requestHeader != null) {
-						param.setName(_requestHeader.value());
-						param.setDescription(_requestHeader.value() + "参数说明");
+						String _nameOld = param.getName();
+						String _name = _requestHeader.value();
+						if (_name == null || _name.trim().equals("")) {
+							_name = _requestHeader.name();
+						}
+						if (_name != null && !_name.trim().equals("")) {
+							param.setName(_name.trim());
+							param.setDescription(_name.trim() + "参数说明");
+						} else {
+							param.setDescription(_nameOld + "参数说明");
+						}
 						param.setRequestType("RequestHeader");
 						param.setNullable(!_requestHeader.required());
 						String _defaultValue = _requestHeader.defaultValue();
@@ -275,8 +284,17 @@ abstract class GeneratorBase {
 					
 					org.springframework.web.bind.annotation.RequestParam _requestParam = _param.getAnnotation(org.springframework.web.bind.annotation.RequestParam.class);
 					if (_requestParam != null) {
-						param.setName(_requestParam.value());
-						param.setDescription(_requestParam.value() + "参数说明");
+						String _nameOld = param.getName();
+						String _name = _requestParam.value();
+						if (_name == null || _name.trim().equals("")) {
+							_name = _requestParam.name();
+						}
+						if (_name != null && !_name.trim().equals("")) {
+							param.setName(_name.trim());
+							param.setDescription(_name.trim() + "参数说明");
+						} else {
+							param.setDescription(_nameOld + "参数说明");
+						}
 						param.setRequestType("RequestParam");
 						param.setNullable(!_requestParam.required());
 						String _defaultValue = _requestParam.defaultValue();
@@ -287,8 +305,17 @@ abstract class GeneratorBase {
 					
 					org.springframework.web.bind.annotation.PathVariable _pathVariable = _param.getAnnotation(org.springframework.web.bind.annotation.PathVariable.class);
 					if (_pathVariable != null) {
-						param.setName(_pathVariable.value());
-						param.setDescription(_pathVariable.value() + "参数说明");
+						String _nameOld = param.getName();
+						String _name = _pathVariable.value();
+						if (_name == null || _name.trim().equals("")) {
+							_name = _pathVariable.name();
+						}
+						if (_name != null && !_name.trim().equals("")) {
+							param.setName(_name.trim());
+							param.setDescription(_name.trim() + "参数说明");
+						} else {
+							param.setDescription(_nameOld + "参数说明");
+						}
 						param.setRequestType("PathVariable");
 						param.setNullable(!_pathVariable.required());
 					}
