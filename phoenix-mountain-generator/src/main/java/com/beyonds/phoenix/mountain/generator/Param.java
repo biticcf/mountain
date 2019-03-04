@@ -19,6 +19,7 @@ class Param {
 	private String defaultValue; //可空
 	private String requestType; //默认是RequestParam,请求参数类型:RequestParam,PathVariable,RequestBody,RequestHeader
 	private List<String> annotations; // 可空
+	private String pathVar; //MatrixVariable中使用字段
 	
 	public String getName() {
 		return name;
@@ -61,5 +62,11 @@ class Param {
 	}
 	public void setAnnotations(List<String> annotations) {
 		this.annotations = annotations;
+	}
+	public String getPathVar() {
+		return pathVar;
+	}
+	public void setPathVar(String pathVar) {
+		this.pathVar = pathVar;
 	}
 }

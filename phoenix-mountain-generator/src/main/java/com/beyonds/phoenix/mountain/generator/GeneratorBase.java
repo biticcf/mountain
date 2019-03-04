@@ -49,7 +49,8 @@ abstract class GeneratorBase {
 	};
 	// ResuestType定义
 	public static final String[] SUPPORT_REQUEST_TYPE = new String[] {
-			"RequestParam", "PathVariable", "RequestBody", "RequestHeader"
+			"RequestParam", "PathVariable", "RequestBody", 
+			"RequestHeader", "RequestPart", "MatrixVariable"
 	};
 	
 	// 相对路径
@@ -210,8 +211,7 @@ abstract class GeneratorBase {
 			method.setExceptions(exceptionsList);
 			
 			// requestMapping
-			org.springframework.web.bind.annotation.RequestMapping rm = _md.getAnnotation(org.springframework.web.bind.annotation.RequestMapping.class);
-			RequestMapping requestMapping = findRequestMapping(rm);
+			RequestMapping requestMapping = findMethodMapping(_md);
 			if (requestMapping == null) {
 				throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法没有RequestMapping!");
 			}
@@ -245,7 +245,9 @@ abstract class GeneratorBase {
 							if (_an instanceof org.springframework.web.bind.annotation.RequestBody || 
 								_an instanceof org.springframework.web.bind.annotation.RequestHeader || 
 								_an instanceof org.springframework.web.bind.annotation.RequestParam ||
-								_an instanceof org.springframework.web.bind.annotation.PathVariable) {
+								_an instanceof org.springframework.web.bind.annotation.PathVariable ||
+								_an instanceof org.springframework.web.bind.annotation.RequestPart ||
+								_an instanceof org.springframework.web.bind.annotation.MatrixVariable) {
 								continue;
 							}
 							
@@ -255,12 +257,32 @@ abstract class GeneratorBase {
 						param.setAnnotations(annotationList);
 					}
 					
+					// RequestBody
 					org.springframework.web.bind.annotation.RequestBody _requestBody = _param.getAnnotation(org.springframework.web.bind.annotation.RequestBody.class);
 					if (_requestBody != null) {
 						param.setRequestType("RequestBody");
 						param.setNullable(false);
 					}
 					
+					// RequestPart
+					org.springframework.web.bind.annotation.RequestPart _requestPart = _param.getAnnotation(org.springframework.web.bind.annotation.RequestPart.class);
+					if (_requestPart != null) {
+						String _nameOld = param.getName();
+						String _name = _requestPart.value();
+						if (_name == null || _name.trim().equals("")) {
+							_name = _requestPart.name();
+						}
+						if (_name != null && !_name.trim().equals("")) {
+							param.setName(_name.trim());
+							param.setDescription(_name.trim() + "参数说明");
+						} else {
+							param.setDescription(_nameOld + "参数说明");
+						}
+						param.setRequestType("RequestPart");
+						param.setNullable(!_requestPart.required());
+					}
+					
+					// RequestHeader
 					org.springframework.web.bind.annotation.RequestHeader _requestHeader = _param.getAnnotation(org.springframework.web.bind.annotation.RequestHeader.class);
 					if (_requestHeader != null) {
 						String _nameOld = param.getName();
@@ -282,6 +304,7 @@ abstract class GeneratorBase {
 						}
 					}
 					
+					// RequestParam
 					org.springframework.web.bind.annotation.RequestParam _requestParam = _param.getAnnotation(org.springframework.web.bind.annotation.RequestParam.class);
 					if (_requestParam != null) {
 						String _nameOld = param.getName();
@@ -303,6 +326,33 @@ abstract class GeneratorBase {
 						}
 					}
 					
+					// MatrixVariable
+					org.springframework.web.bind.annotation.MatrixVariable _matrixVariable = _param.getAnnotation(org.springframework.web.bind.annotation.MatrixVariable.class);
+					if (_matrixVariable != null) {
+						String _nameOld = param.getName();
+						String _name = _matrixVariable.value();
+						if (_name == null || _name.trim().equals("")) {
+							_name = _matrixVariable.name();
+						}
+						if (_name != null && !_name.trim().equals("")) {
+							param.setName(_name.trim());
+							param.setDescription(_name.trim() + "参数说明");
+						} else {
+							param.setDescription(_nameOld + "参数说明");
+						}
+						param.setRequestType("MatrixVariable");
+						param.setNullable(!_matrixVariable.required());
+						String _defaultValue = _matrixVariable.defaultValue();
+						if (_defaultValue != null && !ValueConstants.DEFAULT_NONE.equals(_defaultValue)) {
+							param.setDefaultValue(_defaultValue.trim());
+						}
+						String _pathVar = _matrixVariable.pathVar();
+						if (_pathVar != null && !ValueConstants.DEFAULT_NONE.equals(_pathVar)) {
+							param.setPathVar(_pathVar.trim());
+						}
+					}
+					
+					// PathVariable
 					org.springframework.web.bind.annotation.PathVariable _pathVariable = _param.getAnnotation(org.springframework.web.bind.annotation.PathVariable.class);
 					if (_pathVariable != null) {
 						String _nameOld = param.getName();
@@ -329,6 +379,367 @@ abstract class GeneratorBase {
 		}
 		
 		return list;
+	}
+	
+	private RequestMapping findMethodMapping(java.lang.reflect.Method mothod) throws RuntimeException {
+		// RequestMapping
+		org.springframework.web.bind.annotation.RequestMapping _requestMapping = mothod.getAnnotation(org.springframework.web.bind.annotation.RequestMapping.class);
+		if (_requestMapping != null) {
+			return this.findRequestMapping(_requestMapping);
+		}
+		
+		// GetMapping
+		org.springframework.web.bind.annotation.GetMapping getMapping = mothod.getAnnotation(org.springframework.web.bind.annotation.GetMapping.class);
+		if (getMapping != null) {
+			return findGetMapping(getMapping);
+		}
+		
+		// PostMapping
+		org.springframework.web.bind.annotation.PostMapping postMapping = mothod.getAnnotation(org.springframework.web.bind.annotation.PostMapping.class);
+		if (postMapping != null) {
+			return findPostMapping(postMapping);
+		}
+		
+		// PutMapping
+		org.springframework.web.bind.annotation.PutMapping putMapping = mothod.getAnnotation(org.springframework.web.bind.annotation.PutMapping.class);
+		if (putMapping != null) {
+			return findPutMapping(putMapping);
+		}
+		
+		// DeleteMapping
+		org.springframework.web.bind.annotation.DeleteMapping deleteMapping = mothod.getAnnotation(org.springframework.web.bind.annotation.DeleteMapping.class);
+		if (deleteMapping != null) {
+			return findDeleteMapping(deleteMapping);
+		}
+		
+		// PatchMapping
+		org.springframework.web.bind.annotation.PatchMapping patchMapping = mothod.getAnnotation(org.springframework.web.bind.annotation.PatchMapping.class);
+		if (patchMapping != null) {
+			return findPatchMapping(patchMapping);
+		}
+		
+		return null;
+	}
+	
+	// GetMapping
+	private RequestMapping findGetMapping(org.springframework.web.bind.annotation.GetMapping rm) {
+		RequestMapping requestMapping = new RequestMapping();
+		
+		// requestPaths
+		String[] paths = rm.path();
+		if (paths == null || paths.length <= 0) {
+			paths = rm.value();
+		}
+		List<String> requestPaths = new ArrayList<>();
+		if (paths != null && paths.length > 0) {
+			for (String _s : paths) {
+				requestPaths.add(_s.trim());
+			}
+		}
+		requestMapping.setRequestPaths(requestPaths);
+		
+		// requestMethods
+		List<String> requestMethods = new ArrayList<>();
+		requestMethods.add("GET");
+		requestMapping.setRequestMethods(requestMethods);
+		
+		// requestConsumes
+		String[] consumes = rm.consumes();
+		List<String> requestConsumes = new ArrayList<>();
+		if (consumes != null && consumes.length > 0) {
+			for (String _s : consumes) {
+				requestConsumes.add(_s);
+			}
+		}
+		requestMapping.setRequestConsumes(requestConsumes);
+		
+		// requestProduces
+		String[] produces = rm.produces();
+		List<String> requestProduces = new ArrayList<>();
+		if (produces != null && produces.length > 0) {
+			for (String _s : produces) {
+				requestProduces.add(_s);
+			}
+		}
+		requestMapping.setRequestProduces(requestProduces);
+		
+		// requestHeaders
+		String[] headers = rm.headers();
+		List<String> requestHeaders = new ArrayList<>();
+		if (headers != null && headers.length > 0) {
+			for (String _s : headers) {
+				requestHeaders.add(_s);
+			}
+		}
+		requestMapping.setRequestHeaders(requestHeaders);
+		
+		// requestParams
+		String[] params = rm.params();
+		List<String> requestParams = new ArrayList<>();
+		if (params != null && params.length > 0) {
+			for (String _s : params) {
+				requestParams.add(_s);
+			}
+		}
+		requestMapping.setRequestParams(requestParams);
+		
+		return requestMapping;
+	}
+	// PostMapping
+	private RequestMapping findPostMapping(org.springframework.web.bind.annotation.PostMapping rm) {
+		RequestMapping requestMapping = new RequestMapping();
+		
+		// requestPaths
+		String[] paths = rm.path();
+		if (paths == null || paths.length <= 0) {
+			paths = rm.value();
+		}
+		List<String> requestPaths = new ArrayList<>();
+		if (paths != null && paths.length > 0) {
+			for (String _s : paths) {
+				requestPaths.add(_s.trim());
+			}
+		}
+		requestMapping.setRequestPaths(requestPaths);
+		
+		// requestMethods
+		List<String> requestMethods = new ArrayList<>();
+		requestMethods.add("POST");
+		requestMapping.setRequestMethods(requestMethods);
+		
+		// requestConsumes
+		String[] consumes = rm.consumes();
+		List<String> requestConsumes = new ArrayList<>();
+		if (consumes != null && consumes.length > 0) {
+			for (String _s : consumes) {
+				requestConsumes.add(_s);
+			}
+		}
+		requestMapping.setRequestConsumes(requestConsumes);
+		
+		// requestProduces
+		String[] produces = rm.produces();
+		List<String> requestProduces = new ArrayList<>();
+		if (produces != null && produces.length > 0) {
+			for (String _s : produces) {
+				requestProduces.add(_s);
+			}
+		}
+		requestMapping.setRequestProduces(requestProduces);
+		
+		// requestHeaders
+		String[] headers = rm.headers();
+		List<String> requestHeaders = new ArrayList<>();
+		if (headers != null && headers.length > 0) {
+			for (String _s : headers) {
+				requestHeaders.add(_s);
+			}
+		}
+		requestMapping.setRequestHeaders(requestHeaders);
+		
+		// requestParams
+		String[] params = rm.params();
+		List<String> requestParams = new ArrayList<>();
+		if (params != null && params.length > 0) {
+			for (String _s : params) {
+				requestParams.add(_s);
+			}
+		}
+		requestMapping.setRequestParams(requestParams);
+		
+		return requestMapping;
+	}
+	// PutMapping
+	private RequestMapping findPutMapping(org.springframework.web.bind.annotation.PutMapping rm) {
+		RequestMapping requestMapping = new RequestMapping();
+		
+		// requestPaths
+		String[] paths = rm.path();
+		if (paths == null || paths.length <= 0) {
+			paths = rm.value();
+		}
+		List<String> requestPaths = new ArrayList<>();
+		if (paths != null && paths.length > 0) {
+			for (String _s : paths) {
+				requestPaths.add(_s.trim());
+			}
+		}
+		requestMapping.setRequestPaths(requestPaths);
+		
+		// requestMethods
+		List<String> requestMethods = new ArrayList<>();
+		requestMethods.add("PUT");
+		requestMapping.setRequestMethods(requestMethods);
+		
+		// requestConsumes
+		String[] consumes = rm.consumes();
+		List<String> requestConsumes = new ArrayList<>();
+		if (consumes != null && consumes.length > 0) {
+			for (String _s : consumes) {
+				requestConsumes.add(_s);
+			}
+		}
+		requestMapping.setRequestConsumes(requestConsumes);
+		
+		// requestProduces
+		String[] produces = rm.produces();
+		List<String> requestProduces = new ArrayList<>();
+		if (produces != null && produces.length > 0) {
+			for (String _s : produces) {
+				requestProduces.add(_s);
+			}
+		}
+		requestMapping.setRequestProduces(requestProduces);
+		
+		// requestHeaders
+		String[] headers = rm.headers();
+		List<String> requestHeaders = new ArrayList<>();
+		if (headers != null && headers.length > 0) {
+			for (String _s : headers) {
+				requestHeaders.add(_s);
+			}
+		}
+		requestMapping.setRequestHeaders(requestHeaders);
+		
+		// requestParams
+		String[] params = rm.params();
+		List<String> requestParams = new ArrayList<>();
+		if (params != null && params.length > 0) {
+			for (String _s : params) {
+				requestParams.add(_s);
+			}
+		}
+		requestMapping.setRequestParams(requestParams);
+		
+		return requestMapping;
+	}
+	// DeleteMapping
+	private RequestMapping findDeleteMapping(org.springframework.web.bind.annotation.DeleteMapping rm) {
+		RequestMapping requestMapping = new RequestMapping();
+		
+		// requestPaths
+		String[] paths = rm.path();
+		if (paths == null || paths.length <= 0) {
+			paths = rm.value();
+		}
+		List<String> requestPaths = new ArrayList<>();
+		if (paths != null && paths.length > 0) {
+			for (String _s : paths) {
+				requestPaths.add(_s.trim());
+			}
+		}
+		requestMapping.setRequestPaths(requestPaths);
+		
+		// requestMethods
+		List<String> requestMethods = new ArrayList<>();
+		requestMethods.add("DELETE");
+		requestMapping.setRequestMethods(requestMethods);
+		
+		// requestConsumes
+		String[] consumes = rm.consumes();
+		List<String> requestConsumes = new ArrayList<>();
+		if (consumes != null && consumes.length > 0) {
+			for (String _s : consumes) {
+				requestConsumes.add(_s);
+			}
+		}
+		requestMapping.setRequestConsumes(requestConsumes);
+		
+		// requestProduces
+		String[] produces = rm.produces();
+		List<String> requestProduces = new ArrayList<>();
+		if (produces != null && produces.length > 0) {
+			for (String _s : produces) {
+				requestProduces.add(_s);
+			}
+		}
+		requestMapping.setRequestProduces(requestProduces);
+		
+		// requestHeaders
+		String[] headers = rm.headers();
+		List<String> requestHeaders = new ArrayList<>();
+		if (headers != null && headers.length > 0) {
+			for (String _s : headers) {
+				requestHeaders.add(_s);
+			}
+		}
+		requestMapping.setRequestHeaders(requestHeaders);
+		
+		// requestParams
+		String[] params = rm.params();
+		List<String> requestParams = new ArrayList<>();
+		if (params != null && params.length > 0) {
+			for (String _s : params) {
+				requestParams.add(_s);
+			}
+		}
+		requestMapping.setRequestParams(requestParams);
+		
+		return requestMapping;
+	}
+	// PatchMapping
+	private RequestMapping findPatchMapping(org.springframework.web.bind.annotation.PatchMapping rm) {
+		RequestMapping requestMapping = new RequestMapping();
+		
+		// requestPaths
+		String[] paths = rm.path();
+		if (paths == null || paths.length <= 0) {
+			paths = rm.value();
+		}
+		List<String> requestPaths = new ArrayList<>();
+		if (paths != null && paths.length > 0) {
+			for (String _s : paths) {
+				requestPaths.add(_s.trim());
+			}
+		}
+		requestMapping.setRequestPaths(requestPaths);
+		
+		// requestMethods
+		List<String> requestMethods = new ArrayList<>();
+		requestMethods.add("PATCH");
+		requestMapping.setRequestMethods(requestMethods);
+		
+		// requestConsumes
+		String[] consumes = rm.consumes();
+		List<String> requestConsumes = new ArrayList<>();
+		if (consumes != null && consumes.length > 0) {
+			for (String _s : consumes) {
+				requestConsumes.add(_s);
+			}
+		}
+		requestMapping.setRequestConsumes(requestConsumes);
+		
+		// requestProduces
+		String[] produces = rm.produces();
+		List<String> requestProduces = new ArrayList<>();
+		if (produces != null && produces.length > 0) {
+			for (String _s : produces) {
+				requestProduces.add(_s);
+			}
+		}
+		requestMapping.setRequestProduces(requestProduces);
+		
+		// requestHeaders
+		String[] headers = rm.headers();
+		List<String> requestHeaders = new ArrayList<>();
+		if (headers != null && headers.length > 0) {
+			for (String _s : headers) {
+				requestHeaders.add(_s);
+			}
+		}
+		requestMapping.setRequestHeaders(requestHeaders);
+		
+		// requestParams
+		String[] params = rm.params();
+		List<String> requestParams = new ArrayList<>();
+		if (params != null && params.length > 0) {
+			for (String _s : params) {
+				requestParams.add(_s);
+			}
+		}
+		requestMapping.setRequestParams(requestParams);
+		
+		return requestMapping;
 	}
 	
 	// boolean, byte, char, short, int, long, float, and double

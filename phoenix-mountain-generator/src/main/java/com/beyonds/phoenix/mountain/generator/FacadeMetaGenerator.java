@@ -232,14 +232,23 @@ class FacadeMetaGenerator extends GeneratorBase implements Generator {
 		paramResult += "required = " + (!nullable.booleanValue());
 		// 2,value
 		String name = param.getName();
-		if (!isEmpty(name) && !"RequestBody".equals(requestType)) { //RequestBody无value
+		// RequestBody无value
+		if ((!isEmpty(name)) && (!"RequestBody".equals(requestType))) {
 			paramResult += ", value = \"" + name + "\"";
 		}
 		// 3,defaultValue
 		String defaultValue = param.getDefaultValue();
-		// PathVariable和RequestBody无defaultValue
-		if (!isEmpty(defaultValue) && (!"PathVariable".equals(requestType) && !"RequestBody".equals(requestType))) {
+		// PathVariable、RequestPart和RequestBody无defaultValue
+		if ((!isEmpty(defaultValue)) && 
+		    (!"PathVariable".equals(requestType)) && 
+		    (!"RequestBody".equals(requestType)) &&
+		    (!"RequestPart".equals(requestType))) {
 			paramResult += ", defaultValue = \"" + defaultValue + "\"";
+		}
+		// 4,pathVar(MatrixVariable专有)
+		String pathVar = param.getPathVar();
+		if ((!isEmpty(pathVar)) && "MatrixVariable".equals(requestType)) {
+			paramResult += ", pathVar = \"" + pathVar + "\"";
 		}
 		paramResult += ") ";
 		// annotations
