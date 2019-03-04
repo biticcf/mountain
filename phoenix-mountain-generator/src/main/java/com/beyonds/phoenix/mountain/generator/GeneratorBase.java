@@ -175,7 +175,7 @@ abstract class GeneratorBase {
 			
 			MethodConfig mc = _md.getAnnotation(MethodConfig.class);
 			if (mc == null) {
-				method.setDescription("方法定义说明");
+				method.setDescription(_md.getName() + "方法定义说明");
 				method.setListResultFlag(false);
 				method.setPagination(false);
 				method.setWithTransaction(true);
