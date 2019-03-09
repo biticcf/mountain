@@ -13,8 +13,6 @@ import com.beyonds.phoenix.mountain.core.common.lang.Logable;
 import com.beyonds.phoenix.mountain.core.common.util.CodeGenerator;
 import com.beyonds.phoenix.mountain.core.common.util.LogModel;
 
-import reactor.core.publisher.Mono;
-
 /**
  * 
  * @Author: Daniel.Cao
@@ -24,15 +22,22 @@ import reactor.core.publisher.Mono;
  * @param <T1> 结果对象类型
  * @param <T2> 原对象类型
  */
-public interface ResultExecutor<T1, T2> extends ResultCastExecutor<T1, T1, T2>, Logable {
+public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 	Logger LOGGER = LoggerFactory.getLogger("WEB.LOG");
 	/**
-     * 结果回调
+     * +结果回调
      * @return 结果对象
      */
 	CallResult<T2> execute();
 	
-	@Override
+	/**
+	 * +结果类型转化
+	 * @param name 调用者名称
+	 * @param method 调用接口的method方法
+	 * @param paramValueMap 参数列表
+	 * @param clazz 结果对象
+	 * @return 转换后的结果集
+	 */
 	default ReturnResult<T1> processResult(String name, String method, Map<String, Object> paramValueMap, Class<T1> clazz) {
         final LogModel lm = LogModel.newLogModel(name);
         lm.addMetaData("method", method);
@@ -82,11 +87,5 @@ public interface ResultExecutor<T1, T2> extends ResultCastExecutor<T1, T1, T2>, 
 		MDC.remove(TRACE_ID);
         
         return returnResult;
-    }
-	
-	@Override
-	default Mono<ReturnResult<T1>> processReactorResult(String name, String method, 
-			Map<String, Object> paramValueMap, Class<T1> clazz) {
-		return Mono.just(processResult(name, method, paramValueMap, clazz));
     }
 }

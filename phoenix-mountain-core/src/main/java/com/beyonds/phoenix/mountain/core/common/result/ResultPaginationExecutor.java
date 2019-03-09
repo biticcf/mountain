@@ -16,8 +16,6 @@ import com.beyonds.phoenix.mountain.core.common.util.CodeGenerator;
 import com.beyonds.phoenix.mountain.core.common.util.LogModel;
 import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
 
-import reactor.core.publisher.Mono;
-
 /**
  * 
  * @Author: DanielCao
@@ -27,15 +25,22 @@ import reactor.core.publisher.Mono;
  * @param <T1> 结果类型
  * @param <T2> 原始类型
  */
-public interface ResultPaginationExecutor<T1, T2> extends ResultCastExecutor<List<T1>, T1, T2>, Logable {
+public interface ResultPaginationExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 	Logger LOGGER = LoggerFactory.getLogger("WEB.LOG");
 	/**
-     * 结果回调
+     * +结果回调
      * @return 回调结果
      */
 	CallResult<PaginationSupport<T2>> execute();
 	
-	@Override
+	/**
+	 * +结果集型转化,分页
+	 * @param name 调用者名称
+	 * @param method 调用接口的method方法
+	 * @param paramValueMap 参数列表
+	 * @param clazz 结果对象
+	 * @return 转换后的结果集
+	 */
 	default ReturnResult<List<T1>> processResult(
 			String name, String method, Map<String, Object> paramValueMap, Class<T1> clazz) {
         final LogModel lm = LogModel.newLogModel(name);
@@ -91,13 +96,8 @@ public interface ResultPaginationExecutor<T1, T2> extends ResultCastExecutor<Lis
         return returnResult;
     }
 	
-	@Override
-	default Mono<ReturnResult<List<T1>>> processReactorResult(String name, String method, 
-			Map<String, Object> paramValueMap, Class<T1> clazz) {
-		return Mono.just(processResult(name, method, paramValueMap, clazz));
-    }
 	/**
-	 * 可扩展功能,对象转换
+	 * +可扩展功能,对象转换
 	 * @param sre 原对象
 	 * @param clazz 结果对象
 	 * @return 转换后的结果
