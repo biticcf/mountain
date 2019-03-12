@@ -34,4 +34,7 @@ public @interface FacadeConfig {
 	
 	// 是否重新生成Facade文件,true重新生成,false不重新生成
 	boolean reGenerator() default false;
+	
+	// 是否生成DAO层代码，需要先定义{name}Po文件
+	boolean genDaoCode() default false;
 }
