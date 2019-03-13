@@ -67,11 +67,25 @@ abstract class GeneratorBase {
 			facade.setExecGenerator(fc.execGenerator());
 			facade.setUseSwagger(fc.useSwagger());
 			facade.setReGenerator(fc.reGenerator());
+			
+			facade.setDaoCodeFlag(fc.genDaoCode());
+			facade.setDefaultCreateFlag(fc.genDefaultCreate());
+			facade.setDefaultDeleteFlag(fc.genDefaultDelete());
+			facade.setDefaultUpdateFlag(fc.genDefaultUpdate());
+			facade.setDefaultQueryItemFlag(fc.genDefaultQueryItem());
+			facade.setDefaultQueryPagesFlag(fc.genDefaultQueryPages());
 		} else {
 			facade.setDescription(facade.getName() + "Facade接口定义说明");
 			facade.setExecGenerator(false);
 			facade.setUseSwagger(true);
 			facade.setReGenerator(false);
+			
+			facade.setDaoCodeFlag(true);
+			facade.setDefaultCreateFlag(false);
+			facade.setDefaultDeleteFlag(false);
+			facade.setDefaultUpdateFlag(false);
+			facade.setDefaultQueryItemFlag(true);
+			facade.setDefaultQueryPagesFlag(true);
 		}
 	}
 	
