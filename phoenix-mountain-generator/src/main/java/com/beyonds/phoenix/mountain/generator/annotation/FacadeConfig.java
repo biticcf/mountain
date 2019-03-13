@@ -36,7 +36,7 @@ public @interface FacadeConfig {
 	boolean reGenerator() default false;
 	
 	// 是否生成DAO层代码，需要先定义{name}Po文件
-	boolean genDaoCode() default true;
+	boolean genDaoCode() default false;
 	
 	// 是否生成默认的创建接口(需要genDaoCode=true)
 	boolean genDefaultCreate() default false;
