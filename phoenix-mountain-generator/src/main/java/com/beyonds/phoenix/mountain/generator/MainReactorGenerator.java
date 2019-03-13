@@ -68,41 +68,115 @@ public class MainReactorGenerator extends GeneratorBase {
 		
 		// 2,校验配置文件
 		mainGenerator.checkProject(project, file, baseDir);
-		System.out.println("xml校验成功!");
+System.out.println("xml校验成功!");
 		
-		// 3,生成Facade接口定义文件元文件
+		// 3.生成Po文件元文件
+		List<FileMeta> poFileMetaList = new PoMetaGenerator().generatorFileMeta(project, null, null);
+		
+		// 4.生成Model文件元文件
+		List<FileMeta> modelFileMetaList = new ModelMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
+		
+		// 5,生成Facade接口定义文件元文件
 		List<FileMeta> facadeFileMetaList = new FacadeMetaGenerator().generatorFileMeta(project, null, 2);
 		
-		// 4,生成Controller接口实现文件元文件
+		// 6,生成Controller接口实现文件元文件
 		List<FileMeta> controllerFileMetaList = new ControllerMetaGenerator().generatorFileMeta(project, facadeFileMetaList, 2);
 		
-		// 5,生成Service接口文件元文件
+		// 7,生成Service接口文件元文件
 		List<FileMeta> serviceFileMetaList = new ServiceMetaGenerator().generatorFileMeta(project, controllerFileMetaList, null);
 		
-		// 6,生成Domain定义文件元文件
+		// 8,生成Domain定义文件元文件
 		List<FileMeta> domainFileMetaList = new DomainMetaGenerator().generatorFileMeta(project, serviceFileMetaList, null);
+		
+		// 9.生成DomainRepository定义文件元文件
+		List<FileMeta> domainRepositoryFileMetaList = new DomainRepositoryMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
+		
+		// 10.生成DaoRepository定义文件元文件
+		List<FileMeta> daoFileMetaList = new DaoMetaGenerator().generatorFileMeta(project, domainRepositoryFileMetaList, null);
+		
+		// 11.生成Mapper定义文件元文件
+		List<FileMeta> mapperFileMetaList = new MapperMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
+		
+		// 12.生成ConstantContext定义文件元文件
+		List<FileMeta> contextFileMetaList = new ContextMetaGenerator().generatorFileMeta(project, facadeFileMetaList, null);
 		
 		System.out.println("xml解析成功!");
 		
 		// 7,使用元文件生成实际文件
+		// 生成Po文件
+		for (FileMeta fileMeta : poFileMetaList) {
+			if (fileMeta.isReGenerator()) {
+				String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/dao/po";
+				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
+			}
+		}
+		
+		// 生成Model文件
+		for (FileMeta fileMeta : modelFileMetaList) {
+			if (fileMeta.isReGenerator()) {
+				String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_MODEL);
+				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
+			}
+		}
+		
 		// 生成Facade文件
 		for (FileMeta fileMeta : facadeFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_FACADE), true, 2);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_FACADE), true, 2);
+			}
 		}
 		
 		// 生成Controller文件
 		for (FileMeta fileMeta : controllerFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_CONTROLLER), true, 1);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_CONTROLLER), true, 1);
+			}
 		}
 		
 		// 生成Service文件
 		for (FileMeta fileMeta : serviceFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_SERVICE), true, 2);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_SERVICE), true, 2);
+			}
 		}
 		
 		// 生成Domain文件
 		for (FileMeta fileMeta : domainFileMetaList) {
-			FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN), true, 1);
+			if (fileMeta.isReGenerator()) {
+				FileGeneratorUtils.generatorFile(fileMeta, MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN), true, 1);
+			}
+		}
+		
+		// 生成DomainRepository文件
+		for (FileMeta fileMeta : domainRepositoryFileMetaList) {
+			if (fileMeta.isReGenerator()) {
+				String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/repository";
+				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
+			}
+		}
+		
+		// 生成DaoRepository文件
+		for (FileMeta fileMeta : daoFileMetaList) {
+			if (fileMeta.isReGenerator()) {
+				String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/dao";
+				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 2);
+			}
+		}
+		
+		// 生成ConstantContext文件
+		for (FileMeta fileMeta : contextFileMetaList) {
+			if (fileMeta.isReGenerator()) {
+				String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/support";
+				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
+			}
+		}
+		
+		// 生成Mapper文件
+		for (FileMeta fileMeta : mapperFileMetaList) {
+			if (fileMeta.isReGenerator()) {
+				String destDir = "src/main/resources/bean/mybatis";
+				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
+			}
 		}
 		
 		System.out.println("xml生成成功!");
