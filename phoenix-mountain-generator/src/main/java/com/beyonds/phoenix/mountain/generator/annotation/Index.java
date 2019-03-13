@@ -26,11 +26,11 @@ public @interface Index {
 	// 索引序号(复合索引中使用)
 	int index() default 0;
 	
-	// 索引类型:NORMAL、FULLTEXT、SPATIAL、UNIQUE
-	String indexType() default "NORMAL";
+	// 索引类型:#EnuIndexType
+	EnuIndexType indexType() default EnuIndexType.NORMAL;
 	
-	// 索引函数:BTREE、HASH
-	String indexMethod() default "BTREE";
+	// 索引函数:#EnuIndexMethod
+	EnuIndexMethod indexMethod() default EnuIndexMethod.BTREE;
 	
 	// 备注
 	String comment() default "";

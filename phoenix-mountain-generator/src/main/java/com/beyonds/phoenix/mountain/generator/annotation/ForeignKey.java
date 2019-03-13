@@ -35,9 +35,9 @@ public @interface ForeignKey {
 	// 引用列
 	String[] refFields() default {};
 	
-	// 删除引发操作:CASCADE、NO ACTION、RESTRICT、SET NULL
-	String deleteAction() default "SET NULL";
+	// 删除引发操作:#EnuFKAction
+	EnuFKAction deleteAction() default EnuFKAction.SET_NULL;
 	
-	// 更新引发操作:CASCADE、NO ACTION、RESTRICT、SET NULL
-	String updateAction() default "NO ACTION";
+	// 更新引发操作:#EnuFKAction
+	EnuFKAction updateAction() default EnuFKAction.NO_ACTION;
 }
