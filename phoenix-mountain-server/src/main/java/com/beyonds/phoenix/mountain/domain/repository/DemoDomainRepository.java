@@ -68,13 +68,6 @@ public class DemoDomainRepository {
 	}
 	
 	/**
-	 * 查询总条数
-	 * @return 结果总条数
-	 */
-	public int queryCount() {
-		return demoDAO.queryCount();
-	}
-	/**
 	 * 保存一条记录
 	 * @param demoModel 对象
 	 * @return 1成功,其他失败

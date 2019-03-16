@@ -12,6 +12,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.beyonds.phoenix.mountain.app.config.MainConfig;
+import com.beyonds.phoenix.mountain.domain.support.ConstantContext;
 
 /**
  * @Author: DanielCao
@@ -27,4 +28,6 @@ public class AbstTestController {
 	
 	@Autowired
 	protected TestRestTemplate restTemplate;
+	@Autowired
+	protected ConstantContext constantContext;
 }
