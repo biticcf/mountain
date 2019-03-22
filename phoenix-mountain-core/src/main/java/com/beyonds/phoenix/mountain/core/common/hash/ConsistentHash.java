@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class ConsistentHash<T> {
 	private static final int DEFAULT_NUMBER_REPLICAS = 100;
 	
-	private static Logger logger = LoggerFactory.getLogger(ConsistentHash.class);
+	protected static Logger logger = LoggerFactory.getLogger(ConsistentHash.class);
 	
 	private final HashFunction hashFunction; 
 	private final int numberOfReplicas; 
