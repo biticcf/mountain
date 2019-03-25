@@ -48,14 +48,22 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 		WdCallbackResult<T> result = null;
 
 		try {
+			// 设置标志,保证executeCheck()内不执行事务
+			TransStatusHolder.disableTransaction();
 			result = action.executeCheck();
+			// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
+			TransStatusHolder.removeTransStatus();
 			if (result.isSuccess()) {
 				result = this.transactionTemplate.execute(
 				new TransactionCallback<WdCallbackResult<T>>() {
 					public WdCallbackResult<T> doInTransaction(TransactionStatus status) {
 						// 回调业务逻辑
 						// 通过annotation来实现某些option类型的扩展
+						// 设置标志,保证executeAction()内不执行事务
+						TransStatusHolder.enableTransaction();
 						WdCallbackResult<T> iNresult = action.executeAction();
+						// 清除标志(这里一定会执行sql,因此无需手动清除标志)
+						// TransStatusHolder.removeTransStatus("executeAction");
 						if (iNresult == null) {
 							throw new WdServiceException(SERVICE_NO_RESULT);
 						}
@@ -69,7 +77,12 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 					}
 				});
 				if (result.isSuccess()) {
+					// 设置标志,保证executeAfter()内不执行事务
+					TransStatusHolder.disableTransaction();
 					action.executeAfter();
+					// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
+					TransStatusHolder.removeTransStatus();
+					
 					templateExtensionAfterTransaction(result);
 				}
 			}
@@ -88,6 +101,9 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 			
 			result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
 
+		} finally {
+			// 确保清除标志(有可能出现异常,因此手动清除一次标志)
+			TransStatusHolder.removeTransStatus();
 		}
 		
 		writeDebugInfo(logger, "模板执行结束");
@@ -103,9 +119,17 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 		WdCallbackResult<T> result = null;
 		
 		try {
+			// 设置标志,保证executeCheck()内不执行事务
+			TransStatusHolder.disableTransaction();
 			result = action.executeCheck();
+			// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
+			TransStatusHolder.removeTransStatus();
 			if (result.isSuccess()) {
+				// 设置标志,保证executeAction()内不执行事务
+				TransStatusHolder.disableTransaction();
 				result = action.executeAction();
+				// 清除标志(这里也有可能不会执行sql,因此手动清除一次标志)
+				TransStatusHolder.removeTransStatus();
 				if (result == null) {
 					throw new WdServiceException(SERVICE_NO_RESULT);
 				}
@@ -116,7 +140,11 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 					return result;
 				}
 				// 发送业务事件
+				// 设置标志,保证executeAfter()内不执行事务
+				TransStatusHolder.disableTransaction();
 				action.executeAfter();
+				// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
+				TransStatusHolder.removeTransStatus();
 			}
 			
 			writeDebugInfo(logger, "正常退出模板方法");
@@ -133,7 +161,11 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 			writeErrorInfo(logger, "异常退出模板方法F点", e);
 			
 			result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
+		} finally {
+			// 确保清除标志(有可能出现异常,因此手动清除一次标志)
+			TransStatusHolder.removeTransStatus();
 		}
+		
 		writeDebugInfo(logger, "模板执行结束");
 
 		return result;
