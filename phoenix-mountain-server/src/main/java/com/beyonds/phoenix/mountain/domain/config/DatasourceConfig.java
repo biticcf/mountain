@@ -137,6 +137,9 @@ public class DatasourceConfig {
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
         factory.setDataSource(dataSource);
         
+         // 自定义事务处理器
+        factory.setTransactionFactory(new ManualManagedTransactionFactory());
+        
         factory.setVfs(SpringBootVFS.class);
         if (StringUtils.hasText(properties.getConfigLocation())) {
           factory.setConfigLocation(resourceLoader.getResource(properties.getConfigLocation()));
