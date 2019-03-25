@@ -3,8 +3,11 @@
  */
 package com.beyonds.phoenix.mountain.core.common.service;
 
+import java.sql.SQLException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -27,6 +30,8 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
     public static final int    SERVICE_SYSTEM_FALIURE           = 0xFF0002;
     public static final int    NO_ALIVE_DATASOURCE              = 0xFF0004;
     public static final int    SERVICE_METHOD_ARGS_LESS_THAN_1  = 0xFF0003;
+    public static final int    EXECUTE_SQL_TRANS_FALIURE        = 0xFF0005;
+    public static final int    EXECUTE_SQL_FALIURE              = 0xFF0006;
     
     public static final String CONTEXT_INVOKE_METHOD           = "invokeMethod";
     public static final String CONTEXT_INVOCATION              = "methodInvocation";
@@ -43,6 +48,17 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 	
 	@Override
 	public <T> WdCallbackResult<T> execute(final WdServiceCallback<T> action, final Object domain) {
+		return execute(action, domain, true);
+	}
+	
+	@Override
+	public <T> WdCallbackResult<T> executeWithoutTransaction(final WdServiceCallback<T> action, final Object domain) {
+		return execute(action, domain, false);
+	}
+	
+	//@Override
+	public <T> WdCallbackResult<T> execute(final WdServiceCallback<T> action, final Object domain, 
+			final boolean withTrans) {
 		writeDebugInfo(logger, "进入模板方法开始处理");
 		
 		WdCallbackResult<T> result = null;
@@ -54,16 +70,18 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 			// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
 			TransStatusHolder.removeTransStatus();
 			if (result.isSuccess()) {
+				// 设置标志,保证executeAction()内执行事务
+				if(withTrans) {
+					TransStatusHolder.enableTransaction();
+				} else {
+					TransStatusHolder.disableTransaction();
+				}
+				
 				result = this.transactionTemplate.execute(
 				new TransactionCallback<WdCallbackResult<T>>() {
 					public WdCallbackResult<T> doInTransaction(TransactionStatus status) {
 						// 回调业务逻辑
-						// 通过annotation来实现某些option类型的扩展
-						// 设置标志,保证executeAction()内不执行事务
-						TransStatusHolder.enableTransaction();
 						WdCallbackResult<T> iNresult = action.executeAction();
-						// 清除标志(这里一定会执行sql,因此无需手动清除标志)
-						// TransStatusHolder.removeTransStatus("executeAction");
 						if (iNresult == null) {
 							throw new WdServiceException(SERVICE_NO_RESULT);
 						}
@@ -76,6 +94,8 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 						return iNresult;
 					}
 				});
+				// 清除标志(这里一定会执行sql,因此无需手动清除标志)
+				// TransStatusHolder.removeTransStatus("executeAction");
 				if (result.isSuccess()) {
 					// 设置标志,保证executeAfter()内不执行事务
 					TransStatusHolder.disableTransaction();
@@ -98,79 +118,31 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 			result = WdCallbackResult.failure(e.getErrorCode(), e.getMessage(), e);
 		} catch (Throwable e) {
 			writeErrorInfo(logger, "异常退出模板方法C点", e);
-			
-			result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
-
-		} finally {
-			// 确保清除标志(有可能出现异常,因此手动清除一次标志)
-			TransStatusHolder.removeTransStatus();
-		}
-		
-		writeDebugInfo(logger, "模板执行结束");
-		
-		return result;
-	}
-
-	@Override
-	public <T> WdCallbackResult<T> executeWithoutTransaction(
-			final WdServiceCallback<T> action, final Object domain) {
-		writeDebugInfo(logger, "进入模板方法开始处理");
-		
-		WdCallbackResult<T> result = null;
-		
-		try {
-			// 设置标志,保证executeCheck()内不执行事务
-			TransStatusHolder.disableTransaction();
-			result = action.executeCheck();
-			// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
-			TransStatusHolder.removeTransStatus();
-			if (result.isSuccess()) {
-				// 设置标志,保证executeAction()内不执行事务
-				TransStatusHolder.disableTransaction();
-				result = action.executeAction();
-				// 清除标志(这里也有可能不会执行sql,因此手动清除一次标志)
-				TransStatusHolder.removeTransStatus();
-				if (result == null) {
-					throw new WdServiceException(SERVICE_NO_RESULT);
-				}
+			if (e instanceof TransientDataAccessResourceException) { //SQLException
+				TransientDataAccessResourceException tdarException = (TransientDataAccessResourceException) e;
+				Throwable e1 = tdarException.getCause();
+				String msg = tdarException.getMessage();
 				
-				// 扩展点
-				templateExtensionAfterExecute(result);
-				if (result.isFailure()) {
-					return result;
+				if (e1 != null && e1 instanceof SQLException && msg != null && msg.indexOf("Connection is read-only") >= 0) {
+					writeErrorInfo(logger, "在非事务生命周期中执行了事务操作", e);
+					result = WdCallbackResult.failure(EXECUTE_SQL_TRANS_FALIURE, e);
+				} else {
+					writeErrorInfo(logger, "执行数据库操作失败", e);
+					result = WdCallbackResult.failure(EXECUTE_SQL_FALIURE, e);
 				}
-				// 发送业务事件
-				// 设置标志,保证executeAfter()内不执行事务
-				TransStatusHolder.disableTransaction();
-				action.executeAfter();
-				// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
-				TransStatusHolder.removeTransStatus();
+			} else {
+				result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
 			}
-			
-			writeDebugInfo(logger, "正常退出模板方法");
-		} catch (WdServiceException e) {
-			writeErrorInfo(logger, "异常退出模板方法D点", e);
-			
-			result = WdCallbackResult.failure(e.getErrorCode(), e);
-		} catch (WdRuntimeException e) {
-			writeErrorInfo(logger, "异常退出模板方法E点", e);
-			
-			result = WdCallbackResult.failure(e.getErrorCode(), e);
-		} catch (Throwable e) {
-			// 把系统异常转换为服务异常
-			writeErrorInfo(logger, "异常退出模板方法F点", e);
-			
-			result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
 		} finally {
 			// 确保清除标志(有可能出现异常,因此手动清除一次标志)
 			TransStatusHolder.removeTransStatus();
 		}
 		
 		writeDebugInfo(logger, "模板执行结束");
-
+		
 		return result;
 	}
-
+	
 	/**
 	 * 扩展点：模板提供的允许不同类型业务在<b>事务内</b>进行扩展的一个点
 	 * 
