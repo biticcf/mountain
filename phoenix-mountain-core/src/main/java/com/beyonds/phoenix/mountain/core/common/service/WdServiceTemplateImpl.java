@@ -36,10 +36,10 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
     public static final String CONTEXT_INVOKE_METHOD           = "invokeMethod";
     public static final String CONTEXT_INVOCATION              = "methodInvocation";
     
-    private TransactionTemplate transactionTemplate;
-	
+    private final TransactionTemplate transactionTemplate;
+    
 	public WdServiceTemplateImpl() {
-		
+		this.transactionTemplate = null;
 	}
 	
 	public WdServiceTemplateImpl(TransactionTemplate transactionTemplate) {
@@ -53,14 +53,9 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 		WdCallbackResult<T> result = null;
 
 		try {
-			// 设置标志,保证executeCheck()内不执行事务
-			TransStatusHolder.disableTransaction();
 			result = action.executeCheck();
 			
 			if (result.isSuccess()) {
-				// 设置标志,保证executeAction()内执行事务
-				TransStatusHolder.enableTransaction();
-				
 				result = this.transactionTemplate.execute(
 				new TransactionCallback<WdCallbackResult<T>>() {
 					public WdCallbackResult<T> doInTransaction(TransactionStatus status) {
@@ -79,8 +74,6 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 				});
 				
 				if (result.isSuccess()) {
-					// 设置标志,保证executeAfter()内不执行事务
-					TransStatusHolder.disableTransaction();
 					action.executeAfter();
 				}
 			}
@@ -111,9 +104,6 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 			} else {
 				result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
 			}
-		} finally {
-			// 确保清除标志
-			TransStatusHolder.removeTransStatus();
 		}
 		
 		writeDebugInfo(logger, "模板执行结束");
@@ -128,13 +118,9 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 		WdCallbackResult<T> result = null;
 		
 		try {
-			// 设置标志,保证executeCheck()内不执行事务
-			TransStatusHolder.disableTransaction();
 			result = action.executeCheck();
 			
 			if (result.isSuccess()) {
-				// 设置标志,保证executeAction()内不执行事务
-				TransStatusHolder.disableTransaction();
 				result = action.executeAction();
 				
 				if (result == null) {
@@ -145,8 +131,6 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 					return result;
 				}
 				
-				// 设置标志,保证executeAfter()内不执行事务
-				TransStatusHolder.disableTransaction();
 				action.executeAfter();
 			}
 			
@@ -178,9 +162,6 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 			} else {
 				result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
 			}
-		} finally {
-			// 确保清除标志(有可能出现异常,因此手动清除一次标志)
-			TransStatusHolder.removeTransStatus();
 		}
 		
 		writeDebugInfo(logger, "模板执行结束");
