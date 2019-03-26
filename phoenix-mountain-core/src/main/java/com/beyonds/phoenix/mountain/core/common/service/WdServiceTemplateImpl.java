@@ -56,7 +56,14 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 		return execute(action, domain, false);
 	}
 	
-	//@Override
+	/**
+	 * +事务管理核心流程
+	 * @param <T> 返回的业务对象
+	 * @param action 业务处理流程
+	 * @param domain 保留字段
+	 * @param withTrans 是否需要事务,true-需要事务;false-不需要事务
+	 * @return 处理有得到的业务对象结果集
+	 */
 	public <T> WdCallbackResult<T> execute(final WdServiceCallback<T> action, final Object domain, 
 			final boolean withTrans) {
 		writeDebugInfo(logger, "进入模板方法开始处理");
@@ -67,13 +74,13 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 			// 设置标志,保证executeCheck()内不执行事务
 			TransStatusHolder.disableTransaction();
 			result = action.executeCheck();
-			// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
-			TransStatusHolder.removeTransStatus();
+			
 			if (result.isSuccess()) {
-				// 设置标志,保证executeAction()内执行事务
 				if(withTrans) {
+					// 设置标志,保证executeAction()内执行事务
 					TransStatusHolder.enableTransaction();
 				} else {
+					// 设置标志,保证executeAction()内不执行事务
 					TransStatusHolder.disableTransaction();
 				}
 				
@@ -94,14 +101,11 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 						return iNresult;
 					}
 				});
-				// 清除标志(这里一定会执行sql,因此无需手动清除标志)
-				// TransStatusHolder.removeTransStatus("executeAction");
+				
 				if (result.isSuccess()) {
 					// 设置标志,保证executeAfter()内不执行事务
 					TransStatusHolder.disableTransaction();
 					action.executeAfter();
-					// 清除标志(这里有可能没有执行sql,因此手动清除一次标志)
-					TransStatusHolder.removeTransStatus();
 					
 					templateExtensionAfterTransaction(result);
 				}
@@ -134,7 +138,7 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 				result = WdCallbackResult.failure(SERVICE_SYSTEM_FALIURE, e);
 			}
 		} finally {
-			// 确保清除标志(有可能出现异常,因此手动清除一次标志)
+			// 确保清除标志
 			TransStatusHolder.removeTransStatus();
 		}
 		
