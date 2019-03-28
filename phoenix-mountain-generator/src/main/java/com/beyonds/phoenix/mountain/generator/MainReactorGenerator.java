@@ -94,8 +94,8 @@ System.out.println("xml校验成功!");
 		// 10.生成DaoRepository定义文件元文件
 		List<FileMeta> daoFileMetaList = new DaoMetaGenerator().generatorFileMeta(project, domainRepositoryFileMetaList, null);
 		
-		// 11.生成Mapper定义文件元文件
-		List<FileMeta> mapperFileMetaList = new MapperMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
+		// 11.生成SqlProvider定义文件元文件
+		List<FileMeta> sqlProviderFileMetaList = new MapperMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
 		
 		// 12.生成ConstantContext定义文件元文件
 		List<FileMeta> contextFileMetaList = new ContextMetaGenerator().generatorFileMeta(project, facadeFileMetaList, null);
@@ -171,10 +171,10 @@ System.out.println("xml校验成功!");
 			}
 		}
 		
-		// 生成Mapper文件
-		for (FileMeta fileMeta : mapperFileMetaList) {
+		// 生成SqlProvider文件
+		for (FileMeta fileMeta : sqlProviderFileMetaList) {
 			if (fileMeta.isReGenerator()) {
-				String destDir = "src/main/resources/bean/mybatis";
+				String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/dao/sqlprovider";
 				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
 			}
 		}
