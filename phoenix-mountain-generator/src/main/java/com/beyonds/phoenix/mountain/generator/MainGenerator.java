@@ -380,6 +380,11 @@ public class MainGenerator extends GeneratorBase {
 			// init
 			initFacade(_facade, facadeClass);
 			
+			// 检查po文件
+			if (_facade.getDaoCodeFlag()) {
+				checkPoFile(_facade);
+			}
+			
 			// annotations
 			List<String> annotations = findAnnotations(facadeClass);
 			if (annotations != null && !annotations.isEmpty()) {

@@ -59,6 +59,8 @@ abstract class GeneratorBase {
 	public static final Map<String, String> MODEL_PACKAGE_MAP = new HashMap<>();
 	// 完整路径
 	public static final Map<String, String> MODEL_ALL_DIR_MAP = new HashMap<>();
+	// PO文件
+	public static final Map<String, Class<?>> PO_ALL_NAME_MAP = new HashMap<>();
 	
 	protected void initFacade(Facade facade, Class<?> facadeClass) {
 		FacadeConfig fc = facadeClass.getAnnotation(FacadeConfig.class);
@@ -77,6 +79,31 @@ abstract class GeneratorBase {
 			
 			facade.setDaoCodeFlag(true);
 		}
+	}
+	
+	// 检查用户定义的po文件是否存在
+	protected void checkPoFile(final Facade facade) {
+		if (facade == null) {
+			return;
+		}
+		Boolean daoCodeFlag = facade.getDaoCodeFlag();
+		if (daoCodeFlag != null && !daoCodeFlag.booleanValue()) {
+			return;
+		}
+		String facadeName = facade.getName();
+		String poName = MODEL_PACKAGE_MAP.get(PROJECT_MODEL_DOMAIN) + ".dao.po." + facadeName + "Po";
+		Class<?> poClass = null;
+		try {
+			poClass = this.getClass().getClassLoader().loadClass(poName);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		if (poClass == null) {
+			System.out.println("未找到[" + poName + "],不能生成其对应的DAO!");
+			
+			return;
+		}
+		PO_ALL_NAME_MAP.put(facadeName, poClass);
 	}
 	
 	// 查找Facade类的Annotations

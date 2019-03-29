@@ -41,7 +41,7 @@
 		<java.version>8</java.version>
 		
 		<!-- 定义版本号 -->
-		<phoenix-mountain.version>1.0.0.20190326</phoenix-mountain.version>
+		<phoenix-mountain.version>1.0.0.20190329</phoenix-mountain.version>
 		
 		<!-- asm version -->
 		<asm.version>6.1.1</asm.version>

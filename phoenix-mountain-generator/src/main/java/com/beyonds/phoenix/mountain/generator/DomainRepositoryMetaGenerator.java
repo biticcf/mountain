@@ -3,6 +3,7 @@
  */
 package com.beyonds.phoenix.mountain.generator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,8 +16,9 @@ class DomainRepositoryMetaGenerator extends GeneratorBase implements Generator {
 	
 	@Override
 	public List<FileMeta> generatorFileMeta(Project project, List<FileMeta> metaList, Integer type) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<FileMeta> fileMetaList = new ArrayList<>();
+		
+		return fileMetaList;
 	}
 
 }
