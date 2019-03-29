@@ -22,11 +22,6 @@ class Facade {
 	private Boolean reGenerator; //是否重新生成Facade文件,true重新生成,false不重新生成
 	
 	private Boolean daoCodeFlag; //是否生成DAO层代码，需要先定义{name}Po文件
-	private Boolean defaultCreateFlag; //是否生成默认的创建接口(需要daoCodeFlag=true)
-	private Boolean defaultDeleteFlag; //是否生成默认的删除接口(需要daoCodeFlag=true)
-	private Boolean defaultUpdateFlag; //是否生成默认的更新接口(需要daoCodeFlag=true)
-	private Boolean defaultQueryItemFlag; //是否生成默认的查询(按照id查询)接口(需要daoCodeFlag=true)
-	private Boolean defaultQueryPagesFlag; //是否生成默认的查询(分页查询)接口(需要daoCodeFlag=true)
 	
 	private List<String> annotations; //可空
 	private RequestMapping requestMapping; //可空
@@ -67,36 +62,6 @@ class Facade {
 	}
 	public void setDaoCodeFlag(Boolean daoCodeFlag) {
 		this.daoCodeFlag = daoCodeFlag;
-	}
-	public Boolean getDefaultCreateFlag() {
-		return defaultCreateFlag;
-	}
-	public void setDefaultCreateFlag(Boolean defaultCreateFlag) {
-		this.defaultCreateFlag = defaultCreateFlag;
-	}
-	public Boolean getDefaultDeleteFlag() {
-		return defaultDeleteFlag;
-	}
-	public void setDefaultDeleteFlag(Boolean defaultDeleteFlag) {
-		this.defaultDeleteFlag = defaultDeleteFlag;
-	}
-	public Boolean getDefaultUpdateFlag() {
-		return defaultUpdateFlag;
-	}
-	public void setDefaultUpdateFlag(Boolean defaultUpdateFlag) {
-		this.defaultUpdateFlag = defaultUpdateFlag;
-	}
-	public Boolean getDefaultQueryItemFlag() {
-		return defaultQueryItemFlag;
-	}
-	public void setDefaultQueryItemFlag(Boolean defaultQueryItemFlag) {
-		this.defaultQueryItemFlag = defaultQueryItemFlag;
-	}
-	public Boolean getDefaultQueryPagesFlag() {
-		return defaultQueryPagesFlag;
-	}
-	public void setDefaultQueryPagesFlag(Boolean defaultQueryPagesFlag) {
-		this.defaultQueryPagesFlag = defaultQueryPagesFlag;
 	}
 	public List<String> getAnnotations() {
 		return annotations;
