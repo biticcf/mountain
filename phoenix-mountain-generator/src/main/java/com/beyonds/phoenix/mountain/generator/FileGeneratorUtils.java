@@ -99,7 +99,9 @@ class FileGeneratorUtils {
 			List<String> memberList = fileMeta.getMemberList();
 			if(memberList != null && !memberList.isEmpty()) {
 				for (String _s : memberList) {
-					if (_s.startsWith("@")) { //注解
+					if (_s == null || _s.trim().equals("")) {
+						bw.write("    ");
+					} else if (_s.startsWith("@")) { //注解
 						bw.write("    " + _s);
 					} else {
 						bw.write("    " + _s + ";");

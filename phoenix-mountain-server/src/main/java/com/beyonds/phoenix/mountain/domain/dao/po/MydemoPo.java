@@ -1,115 +1,127 @@
 /**
- * 
+ * MydemoPo.java
  */
 package com.beyonds.phoenix.mountain.domain.dao.po;
 
-import java.util.Date;
 
 import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
+import java.util.Date;
 
 /**
- * @author  DanielCao
- * @date    2015年4月8日
- * @time    下午6:23:10
- * 商品基本信息数据模型,对应于WD_DEMO_INFO表(不存在的表,实际应用时替换为实际表)
+ * @Author: DanielCao
+ * @Date:   2019-04-04
+ * @Time:   17:36:52
+ * +MydemoPo
  */
+
 public class MydemoPo extends WdBaseModel {
-	private static final long serialVersionUID = -3690814072354261953L;
-	
-	private Long		 id; //自增主键
-	private String       goodsCode; //商品代码
-	private String       goodsSn; //商品编码(64位长度编码)(对应原ID)(唯一非空)
-	
-	/**
-	 * 注意：以下4个字段,在每张表中都要有
-	 */
-	private Byte         status;  //记录状态,0有效,1无效
-	private Date         createTime;  //创建时间
-	private Date         updateTime; //更新时间
-	private Integer      version; //乐观锁版本号
-	
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-	/**
-	 * @return the goodsCode
-	 */
-	public String getGoodsCode() {
-		return goodsCode;
-	}
-	/**
-	 * @param goodsCode the goodsCode to set
-	 */
-	public void setGoodsCode(String goodsCode) {
-		this.goodsCode = goodsCode;
-	}
-	/**
-	 * @return the goodsSn
-	 */
-	public String getGoodsSn() {
-		return goodsSn;
-	}
-	/**
-	 * @param goodsSn the goodsSn to set
-	 */
-	public void setGoodsSn(String goodsSn) {
-		this.goodsSn = goodsSn;
-	}
-	/**
-	 * @return the status
-	 */
-	public Byte getStatus() {
-		return status;
-	}
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(Byte status) {
-		this.status = status;
-	}
-	/**
-	 * @return the createTime
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
-	/**
-	 * @param createTime the createTime to set
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	/**
-	 * @return the updateTime
-	 */
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	/**
-	 * @param updateTime the updateTime to set
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * @return the version
-	 */
-	public Integer getVersion() {
-		return version;
-	}
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
+    private static final long serialVersionUID = -7064281178984892806L;
+    
+    private Long id;
+    private String goodsCode;
+    private String goodsSn;
+    private Byte status;
+    private Date createTime;
+    private Date updateTime;
+    private Integer version;
+
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the goodsCode
+     */
+    public String getGoodsCode() {
+        return this.goodsCode;
+    }
+
+    /**
+     * @param goodsCode the goodsCode to set
+     */
+    public void setGoodsCode(String goodsCode) {
+        this.goodsCode = goodsCode;
+    }
+
+    /**
+     * @return the goodsSn
+     */
+    public String getGoodsSn() {
+        return this.goodsSn;
+    }
+
+    /**
+     * @param goodsSn the goodsSn to set
+     */
+    public void setGoodsSn(String goodsSn) {
+        this.goodsSn = goodsSn;
+    }
+
+    /**
+     * @return the status
+     */
+    public Byte getStatus() {
+        return this.status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the createTime
+     */
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    /**
+     * @param createTime the createTime to set
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * @return the updateTime
+     */
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    /**
+     * @param updateTime the updateTime to set
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * @return the version
+     */
+    public Integer getVersion() {
+        return this.version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
 }

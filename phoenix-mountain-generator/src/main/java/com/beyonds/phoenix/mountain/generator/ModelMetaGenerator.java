@@ -54,12 +54,13 @@ class ModelMetaGenerator extends GeneratorBase implements Generator {
 					String fdName = _fd.getName();
 					Class<?> fdType = _fd.getType();
 					if (fdName.equals("serialVersionUID")) {
-						memberList.add("private static final long serialVersionUID = " + new Random().nextLong() + "L;");
+						memberList.add("private static final long serialVersionUID = " + new Random().nextLong() + "L");
+						memberList.add("");
 						continue;
 					}
 					
 					String fdTypeName = this.getJavaNameAndImport(fdType.getName(), javaNameMap, importList);
-					memberList.add("private " + fdTypeName + " " + fdName + ";");
+					memberList.add("private " + fdTypeName + " " + fdName);
 					
 					makeGetterSetter(fdTypeName, fdName, methodList);
 				}
@@ -78,6 +79,7 @@ class ModelMetaGenerator extends GeneratorBase implements Generator {
 			List<String> classContentList = generatorClassContent(null, facadeName + "Model");
 			fileMeta.setClassContentList(classContentList);
 			
+			sortImportList(importList);
 			fileMeta.setImportList(importList);
 			
 			fileMetaList.add(fileMeta);

@@ -95,7 +95,8 @@ class ControllerMetaGenerator extends GeneratorBase implements Generator {
 			String serviceName1 = getJavaNameAndImport(servicePackage + "." + serviceName, javaNameMap, importList);
 			String autowired = "org.springframework.beans.factory.annotation.Autowired";
 			String autowiredName = getJavaNameAndImport(autowired, javaNameMap, importList);
-			String member = "@" + autowiredName + " " + serviceName1 + " " + makePropertyName(serviceName) + ";";
+			String member = serviceName1 + " " + makePropertyName(serviceName);
+			memberList.add("@" + autowiredName);
 			memberList.add(member);
 			fileMeta.setMemberList(memberList);
 			
