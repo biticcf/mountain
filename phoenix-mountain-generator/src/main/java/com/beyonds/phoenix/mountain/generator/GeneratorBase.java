@@ -3,7 +3,10 @@
  */
 package com.beyonds.phoenix.mountain.generator;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -28,6 +31,7 @@ import com.beyonds.phoenix.mountain.generator.annotation.MethodConfig;
  * @Time:   上午11:49:48
  *
  */
+@SuppressWarnings("restriction")
 abstract class GeneratorBase {
 	// 组件基础路径
 	public static final String PLUGIN_BASE_DIR = "com.beyonds.phoenix.mountain";
@@ -82,7 +86,7 @@ abstract class GeneratorBase {
 	}
 	
 	// 检查用户定义的po文件是否存在
-	protected void checkPoFile(final Facade facade) {
+	protected void checkPoFile(final Facade facade, final String baseDir) throws Exception {
 		if (facade == null) {
 			return;
 		}
@@ -91,15 +95,13 @@ abstract class GeneratorBase {
 			return;
 		}
 		String facadeName = facade.getName();
-		String poName = MODEL_PACKAGE_MAP.get(PROJECT_MODEL_DOMAIN) + ".dao.po." + facadeName + "Po";
-		Class<?> poClass = null;
-		try {
-			poClass = this.getClass().getClassLoader().loadClass(poName);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		
+		String baseService = baseDir.substring(0, baseDir.length() - MAVEN_MODEL_SERVER.length()) + MAVEN_MODEL_SERVER;
+		String poPath = baseService + "/target/classes/"+ MODEL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/dao/po/" + facadeName + "Po.class";
+		
+		Class<?> poClass = this.getClassUnsafe(poPath);
 		if (poClass == null) {
-			System.out.println("未找到[" + poName + "],不能生成其对应的DAO!");
+			System.out.println("未找到[" + poPath + "],不能生成其对应的DAO!");
 			
 			return;
 		}
@@ -987,5 +989,60 @@ abstract class GeneratorBase {
 		}
 		
 		return "".equals(str.trim());
+	}
+	
+	/**
+	 * +动态加载类
+	 * @param absoluteFilePath .class文件路径
+	 * @return Class
+	 * @throws Exception
+	 */
+	public Class<?> getClassUnsafe(final String absoluteFilePath) throws Exception {
+		byte[] classContents = getClassContent(absoluteFilePath);
+		
+		Class<?> c = getUnsafe().defineClass(null, classContents, 0, classContents.length, 
+				GeneratorBase.class.getClassLoader(), null);
+		if (c == null) {
+			throw new Exception("Load File[" + absoluteFilePath + "] Error!");
+		}
+		
+		return c;
+	}
+	
+	/**
+	 * +手动加载文件
+	 * @param absoluteFilePath
+	 * @return 文件二进制
+	 * @throws Exception
+	 */
+	private static byte[] getClassContent(final String absoluteFilePath) throws Exception {
+	    File f = new File(absoluteFilePath);
+	    if(f == null || !f.exists() || f.isDirectory()) {
+	    	throw new Exception("File[" + absoluteFilePath + "] Not Found Or IsDirectory!");
+	    }
+	    
+	    byte[] content = new byte[(int)f.length()];
+	    try (FileInputStream input = new FileInputStream(f);) {
+		    input.read(content);
+	    } catch (Exception e) {
+	    	throw e;
+	    }
+	    
+	    if (content == null || content.length == 0) {
+	    	throw new Exception("File[" + absoluteFilePath + "] Error!");
+	    }
+	    
+	    return content;
+	}
+	
+	/**
+	 * +通过反射加载sun.misc.Unsafe
+	 * @return sun.misc.Unsafe
+	 */
+	private static sun.misc.Unsafe getUnsafe() throws Exception {
+		Field field = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
+		field.setAccessible(true);
+		
+		return (sun.misc.Unsafe) field.get(null);
 	}
 }

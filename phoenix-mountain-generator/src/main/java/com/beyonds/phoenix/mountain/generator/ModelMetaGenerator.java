@@ -21,10 +21,6 @@ class ModelMetaGenerator extends GeneratorBase implements Generator {
 	@Override
 	public List<FileMeta> generatorFileMeta(Project project, List<FileMeta> metaList, Integer type) throws Exception {
 		List<FileMeta> fileMetaList = new ArrayList<>();
-		boolean b = true;
-		if(b) {
-			return fileMetaList;
-		}
 		
 		for (String facadeName : PO_ALL_NAME_MAP.keySet()) {
 			FileMeta fileMeta = new FileMeta();
@@ -83,6 +79,8 @@ class ModelMetaGenerator extends GeneratorBase implements Generator {
 			fileMeta.setClassContentList(classContentList);
 			
 			fileMeta.setImportList(importList);
+			
+			fileMetaList.add(fileMeta);
 		}
 		
 		return fileMetaList;
@@ -119,7 +117,6 @@ class ModelMetaGenerator extends GeneratorBase implements Generator {
 		// SET
 		MethodMeta setterMethod = new MethodMeta();
 		setterMethod.setMethodName("set" + tmpName);
-		setterMethod.setReturnType(fdTypeName);
 		
 		List<String> parameterList = new ArrayList<>();
 		parameterList.add(fdTypeName + " " + fdName);
@@ -130,6 +127,7 @@ class ModelMetaGenerator extends GeneratorBase implements Generator {
 		contentList1.add(" * @param " + fdName + " the " + fdName + " to set");
 		contentList1.add(" */");
 		setterMethod.setContentList(contentList1);
+		setterMethod.setReturnType("void");
 		
 		List<String> bodyList1 = new ArrayList<>();
 		bodyList1.add("this." + fdName + " = " + fdName + ";");

@@ -20,6 +20,11 @@ public class MainGenerator extends GeneratorBase {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
+//		args = new String[] {
+//				"dir=C:/User/workspaces_github/phoenix-mountain-platform.git/phoenix-mountain-server", 
+//				"file=/src/generator/facades-define.xml"
+//				};
+		
 		if (args == null || args.length < 2) {
 			throw new Exception("[Arguments] Not Correct!");
 		}
@@ -194,7 +199,7 @@ public class MainGenerator extends GeneratorBase {
 		
 		// 3,检查facades属性
 		List<Facade> facades = project.getFacades();
-		checkFacades(facades);
+		checkFacades(facades, baseDir);
 	}
 	// 2.1,检查Properties属性
 	private void checkProperties(Properties properties) throws Exception {
@@ -357,32 +362,29 @@ public class MainGenerator extends GeneratorBase {
 		MODEL_ALL_DIR_MAP.put(PROJECT_MODEL_DOMAIN, domainDir);
 	}
 	// 2.3,检查facades属性
-	private void checkFacades(List<Facade> facades) throws Exception {
+	private void checkFacades(List<Facade> facades, String baseDir) throws Exception {
 		if (facades == null || facades.isEmpty()) {
 			throw new Exception("[<facades>] Cannot Empty!");
 		}
 		
 		for (Facade _facade : facades) {
 			// 查找Facade文件
-			String facadeName = MODEL_PACKAGE_MAP.get(PROJECT_MODEL_FACADE) + "." + _facade.getName() + "Facade";
-			System.out.println("开始查找Facade[" + facadeName + "]...");
-			Class<?> facadeClass = null;
-			try {
-				facadeClass = this.getClass().getClassLoader().loadClass(facadeName);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+			String baseApi = baseDir.substring(0, baseDir.length() - MAVEN_MODEL_SERVER.length()) + MAVEN_MODEL_API;
+			String facadePath = baseApi + "/target/classes/"+ MODEL_DIR_MAP.get(PROJECT_MODEL_FACADE) + "/" + _facade.getName() + "Facade.class";
+			System.out.println("开始查找Facade[" + facadePath + "]...");
+			
+			Class<?> facadeClass = this.getClassUnsafe(facadePath);
 			if (facadeClass == null) {
-				throw new Exception("[Facade[" + facadeName + "]] Cannot Found!");
+				throw new Exception("[Facade[" + facadePath + "]] Cannot Found!");
 			}
-			System.out.println("查找到Facade[" + facadeName + "].");
+			System.out.println("查找到Facade[" + facadePath + "].");
 			
 			// init
 			initFacade(_facade, facadeClass);
 			
 			// 检查po文件
-			if (_facade.getDaoCodeFlag()) {
-				checkPoFile(_facade);
+			if (_facade.getDaoCodeFlag() != null && _facade.getDaoCodeFlag()) {
+				checkPoFile(_facade, baseDir);
 			}
 			
 			// annotations

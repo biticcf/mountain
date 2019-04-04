@@ -37,19 +37,4 @@ public @interface FacadeConfig {
 	
 	// 是否生成DAO层代码，需要先定义{name}Po文件
 	boolean genDaoCode() default false;
-	
-	// 是否生成默认的创建接口(需要genDaoCode=true)
-	boolean genDefaultCreate() default false;
-	
-	// 是否生成默认的删除接口(需要genDaoCode=true)
-	boolean genDefaultDelete() default false;
-	
-	// 是否生成默认的更新接口(需要genDaoCode=true)
-	boolean genDefaultUpdate() default false;
-	
-	// 是否生成默认的查询(按照id查询)接口(需要genDaoCode=true)
-	boolean genDefaultQueryItem() default true;
-	
-	// 是否生成默认的查询(分页查询)接口(需要genDaoCode=true)
-	boolean genDefaultQueryPages() default true;
 }

@@ -25,7 +25,7 @@ import com.beyonds.phoenix.mountain.model.DemoModel;
  * +Demo接口定义说明
  */
 
-@FacadeConfig(name = "Mydemo", description = "Mydemo接口定义", execGenerator = true, useSwagger = true)
+@FacadeConfig(name = "Mydemo", description = "Mydemo接口定义", execGenerator = true, useSwagger = true, genDaoCode = true)
 @Validated
 @RequestMapping(value = {"/phoenix/mountain/v1"}, produces = {"application/json"})
 public interface MydemoFacade {

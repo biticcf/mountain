@@ -7,3 +7,5 @@ This framework is released under version 2.0 of the [Apache License](http://www.
 Name： Daniel Cao
 Mail： 19070443@qq.com
 
+代码自动生成maven命令
+mvn clean install exec:java -DskipGenerator=false
