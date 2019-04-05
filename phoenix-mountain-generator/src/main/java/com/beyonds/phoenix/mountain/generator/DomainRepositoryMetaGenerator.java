@@ -168,7 +168,7 @@ class DomainRepositoryMetaGenerator extends GeneratorBase implements Generator {
 		// poName
 		String poNameTmp  = getJavaNameAndImport(poName, javaNameMap, importList);
 		int _idx1 = poNameTmp.lastIndexOf(".");
-		String poNameTmpShort  = _idx1 < 0 ? poNameTmp : poNameTmp.substring(_idx + 1);
+		String poNameTmpShort  = _idx1 < 0 ? poNameTmp : poNameTmp.substring(_idx1 + 1);
 		poNameTmpShort = this.makePropertyName(poNameTmpShort);
 		// ClazzConverter
 		String convertName = "com.beyonds.phoenix.mountain.core.common.util.ClazzConverter";
@@ -273,7 +273,8 @@ class DomainRepositoryMetaGenerator extends GeneratorBase implements Generator {
 			String pageHelperType = getJavaNameAndImport("com.github.pagehelper.PageHelper", javaNameMap, importList);
 			bodyList.add(pageType + "<" + modelNameTemp + "> pageInfo = " + pageHelperType + ".startPage(p, ps);");
 			bodyList.add("");
-			bodyList.add(listType + "<" + poNameTmp + "> poList = " + daoPropLow + ".queryList(" + modelNameTempShort + ");");
+			bodyList.add(poNameTmp + " " + poNameTmpShort + " = " + convertName + ".converterClass(" + modelNameTempShort + ", " + poNameTmp + ".class);");
+			bodyList.add(listType + "<" + poNameTmp + "> poList = " + daoPropLow + ".queryList(" + poNameTmpShort + ");");
 			bodyList.add("");
 			bodyList.add(listType + "<" + modelNameTemp + "> list = (" + listType + "<" + modelNameTemp + ">) " + convertName + ".converterClass(poList, " + modelNameTemp + ".class);");
 			bodyList.add("if (list == null) {");

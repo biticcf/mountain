@@ -4,25 +4,36 @@
 package com.beyonds.phoenix.mountain.domain.dao.po;
 
 
-import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
 import java.util.Date;
+
+import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
+import com.beyonds.phoenix.mountain.generator.annotation.ColumnConfig;
+import com.beyonds.phoenix.mountain.generator.annotation.EnuFieldType;
+import com.beyonds.phoenix.mountain.generator.annotation.TableConfig;
 
 /**
  * @Author: DanielCao
- * @Date:   2019-04-04
- * @Time:   17:36:52
+ * @Date:   2019-04-05
+ * @Time:   14:24:15
  * +MydemoPo
  */
-
+@TableConfig(poName = "MydemoPo", tableName = "WD_MY_DEMO_INFO")
 public class MydemoPo extends WdBaseModel {
-    private static final long serialVersionUID = -7064281178984892806L;
+    private static final long serialVersionUID = 2219364663353079254L;
     
+    @ColumnConfig(propertyName = "id", columnName = "id", primaryKeyFlag = true, columnType = EnuFieldType.BIGINT)
     private Long id;
+    @ColumnConfig(propertyName = "goodsCode", columnName = "goods_code", columnType = EnuFieldType.VARCHAR)
     private String goodsCode;
+    @ColumnConfig(propertyName = "goodsSn", columnName = "goods_sn", columnType = EnuFieldType.VARCHAR)
     private String goodsSn;
+    @ColumnConfig(propertyName = "status", columnName = "status", columnType = EnuFieldType.TINYINT)
     private Byte status;
+    @ColumnConfig(propertyName = "createTime", columnName = "create_time", columnType = EnuFieldType.DATETIME)
     private Date createTime;
+    @ColumnConfig(propertyName = "updateTime", columnName = "update_time", columnType = EnuFieldType.TIMESTAMP)
     private Date updateTime;
+    @ColumnConfig(propertyName = "version", columnName = "version", columnType = EnuFieldType.INTEGER)
     private Integer version;
 
 
