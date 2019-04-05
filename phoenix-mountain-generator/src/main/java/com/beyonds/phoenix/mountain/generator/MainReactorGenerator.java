@@ -20,9 +20,6 @@ public class MainReactorGenerator extends GeneratorBase {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		//args = new String[] {"dir=C:/User/workspaces_github/phoenix-mountain-platform.git/phoenix-mountain-server",
-		//		"file=/src/generator/facades-define-min.xml"};
-		
 		if (args == null || args.length < 2) {
 			throw new Exception("[Arguments] Not Correct!");
 		}
@@ -98,7 +95,7 @@ System.out.println("xml校验成功!");
 		List<FileMeta> sqlProviderFileMetaList = new SqlProviderMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
 		
 		// 12.生成ConstantContext定义文件元文件
-		List<FileMeta> contextFileMetaList = new ContextMetaGenerator().generatorFileMeta(project, facadeFileMetaList, null);
+		List<FileMeta> contextFileMetaList = new ContextMetaGenerator(baseDir).generatorFileMeta(project, facadeFileMetaList, null);
 		
 		System.out.println("xml解析成功!");
 		
