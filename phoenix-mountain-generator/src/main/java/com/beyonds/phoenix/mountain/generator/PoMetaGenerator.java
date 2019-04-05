@@ -21,6 +21,10 @@ class PoMetaGenerator extends GeneratorBase implements Generator {
 	@Override
 	public List<FileMeta> generatorFileMeta(Project project, List<FileMeta> metaList, Integer type) throws Exception {
 		List<FileMeta> fileMetaList = new ArrayList<>();
+		boolean b = true;
+		if (b) {
+			return fileMetaList;
+		}
 		
 		for (String facadeName : PO_ALL_NAME_MAP.keySet()) {
 			FileMeta fileMeta = new FileMeta();

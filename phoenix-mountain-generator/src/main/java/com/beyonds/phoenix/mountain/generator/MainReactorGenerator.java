@@ -95,7 +95,7 @@ System.out.println("xml校验成功!");
 		List<FileMeta> daoFileMetaList = new DaoMetaGenerator().generatorFileMeta(project, domainRepositoryFileMetaList, null);
 		
 		// 11.生成SqlProvider定义文件元文件
-		List<FileMeta> sqlProviderFileMetaList = new MapperMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
+		List<FileMeta> sqlProviderFileMetaList = new SqlProviderMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
 		
 		// 12.生成ConstantContext定义文件元文件
 		List<FileMeta> contextFileMetaList = new ContextMetaGenerator().generatorFileMeta(project, facadeFileMetaList, null);

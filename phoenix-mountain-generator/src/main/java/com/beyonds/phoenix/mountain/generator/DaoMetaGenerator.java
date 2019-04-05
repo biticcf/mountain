@@ -241,7 +241,8 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 			methodName = "batchInserts";
 			returnName = "int";
 			String _paramName = poNameTmpShort + "List";
-			parameterList.add("final " + listType + "<" + poNameTmp + "> " + _paramName);
+			String paramType = getJavaNameAndImport("org.apache.ibatis.annotations.Param", javaNameMap, importList);
+			parameterList.add("@" + paramType + "(\"list\") final " + listType + "<" + poNameTmp + "> " + _paramName);
 			contentList.add(" * +批量添加记录");
 			contentList.add(" * @param " + _paramName + " " + _paramName);
 			

@@ -56,4 +56,16 @@ public class DemoSqlProvider {
 		
 		return sql.toString();
 	}
+	
+	public String update(DemoPo demoPo) {
+		StringBuilder sql = new StringBuilder("");
+		
+		sql.append("UPDATE `WD_DEMO_INFO` SET `update_time` = now(), `version` = `version` + 1");
+		if (demoPo.getGoodsSn() != null) {
+			sql.append(", `GOODS_SN` = #{goodsSn}");
+		}
+		sql.append("WHERE `id` = #{id} AND `version` = #{version}");
+		
+		return sql.toString();
+	}
 }
