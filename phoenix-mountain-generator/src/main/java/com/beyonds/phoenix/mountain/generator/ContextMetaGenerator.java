@@ -4,6 +4,7 @@
 package com.beyonds.phoenix.mountain.generator;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ class ContextMetaGenerator extends GeneratorBase implements Generator {
 		// null end
 		
 		// 检查已经存在的文件,取得原有成员变量
-		Map<String, Field> oldFiledMap = new HashMap<>();
+		List<Field> oldFiledList = new ArrayList<>();
 		String baseService = baseDir.substring(0, baseDir.length() - MAVEN_MODEL_SERVER.length()) + MAVEN_MODEL_SERVER;
 		String contextPath = baseService + "/target/classes/"+ MODEL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/support/ConstantContext.class";
 		Class<?> oldContextClass = this.getClassUnsafe(contextPath);
@@ -65,8 +66,7 @@ class ContextMetaGenerator extends GeneratorBase implements Generator {
 					if (field == null) {
 						continue;
 					}
-					String _key = field.getType().getName() + "@@@" + field.getName();
-					oldFiledMap.put(_key, field);
+					oldFiledList.add(field);
 				}
 			}
 		}
@@ -89,11 +89,9 @@ class ContextMetaGenerator extends GeneratorBase implements Generator {
 			methodList.add(methodMeta);
 		}
 		// 检查原有成员变量
-		for (String _key : oldFiledMap.keySet()) {
-			Field oldField = oldFiledMap.get(_key);
-			
-			Class<?> returnType = oldField.getType();
-			String memberType = getJavaNameAndImport(returnType.getName(), javaNameMap, importList);
+		for (Field oldField : oldFiledList) {
+			Type returnType = oldField.getGenericType();
+			String memberType = getJavaNameAndImport(returnType.getTypeName(), javaNameMap, importList);
 			String memberNameShort = oldField.getName();
 			String _tmp = "private " + memberType + " " + memberNameShort;
 			// 重复数据
