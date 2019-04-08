@@ -44,4 +44,10 @@ public @interface TableConfig {
 	// 数据库表行格式:COMPACT、COMPRESSED、DEFAULT、DYNAMIC、FIXED、REDUNDANT
 	// 如果字段较多text且较长，适合用DYNAMIC
 	EnuRowFormat rowFormat() default EnuRowFormat.DYNAMIC;
+	
+	// 是否重新生成po类
+	boolean reGeneratorPo() default false;
+	
+	// 是否重新生成model类
+	boolean reGeneratorModel() default false;
 }

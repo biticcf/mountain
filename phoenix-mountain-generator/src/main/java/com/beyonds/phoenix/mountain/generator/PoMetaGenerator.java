@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.beyonds.phoenix.mountain.generator.annotation.TableConfig;
+
 /**
  * @Author: Daniel.Cao
  * @Date:   2019年3月13日
@@ -21,19 +23,24 @@ class PoMetaGenerator extends GeneratorBase implements Generator {
 	@Override
 	public List<FileMeta> generatorFileMeta(Project project, List<FileMeta> metaList, Integer type) throws Exception {
 		List<FileMeta> fileMetaList = new ArrayList<>();
-		boolean b = true;
-		if (b) {
-			return fileMetaList;
-		}
 		
 		for (String facadeName : PO_ALL_NAME_MAP.keySet()) {
+			Class<?> poClz = PO_ALL_NAME_MAP.get(facadeName);
+			
+			TableConfig[] tableConfigs = poClz.getAnnotationsByType(TableConfig.class);
+			TableConfig tableConfig = null;
+			if (tableConfigs != null && tableConfigs.length > 0) {
+				tableConfig = tableConfigs[0];
+			}
+			if (tableConfig == null || !tableConfig.reGeneratorPo()) {
+				continue;
+			}
+			
 			FileMeta fileMeta = new FileMeta();
 			// importList
 			List<String> importList = new ArrayList<>();
 			// <javaName, javaPacakge>
 			Map<String, String> javaNameMap = new HashMap<>();
-			
-			Class<?> poClz = PO_ALL_NAME_MAP.get(facadeName);
 			
 			fileMeta.setClassName(facadeName + "Po");
 			fileMeta.setPreffix(facadeName);
