@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @Author: Daniel.Cao
@@ -99,21 +101,39 @@ class ContextMetaGenerator extends GeneratorBase implements Generator {
 				continue;
 			}
 			
-			String qualifierName = null;
-			Qualifier[] qualifiers = oldField.getAnnotationsByType(Qualifier.class);
-			if (qualifiers != null && qualifiers.length > 0) {
-				Qualifier qualifier = qualifiers[0];
-				if (qualifier != null) {
-					qualifierName = qualifier.value();
+			Autowired[] autowireds = oldField.getAnnotationsByType(Autowired.class);
+			if (autowireds == null || autowireds.length <= 0) {
+				// Value注解
+				String valueValue = null;
+				Value[] values = oldField.getAnnotationsByType(Value.class);
+				if (values != null && values.length > 0) {
+					Value value = values[0];
+					if (value != null) {
+						valueValue = value.value();
+					}
 				}
-			}
-			if (qualifierName != null && !qualifierName.trim().equals("")) {
-				String qualifierType = getJavaNameAndImport("org.springframework.beans.factory.annotation.Qualifier", javaNameMap, importList);
-				memberList.add("@" + autowiredType + "@" + qualifierType + "(\"" + qualifierName.trim() + "\")");
+				if (valueValue != null && !valueValue.trim().equals("")) {
+					String valueType = getJavaNameAndImport("org.springframework.beans.factory.annotation.Value", javaNameMap, importList);
+					memberList.add("@" + valueType + "(\"" + valueValue.trim() + "\")");
+				}
 			} else {
-				memberList.add("@" + autowiredType);
+				// Qualifier注解
+				String qualifierName = null;
+				Qualifier[] qualifiers = oldField.getAnnotationsByType(Qualifier.class);
+				if (qualifiers != null && qualifiers.length > 0) {
+					Qualifier qualifier = qualifiers[0];
+					if (qualifier != null) {
+						qualifierName = qualifier.value();
+					}
+				}
+				if (qualifierName != null && !qualifierName.trim().equals("")) {
+					String qualifierType = getJavaNameAndImport("org.springframework.beans.factory.annotation.Qualifier", javaNameMap, importList);
+					memberList.add("@" + autowiredType + "@" + qualifierType + "(\"" + qualifierName.trim() + "\")");
+				} else {
+					memberList.add("@" + autowiredType);
+				}
+				memberList.add(_tmp);
 			}
-			memberList.add(_tmp);
 			
 			// methodList
 			MethodMeta methodMeta = makeGetMethod(memberType, memberNameShort, javaNameMap, importList);

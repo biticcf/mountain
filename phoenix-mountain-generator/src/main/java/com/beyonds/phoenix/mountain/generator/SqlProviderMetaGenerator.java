@@ -369,7 +369,7 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 		TableConfig tableConfig = poClz.getAnnotationsByType(TableConfig.class)[0];
 		
 		bodyList.add("StringBuilder sql = new StringBuilder(\"\");");
-		bodyList.add("sql.append(\"UPDATE `" + tableConfig.tableName() + "` SET 1 = 1\");");
+		bodyList.add("sql.append(\"UPDATE `" + tableConfig.tableName() + "` SET `id` = #{id}\");");
 		Field[] fields = poClz.getDeclaredFields();
 		boolean hasVersion = false;
 		for (int i = 0; i < fields.length; i ++) {
