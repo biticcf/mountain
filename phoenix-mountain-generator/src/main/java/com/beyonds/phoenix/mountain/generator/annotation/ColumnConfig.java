@@ -26,6 +26,9 @@ public @interface ColumnConfig {
 	// 列名称
 	String columnName();
 	
+	// 列说明
+	String description() default "";
+	
 	// 主键标志
 	boolean primaryKeyFlag() default false;
 	
