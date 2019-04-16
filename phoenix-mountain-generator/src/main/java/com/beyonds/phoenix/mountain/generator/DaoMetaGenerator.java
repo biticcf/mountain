@@ -360,7 +360,7 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 	
 		String tableName = tableConfig.tableName();
 		
-		annotationList.add("@" + deleteType + "(\"DELETE * FROM `" + tableName + "` WHERE `id` = #{id}\")");
+		annotationList.add("@" + deleteType + "(\"DELETE FROM `" + tableName + "` WHERE `id` = #{id}\")");
 	}
 	
 	/**
