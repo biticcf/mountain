@@ -31,7 +31,7 @@ public class PaginationSupport<T> extends WdBaseModel {
 	private int realSize;
 	private int currentPage;
 	
-	private int maxPageSize = DEFAULT_MAX_PAGESIZE;
+	private static int maxPageSize = DEFAULT_MAX_PAGESIZE;
 	
 	public PaginationSupport() {
 		this(null, 0);
@@ -94,7 +94,7 @@ public class PaginationSupport<T> extends WdBaseModel {
 		return currentPage;
 	}
 	
-	public int getMaxPageSize() {
+	public static int getMaxPageSize() {
 		return maxPageSize;
 	}
 	
@@ -102,13 +102,13 @@ public class PaginationSupport<T> extends WdBaseModel {
 	 * 自定义最大分页大小
 	 * @param maxPageSize 输入参数
 	 */
-	public void setMaxPageSize(int maxPageSize) {
+	public static void setMaxPageSize(int maxPageSize) {
 		if (maxPageSize <= 0) {
-			this.maxPageSize = DEFAULT_PAGESIZE;
+			PaginationSupport.maxPageSize = DEFAULT_PAGESIZE;
 		} else if (maxPageSize > MAX_MAX_PAGESIZE) {
-			this.maxPageSize = MAX_MAX_PAGESIZE;
+			PaginationSupport.maxPageSize = MAX_MAX_PAGESIZE;
 		} else {
-			this.maxPageSize = maxPageSize;
+			PaginationSupport.maxPageSize = maxPageSize;
 		}
 	}
 }
