@@ -262,8 +262,8 @@ class DomainRepositoryMetaGenerator extends GeneratorBase implements Generator {
 			bodyList.add("int p = page, ps = pageSize;");
 			bodyList.add("if (pageSize <= 0) {");
 			bodyList.add("    ps = " + paginationType + ".DEFAULT_PAGESIZE;");
-			bodyList.add("} else if (pageSize > " + paginationType + ".DEFAULT_MAX_PAGESIZE) {");
-			bodyList.add("    ps = PaginationSupport.DEFAULT_MAX_PAGESIZE;");
+			bodyList.add("} else if (pageSize > " + paginationType + ".getMaxPageSize()) {");
+			bodyList.add("    ps = PaginationSupport.getMaxPageSize();");
 			bodyList.add("}");
 			bodyList.add("if (page <= 0) {");
 			bodyList.add("    p = 1;");

@@ -306,6 +306,7 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 		bodyList.add("    sql.append(\"(" + values + "),\");");
 		bodyList.add("}");
 		bodyList.add("sql.deleteCharAt(sql.length() - 1);");
+		bodyList.add("sql.append(\" ON DUPLICATE KEY UPDATE `update_time` = now()\");");
 		bodyList.add("sql.append(\";\");");
 		bodyList.add("");
 		bodyList.add("return sql.toString();");
