@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.beyonds.phoenix.mountain.generator.annotation.ColumnConfig;
-import com.beyonds.phoenix.mountain.generator.annotation.EnuFieldType;
 import com.beyonds.phoenix.mountain.generator.annotation.TableConfig;
 
 /**
@@ -483,12 +482,12 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 			String columnName = columnConfig.columnName();
 			
 			bodyList.add("if (" + poNameTmpShort + ".get" + makePropertyName(propertyName) + "() != null) {");
-			EnuFieldType enuFieldType = columnConfig.columnType();
-			if (enuFieldType.getJavaType().equals("java.lang.String")) {
-				bodyList.add("    sql.append(\"  AND `" + columnName + "` LIKE CONCAT('%',#{" + propertyName + "},'%')\");");
-			} else {
-				bodyList.add("    sql.append(\"  AND `" + columnName + "` = #{" + propertyName + "}\");");
-			}
+			//EnuFieldType enuFieldType = columnConfig.columnType();
+			//if (enuFieldType.getJavaType().equals("java.lang.String")) {
+			//	bodyList.add("    sql.append(\"  AND `" + columnName + "` LIKE CONCAT('%',#{" + propertyName + "},'%')\");");
+			//} else {
+			bodyList.add("    sql.append(\"  AND `" + columnName + "` = #{" + propertyName + "}\");");
+			//}
 			bodyList.add("}");
 		}
 		bodyList.add("sql.append(\"  ORDER BY `id` DESC\");");
