@@ -169,9 +169,13 @@ class DomainMetaGenerator extends GeneratorBase implements Generator {
 		MethodMeta actionMethodMeta = makeActionMethod(method, facade, project, domainMeta, importList, javaNameMap);
 		methodList.add(actionMethodMeta);
 		
-		// executeAfter
-		MethodMeta afterMethodMeta = makeAfterMethod(method, facade, project, importList, javaNameMap);
-		methodList.add(afterMethodMeta);
+		// executeAfterSuccess
+		MethodMeta afterSuccessMethodMeta = makeAfterSuccessMethod(method, facade, project, importList, javaNameMap);
+		methodList.add(afterSuccessMethodMeta);
+		
+		// executeAfterFailure
+		MethodMeta afterFailureMethodMeta = makeAfterFailureMethod(method, facade, project, importList, javaNameMap);
+		methodList.add(afterFailureMethodMeta);
 		
 		return methodList;
 	}
@@ -261,19 +265,42 @@ class DomainMetaGenerator extends GeneratorBase implements Generator {
 		return methodMeta;
 	}
 	
-	private MethodMeta makeAfterMethod(Method method, Facade facade, Project project, 
+	private MethodMeta makeAfterSuccessMethod(Method method, Facade facade, Project project, 
 			List<String> importList, Map<String, String> javaNameMap) throws Exception {
 		MethodMeta methodMeta = new MethodMeta();
 		
 		methodMeta.setReturnType("void");
-		methodMeta.setMethodName("executeAfter");
+		methodMeta.setMethodName("executeAfterSuccess");
 		
 		List<String> annotationList = new ArrayList<>();
 		annotationList.add("@Override");
 		methodMeta.setAnnotationList(annotationList);
 		
 		List<String> bodyList = new ArrayList<>();
-		bodyList.add("// 业务处理完毕后的附加处理,比如更新缓存、通知第三方等，不受事务管理");
+		bodyList.add("// 业务成功处理完毕后的附加处理,比如更新缓存、通知第三方等，不受事务管理");
+		bodyList.add("// TODO");
+		methodMeta.setBodyList(bodyList);
+		
+		return methodMeta;
+	}
+	
+	private MethodMeta makeAfterFailureMethod(Method method, Facade facade, Project project, 
+			List<String> importList, Map<String, String> javaNameMap) throws Exception {
+		MethodMeta methodMeta = new MethodMeta();
+		
+		methodMeta.setReturnType("void");
+		methodMeta.setMethodName("executeAfterFailure");
+		
+		List<String> parameterList = new ArrayList<>();
+		parameterList.add("Throwable e");
+		methodMeta.setParameterList(parameterList);
+		
+		List<String> annotationList = new ArrayList<>();
+		annotationList.add("@Override");
+		methodMeta.setAnnotationList(annotationList);
+		
+		List<String> bodyList = new ArrayList<>();
+		bodyList.add("// 业务处理失败后的附加处理");
 		bodyList.add("// TODO");
 		methodMeta.setBodyList(bodyList);
 		
