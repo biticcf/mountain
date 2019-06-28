@@ -44,7 +44,7 @@
 		<java.version>8</java.version>
 		
 		<!-- 定义版本号 -->
-		<phoenix-mountain.version>1.0.0.20190605</phoenix-mountain.version>
+		<phoenix-mountain.version>1.0.0.20190628</phoenix-mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.1.5.RELEASE</spring.boot.version>

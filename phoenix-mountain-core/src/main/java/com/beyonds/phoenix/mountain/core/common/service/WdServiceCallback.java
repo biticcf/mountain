@@ -25,7 +25,24 @@ public interface WdServiceCallback<T> {
 	 */
     WdCallbackResult<T> executeAction();
     /**
-     * 该方法主要是在事务成功提交之后执行的事务无关操作
+     * +该方法主要是在事务成功提交之后执行的事务无关操作
+     * 为了兼容之前的版本,暂时会保留
      */
-    void executeAfter();
+    @Deprecated
+    default void executeAfter() {
+    	// DO NOTHING
+    }
+    /**
+     * +避免名称歧义,用以替代executeAfter方法
+     */
+    default void executeAfterSuccess() {
+    	executeAfter();
+    }
+    /**
+     * +该方法主要在业务失败之后执行相关操作
+     * @param e 业务抛出的异常或者null
+     */
+    default void executeAfterFailure(Throwable e) {
+    	// DO NOTHING
+    }
 }

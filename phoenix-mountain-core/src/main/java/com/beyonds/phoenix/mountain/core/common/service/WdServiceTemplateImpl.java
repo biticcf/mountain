@@ -51,7 +51,7 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 		writeDebugInfo(logger, "进入模板方法开始处理");
 		
 		WdCallbackResult<T> result = null;
-
+		
 		try {
 			result = action.executeCheck();
 			
@@ -74,21 +74,32 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 				});
 				
 				if (result.isSuccess()) {
-					action.executeAfter();
+					action.executeAfterSuccess();
+				} else {
+					action.executeAfterFailure(null);
 				}
+			} else {
+				action.executeAfterFailure(null);
 			}
 			
 			writeDebugInfo(logger, "正常退出模板方法");
 		} catch (WdServiceException e) {
 			writeErrorInfo(logger, "异常退出模板方法A点", e);
 			
+			action.executeAfterFailure(e);
+			
 			result = WdCallbackResult.failure(e.getErrorCode(), e.getMessage(), e);
 		} catch (WdRuntimeException e) {
 			writeErrorInfo(logger, "异常退出模板方法B点", e);
 			
+			action.executeAfterFailure(e);
+			
 			result = WdCallbackResult.failure(e.getErrorCode(), e.getMessage(), e);
 		} catch (Throwable e) {
 			writeErrorInfo(logger, "异常退出模板方法C点", e);
+			
+			action.executeAfterFailure(e);
+			
 			if (e instanceof TransientDataAccessResourceException) {
 				TransientDataAccessResourceException tdarException = (TransientDataAccessResourceException) e;
 				Throwable e1 = tdarException.getCause();
@@ -127,25 +138,33 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 					throw new WdServiceException(SERVICE_NO_RESULT);
 				}
 				
-				if (result.isFailure()) {
-					return result;
+				if (result.isSuccess()) {
+					action.executeAfterSuccess();
+				} else {
+					action.executeAfterFailure(null);
 				}
-				
-				action.executeAfter();
+			} else {
+				action.executeAfterFailure(null);
 			}
 			
 			writeDebugInfo(logger, "正常退出模板方法");
 		} catch (WdServiceException e) {
 			writeErrorInfo(logger, "异常退出模板方法D点", e);
 			
+			action.executeAfterFailure(e);
+			
 			result = WdCallbackResult.failure(e.getErrorCode(), e);
 		} catch (WdRuntimeException e) {
 			writeErrorInfo(logger, "异常退出模板方法E点", e);
+			
+			action.executeAfterFailure(e);
 			
 			result = WdCallbackResult.failure(e.getErrorCode(), e);
 		} catch (Throwable e) {
 			// 把系统异常转换为服务异常
 			writeErrorInfo(logger, "异常退出模板方法F点", e);
+			
+			action.executeAfterFailure(e);
 			
 			if (e instanceof TransientDataAccessResourceException) {
 				TransientDataAccessResourceException tdarException = (TransientDataAccessResourceException) e;
