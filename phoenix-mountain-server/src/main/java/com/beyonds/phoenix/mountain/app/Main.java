@@ -7,7 +7,6 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -27,12 +26,12 @@ import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 @EnableFeignClients(basePackages = {"com.beyonds.phoenix.mountain.domain.feign"})
 @EnableShackleTemplates(basePackages = {"com.beyonds.phoenix.mountain.service"})
 @EnableEurekaClient
-public class Main extends SpringBootServletInitializer {
+public class Main/* extends SpringBootServletInitializer*/ {
 	// war启动入口
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return configureApplication(builder);
-	}
+	// @Override
+	// protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+	//	return configureApplication(builder);
+	// }
 	
 	/**
 	 * 主程序入口(jar格式)
