@@ -13,6 +13,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,9 +24,10 @@ import com.beyonds.phoenix.mountain.core.common.result.ReturnResult;
 import com.beyonds.phoenix.mountain.model.enums.ResultEnum;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年11月14日
- * @Time:   上午11:18:09
+ * +统一异常处理
+ * @Author: Daniel.Cao
+ * @Date:   2019年8月2日
+ * @Time:   下午5:34:26
  *
  */
 @ControllerAdvice
@@ -44,7 +46,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "NullPointerException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[NullPointer]", errorMsg, ex);
 	}
 	
 	/**
@@ -58,7 +60,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "ClassCastException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[ClassCast]", errorMsg, ex);
 	}
 	
 	/**
@@ -72,7 +74,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "IOException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[IO]", errorMsg, ex);
 	}
 	
 	/**
@@ -86,7 +88,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "NoSuchMethodException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[NoSuchMethod]", errorMsg, ex);
 	}
 	
 	/**
@@ -100,7 +102,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "IndexOutOfBoundsException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[IndexOutOfBounds]", errorMsg, ex);
 	}
 	
 	/**
@@ -110,11 +112,11 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = HttpMessageNotReadableException.class)
 	public ReturnResult<Object> httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException ex) {
-		ResultEnum resultEnu = ResultEnum.PATH_NOT_FOUND;
+		ResultEnum resultEnu = ResultEnum.PARAM_ERROR;
 		
 		String errorMsg = "HttpMessageNotReadableException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[" + ex.getMessage() + "]", errorMsg, ex);
 	}
 	
 	/**
@@ -128,7 +130,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "NoHandlerFoundException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, ex.getRequestURL());
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc()+ "[" + ex.getRequestURL() + "]", errorMsg, ex);
 	}
 	
 	/**
@@ -142,7 +144,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "HttpRequestMethodNotSupportedException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, ex.getMethod());
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc()+ "[" + ex.getMethod() + "]", errorMsg, ex);
 	}
 	
 	/**
@@ -156,7 +158,21 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "HttpMediaTypeNotAcceptableException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, ex.getSupportedMediaTypes());
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[HttpMediaTypeError]", errorMsg, ex);
+	}
+	
+	/**
+	 * MissingServletRequestParameterException异常处理
+	 * @param ex MissingServletRequestParameterException
+	 * @return 返回结果
+	 */
+	@ExceptionHandler(value = MissingServletRequestParameterException.class)
+	public ReturnResult<Object> missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException ex) {
+		ResultEnum resultEnu = ResultEnum.PARAM_ERROR;
+		
+		String errorMsg = "MissingServletRequestParameterException Error!";
+		
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[MissingRequestParameter:" + ex.getParameterName() + "]", errorMsg, ex);
 	}
 	
 	/**
@@ -170,7 +186,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "MethodArgumentNotValidException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, ex.getParameter());
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[ArgumentNotValid]", errorMsg, ex);
 	}
 	
 	/**
@@ -180,11 +196,11 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = ConstraintViolationException.class)
 	public ReturnResult<Object> constraintViolationExceptionHandler(ConstraintViolationException ex) {
-		ResultEnum resultEnu = ResultEnum.PARAM_ERROR;
+		ResultEnum resultEnu = ResultEnum.SYS_ERROR;
 		
 		String errorMsg = "ConstraintViolationException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, ex.getConstraintViolations());
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[ConstraintViolation]", errorMsg, ex);
 	}
 	
 	/**
@@ -194,11 +210,11 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = WdRuntimeException.class)
 	public ReturnResult<Object> wdRuntimeExceptionHandler(WdRuntimeException ex) {
-		ResultEnum resultEnu = ResultEnum.FAILURE;
+		ResultEnum resultEnu = ResultEnum.SYS_ERROR;
 		
 		String errorMsg = "WdRuntimeException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, ex.getDesc());
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[WdRuntime]", errorMsg, ex);
 	}
 	
 	/**
@@ -212,7 +228,7 @@ public class GlobalExceptionHandler {
 		
 		String errorMsg = "RuntimeException Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[Runtime]", errorMsg, ex);
 	}
 	
 	/**
@@ -222,11 +238,11 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = Exception.class)
 	public ReturnResult<Object> otherExceptionHandler(Exception ex) {
-		ResultEnum resultEnu = ResultEnum.FAILURE;
+		ResultEnum resultEnu = ResultEnum.SYS_ERROR;
 		
 		String errorMsg = "Exception Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[Unknow]", errorMsg, ex);
 	}
 	
 	/**
@@ -236,22 +252,25 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = Throwable.class)
 	public ReturnResult<Object> otherThrowableHandler(Throwable ex) {
-		ResultEnum resultEnu = ResultEnum.FAILURE;
+		ResultEnum resultEnu = ResultEnum.SYS_ERROR;
 		
 		String errorMsg = "Throwable Error!";
 		
-		return exceptionHandler(resultEnu, errorMsg, ex, null);
+		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[Unknow]", errorMsg, ex);
 	}
 	
 	/**
 	 * +统一异常处理
-	 * @param resultEnu
-	 * @return
+	 * @param errorCode 统一错误码
+	 * @param errorMsg 对外错误信息
+	 * @param errorMsgInternal 对内错误信息
+	 * @param th 异常详情
+	 * @return 返回结果
 	 */
-	private ReturnResult<Object> exceptionHandler(ResultEnum resultEnu, String errorMsg, Throwable th, Object entry) {
-		writeErrorLog(errorMsg, th);
+	private ReturnResult<Object> exceptionHandler(int errorCode, String errorMsg, String errorMsgInternal, Throwable th) {
+		writeErrorLog(errorMsgInternal, th);
 		
-		return new ReturnResult<Object>(resultEnu.getCode(), resultEnu.getDesc(), entry);
+		return new ReturnResult<Object>(errorCode, errorMsg, null);
 	}
 	
 	/**
