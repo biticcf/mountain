@@ -9,3 +9,19 @@ Mail： 19070443@qq.com
 
 代码自动生成maven命令
 mvn clean install exec:java -DskipGenerator=false
+
+
+关于druid密文的使用
+1，找到maven本地库druid的jar包所在路径(注意版本一致)，该路径下打开cmd命令窗口；
+2，java -cp druid-1.1.14.jar com.alibaba.druid.filter.config.ConfigTools yourpassword；
+3，然后会出现
+privateKey:MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA1j7Oorws/mu2MmHl4qy/8wxpo+E6ypn/cfatwIrrblTw1m/KIHvlNug1JX7S/+6oH8flqLziLadu5FPtCAxD/QIDAQABAkBDPdkq2Dai73lynKlDGIbyKG4rgjAqkGTNBugHq1IzASC1UlSK/rfuKc7Az4ee/mS6X0LRdFoCL566fMUcX8PdAiEA8aMMrhCk22Zy26DJyD56BZ6tGyrhGqo+rtegUr22328CIQDi+vHHYDZjLWuRd69sbLlAqE819zQ9OFcNnHh295HdUwIhAJo/NfnrYAE57bnrcsNjtmrd9qyv+5AU+vyLYqlOt2z7AiEAnnbH+YPINLFvGd3PEQlOxD89HdX6GIuO6yfESnpI0ZUCIDB9bCRYKMI7KXx3l1dxVUVjwrW6kpeWMlAqdhV5gMl8
+publicKey:MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANY+zqK8LP5rtjJh5eKsv/MMaaPhOsqZ/3H2rcCK625U8NZvyiB75TboNSV+0v/uqB/H5ai84i2nbuRT7QgMQ/0CAwEAAQ==
+password:d3hCh7tS8Fy9d0hpZ4AuaRx7tfusY1Db+7TGZeHuDNclWob24eqMgUpa0ZofLU/GXumb8qR0RLJfuGYDgK4cxQ==
+4，替换原来的密文和公钥
+filters: config,.....
+password: ${DRUID.PASSWORD:d3hCh7tS8Fy9d0hpZ4AuaRx7tfusY1Db+7TGZeHuDNclWob24eqMgUpa0ZofLU/GXumb8qR0RLJfuGYDgK4cxQ==}
+connectionProperties: config.decrypt=true;config.decrypt.key=${DRUID.KEY.PUBLIC:MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANY+zqK8LP5rtjJh5eKsv/MMaaPhOsqZ/3H2rcCK625U8NZvyiB75TboNSV+0v/uqB/H5ai84i2nbuRT7QgMQ/0CAwEAAQ==}
+5，如果不想启用druid密文，做反向操作即可
+去掉filters中的config配置；去掉connectionProperties配置项；password改为明文
+

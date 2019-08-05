@@ -136,7 +136,7 @@ datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql:replication://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?useSSL=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
     username: ${DRUID.USERNAME:demotest}
-    password: ${DRUID.PASSWORD:demotest}
+    password: ${DRUID.PASSWORD:WutsSSUIsOhxkenBOJJy61jVpfYONBY5lSl6uDk1AWSlbMtO4BfCtNhUBSIZPPhQZXEfwe7ZzIDrCcgtE5cOtA==} #demotest
     initialSize: ${DRUID.INITIAL_SIZE:10}
     maxActive: ${DRUID.MAX_ACTIVE:50}
     minIdle: ${DRUID.MIN_IDLE:10}
@@ -158,7 +158,8 @@ datasource:
     minEvictableIdleTimeMillis: 600000
     removeAbandoned: true
     removeAbandonedTimeoutMillis: 300000
-    filters: stat,mergeStat,slf4j,wall
+    filters: stat,mergeStat,slf4j,wall,config #config为密码加密项
+    connectionProperties: config.decrypt=true;config.decrypt.key=${KEY.PUBLIC:MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJScaxMWmefYlVEAKdHw9t/b+FJjYR3lpswm6bAbWbdHo8T0kuu4hUNmZJJ9TBmYtNCSP3RyyFqXV0aVTwuPlT0CAwEAAQ==} #该项为密码加密项
 
 # mybatis配置
 mybatis: 
