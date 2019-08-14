@@ -22,6 +22,10 @@ public class ReturnResult<T> implements Serializable {
 	
 	private   PaginationMeta  meta; //分页信息或者null
 	
+	public ReturnResult() {
+		this(0);
+	}
+	
 	public ReturnResult(int status) {
 		this(status, null);
 	}
