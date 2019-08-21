@@ -238,12 +238,18 @@
         <!-- 自定义该模块的jar包名称,用于发布 -->
         <finalName>${build.final.name}.${phoenix-mountain.version}</finalName>
     	<filters>
-			<filter>src/main/filters/filter-${env}.properties</filter>
+			<filter>src/main/filters/filter-${env}-${profile}.properties</filter>
 		</filters>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<includes>
+					<include>banner.txt</include>
+					<include>bootstrap.yml</include>
+					<include>logback-spring.xml</include>
+					<include>config/${env}/application-${profile}.yml</include>
+				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/bin</directory>

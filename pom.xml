@@ -19,6 +19,7 @@
 	<properties>
 		<skipTests>true</skipTests>
 		<env>dev</env>
+		<profile>default</profile>
 		
 		<build.final.name>phoenix-mountain-release</build.final.name>
 		
