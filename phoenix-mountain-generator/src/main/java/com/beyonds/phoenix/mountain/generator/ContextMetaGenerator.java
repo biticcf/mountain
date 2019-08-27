@@ -91,6 +91,7 @@ class ContextMetaGenerator extends GeneratorBase implements Generator {
 			methodList.add(methodMeta);
 		}
 		// 检查原有成员变量
+		
 		for (Field oldField : oldFiledList) {
 			Type returnType = oldField.getGenericType();
 			String memberType = getJavaNameAndImport(returnType.getTypeName(), javaNameMap, importList);
@@ -116,6 +117,7 @@ class ContextMetaGenerator extends GeneratorBase implements Generator {
 					String valueType = getJavaNameAndImport("org.springframework.beans.factory.annotation.Value", javaNameMap, importList);
 					memberList.add("@" + valueType + "(\"" + valueValue.trim() + "\")");
 				}
+				memberList.add(_tmp);
 			} else {
 				// Qualifier注解
 				String qualifierName = null;

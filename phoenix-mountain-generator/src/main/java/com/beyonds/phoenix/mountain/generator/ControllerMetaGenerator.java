@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @Author: Daniel.Cao
  * @Date:   2019年1月13日
@@ -394,6 +396,15 @@ class ControllerMetaGenerator extends GeneratorBase implements Generator {
 			if (_param == null) {
 				continue;
 			}
+			// 文件流类型忽略swagger
+			try {
+				Class<?> multipartFile = Class.forName(_param.getType());
+				if (multipartFile != null && MultipartFile.class.isAssignableFrom(multipartFile)) {
+					continue;
+				}
+			} catch (Exception e) {
+			}
+			
 			// RequestParam,PathVariable,RequestBody,RequestHeader
 			String requestType = _param.getRequestType();
 			String swaggerType = "";

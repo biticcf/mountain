@@ -57,6 +57,8 @@ abstract class GeneratorBase {
 			"RequestHeader", "RequestPart", "MatrixVariable"
 	};
 	
+	private static final List<String> JAVA_PRIMIVITE_TYPE_LIST = new ArrayList<>();
+	
 	// 相对路径
 	public static final Map<String, String> MODEL_DIR_MAP = new HashMap<>();
 	// 包名
@@ -65,6 +67,18 @@ abstract class GeneratorBase {
 	public static final Map<String, String> MODEL_ALL_DIR_MAP = new HashMap<>();
 	// PO文件
 	public static final Map<String, Class<?>> PO_ALL_NAME_MAP = new HashMap<>();
+	
+	static {
+		JAVA_PRIMIVITE_TYPE_LIST.add("int");
+		JAVA_PRIMIVITE_TYPE_LIST.add("byte");
+		JAVA_PRIMIVITE_TYPE_LIST.add("short");
+		JAVA_PRIMIVITE_TYPE_LIST.add("long");
+		JAVA_PRIMIVITE_TYPE_LIST.add("float");
+		JAVA_PRIMIVITE_TYPE_LIST.add("double");
+		JAVA_PRIMIVITE_TYPE_LIST.add("char");
+		JAVA_PRIMIVITE_TYPE_LIST.add("boolean");
+		JAVA_PRIMIVITE_TYPE_LIST.add("String");
+	}
 	
 	protected void initFacade(Facade facade, Class<?> facadeClass) {
 		FacadeConfig fc = facadeClass.getAnnotation(FacadeConfig.class);
@@ -896,11 +910,23 @@ abstract class GeneratorBase {
 	}
 	
 	private void addToImport(String javaType, List<String> importList) {
-		if (importList.contains(javaType) || javaType.startsWith("java.lang")) {
+		if (javaType == null || javaType.trim().equals("")) {
+			return;
+		}
+		String _javaType = javaType.trim();
+		while (_javaType.endsWith("[]")) {
+			int _len = _javaType.length();
+			_javaType = _javaType.substring(0, _len - 2);
+		}
+		// 原生类型
+		if (JAVA_PRIMIVITE_TYPE_LIST.contains(_javaType)) {
+			return;
+		}
+		if (importList.contains(_javaType) || _javaType.startsWith("java.lang")) {
 			return;
 		}
 		
-		importList.add(javaType);
+		importList.add(_javaType);
 	}
 	
 	protected String makePropertyName(String srcName) { //更换第一个字母的大小写
