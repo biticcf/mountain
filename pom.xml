@@ -19,9 +19,9 @@
     </licenses>
     <scm>
         <tag>master</tag>
-        <url>https://github.com/biticcf/ocean-sea-platform.git</url>
-        <connection>scm:git:https://github.com/biticcf/ocean-sea-platform.git</connection>
-        <developerConnection>scm:git:https://github.com/biticcf/ocean-sea-platform.git</developerConnection>
+        <url>https://github.com/biticcf/mountain.git</url>
+        <connection>scm:git:https://github.com/biticcf/mountain.git</connection>
+        <developerConnection>scm:git:https://github.com/biticcf/mountain.git</developerConnection>
     </scm>
     <developers>
         <developer>
