@@ -2,18 +2,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.beyonds.phoenix.mountain</groupId>
-	<artifactId>phoenix-mountain-parent</artifactId>
+	<groupId>com.github.biticcf</groupId>
+	<artifactId>mountain-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>phoenix-mountain-parent</name>
+	<name>mountain-parent</name>
+	<description>a project about mountain</description>
+	<url>https://github.com/biticcf</url>
 	
+	<licenses>
+        <license>
+            <name>The ApacheSoftware License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <tag>master</tag>
+        <url>https://github.com/biticcf/ocean-sea-platform.git</url>
+        <connection>scm:git:https://github.com/biticcf/ocean-sea-platform.git</connection>
+        <developerConnection>scm:git:https://github.com/biticcf/ocean-sea-platform.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <name>CaoChaofeng</name>
+            <email>19070443@qq.com</email>
+            <organization>biti</organization>
+        </developer>
+    </developers>
+    
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+    
 	<modules>
-		<module>phoenix-mountain-core</module>
-		<module>phoenix-mountain-shackle</module>
-		<module>phoenix-mountain-generator</module>
-		<module>phoenix-mountain-api</module>
-		<module>phoenix-mountain-server</module>
+		<module>mountain-core</module>
+		<module>mountain-shackle</module>
+		<module>mountain-generator</module>
+		<module>mountain-api</module>
+		<module>mountain-server</module>
 	</modules>
 	
 	<properties>
@@ -21,7 +50,7 @@
 		<env>dev</env>
 		<profile>default</profile>
 		
-		<build.final.name>phoenix-mountain-release</build.final.name>
+		<build.final.name>mountain-release</build.final.name>
 		
 		<!-- CheckStyle检查 -->
 		<skipCheckStyle>true</skipCheckStyle>
@@ -42,10 +71,10 @@
 		<!-- git.version.name -->
 		<git.version.name>RELEASE.VERSION</git.version.name>
 		
-		<java.version>8</java.version>
+		<java.version>1.8</java.version>
 		
 		<!-- 定义版本号 -->
-		<phoenix-mountain.version>1.0.0.20190827</phoenix-mountain.version>
+		<mountain.version>1.0.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.1.7.RELEASE</spring.boot.version>
@@ -73,29 +102,29 @@
 		<dependencies>
 			<!-- core jars -->
 			<dependency>
-				<groupId>com.beyonds.phoenix.mountain</groupId>
-				<artifactId>phoenix-mountain-core</artifactId>
-				<version>${phoenix-mountain.version}</version>
+				<groupId>com.github.biticcf</groupId>
+				<artifactId>mountain-core</artifactId>
+				<version>${mountain.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.beyonds.phoenix.mountain</groupId>
-				<artifactId>phoenix-mountain-shackle</artifactId>
-				<version>${phoenix-mountain.version}</version>
+				<groupId>com.github.biticcf</groupId>
+				<artifactId>mountain-shackle</artifactId>
+				<version>${mountain.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.beyonds.phoenix.mountain</groupId>
-				<artifactId>phoenix-mountain-generator</artifactId>
-				<version>${phoenix-mountain.version}</version>
+				<groupId>com.github.biticcf</groupId>
+				<artifactId>mountain-generator</artifactId>
+				<version>${mountain.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.beyonds.phoenix.mountain</groupId>
-				<artifactId>phoenix-mountain-api</artifactId>
-				<version>${phoenix-mountain.version}</version>
+				<groupId>com.github.biticcf</groupId>
+				<artifactId>mountain-api</artifactId>
+				<version>${mountain.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.beyonds.phoenix.mountain</groupId>
-				<artifactId>phoenix-mountain-server</artifactId>
-				<version>${phoenix-mountain.version}</version>
+				<groupId>com.github.biticcf</groupId>
+				<artifactId>mountain-server</artifactId>
+				<version>${mountain.version}</version>
 			</dependency>
 			
 			<!-- SpringFramework把需要升级版本的组件放到前面 -->
@@ -225,12 +254,6 @@
             	<artifactId>hessian</artifactId>
             	<version>4.0.51</version>
         	</dependency>
-        	
-        	<dependency>
-				<groupId>commons-io</groupId>
-  				<artifactId>commons-io</artifactId>
-  				<version>2.6</version>
-			</dependency>
         	
 		</dependencies>
 	</dependencyManagement>
@@ -402,9 +425,9 @@
     			</configuration>
     			<dependencies>
 					<dependency>
-						<groupId>com.beyonds.phoenix.mountain</groupId>
-						<artifactId>phoenix-mountain-generator</artifactId>
-						<version>${phoenix-mountain.version}</version>
+						<groupId>com.github.biticcf</groupId>
+						<artifactId>mountain-generator</artifactId>
+						<version>${mountain.version}</version>
 					</dependency>
     			</dependencies>
 			</plugin>
@@ -413,31 +436,17 @@
 	</build>
 	
 	<distributionManagement>
-		<!-- 依赖包私服上传 -->
+		<!-- 依赖包中心服上传 -->
 		<repository>
 			<id>releases</id>
 			<name>internal releases</name>
-			<url>http://maven.bingsheng.tech/repository/maven-releases/</url>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
 			<name>internal snapshot</name>
-			<url>http://maven.bingsheng.tech/repository/maven-snapshots/</url>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
-		
-		<!-- 阿里云效私服上传 -->
-		<!--
-		<repository>
-			<id>rdc-releases</id>
-			<name>internal releases</name>
-			<url>https://repo.rdc.aliyun.com/repository/49339-release-Sz60lB/</url>
-		</repository>
-		<snapshotRepository>
-			<id>rdc-snapshots</id>
-			<name>internal snapshot</name>
-			<url>https://repo.rdc.aliyun.com/repository/49339-snapshot-pXxmSM/</url>
-		</snapshotRepository>
-		-->
 	</distributionManagement>
 	
 </project>
