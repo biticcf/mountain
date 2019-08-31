@@ -21,9 +21,9 @@ import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
  */
 public interface Contract {
 	/**
-	 * Called to parse the methods in the class that are linked to Domain Callback.
-	 *
-	 * @param targetType {@link Target#type() type} of the Shackle interface.
+	 * 
+	 * @param targetType type
+	 * @return list
 	 */
 	List<MethodMetadata> parseAndValidateMetadata(Class<?> targetType);
 
@@ -54,7 +54,10 @@ public interface Contract {
 		}
 
 		/**
-		 * Called indirectly by {@link #parseAndValidateMetadata(Class)}.
+		 * 
+		 * @param targetType type
+		 * @param method method
+		 * @return MethodMetadata
 		 */
 		protected MethodMetadata parseAndValidateMetadata(Class<?> targetType, Method method) {
 			MethodMetadata data = new MethodMetadata();
@@ -79,6 +82,7 @@ public interface Contract {
 		 *
 		 * @param data metadata collected so far relating to the current java method.
 		 * @param clz  the class to process
+		 * 
 		 */
 		protected abstract void processAnnotationOnClass(MethodMetadata data, Class<?> clz);
 

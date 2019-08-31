@@ -19,32 +19,11 @@ public abstract class Shackle {
 	    return new Builder();
 	}
 	/**
-	 * Configuration keys are formatted as unresolved <a href=
-	 * "http://docs.oracle.com/javase/6/docs/jdk/api/javadoc/doclet/com/sun/javadoc/SeeTag.html"
-	 * >see tags</a>. This method exposes that format, in case you need to create
-	 * the same value as {@link MethodMetadata#configKey()} for correlation
-	 * purposes.
-	 *
-	 * <p>
-	 * Here are some sample encodings:
-	 *
-	 * <pre>
-	 * <ul>
-	 *   <li>{@code Route53}: would match a class {@code route53.Route53}</li>
-	 *   <li>{@code Route53#list()}: would match a method {@code route53.Route53#list()}</li>
-	 *   <li>{@code Route53#listAt(Marker)}: would match a method {@code
-	 * route53.Route53#listAt(Marker)}</li>
-	 *   <li>{@code Route53#listByNameAndType(String, String)}: would match a method {@code
-	 * route53.Route53#listAt(String, String)}</li>
-	 * </ul>
-	 * </pre>
-	 *
-	 * Note that there is no whitespace expected in a key!
-	 *
-	 * @param targetType {@link Target#type() type} of the ShackleTemplate
-	 *                   interface.
-	 * @param method     invoked method, present on {@code type} or its super.
-	 * @see MethodMetadata#configKey()
+	 * 
+	 * @param targetType type of the ShackleTemplate interface
+	 * @param method invoked method, present on type or its super.
+	 * @return configKey
+	 * @see MethodMetadata#configKey() 
 	 */
 	public static String configKey(Class<?> targetType, Method method) {
 		StringBuilder builder = new StringBuilder();
@@ -59,11 +38,12 @@ public abstract class Shackle {
 		}
 		return builder.append(')').toString();
 	}
-
+	
 	/**
-	 * Returns a new instance of a Domain callback, defined by annotations in the
-	 * {@link Contract}, for the specified {@code target}. You should cache this
-	 * result.
+	 * 
+	 * @param <T> newInstance type
+	 * @param target target
+	 * @return target newInstance
 	 */
 	public abstract <T> T newInstance(Target<T> target);
 
@@ -83,9 +63,11 @@ public abstract class Shackle {
 
 			return this;
 		}
-
+		
 		/**
-		 * Allows you to override how reflective dispatch works inside of Feign.
+		 * Allows you to override how reflective dispatch works inside of Shackle.
+		 * @param invocationHandlerFactory invocationHandlerFactory
+		 * @return invocationHandlerFactory
 		 */
 		public Builder invocationHandlerFactory(InvocationHandlerFactory invocationHandlerFactory) {
 			this.invocationHandlerFactory = invocationHandlerFactory;

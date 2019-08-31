@@ -40,7 +40,10 @@ public interface DomainExecutor {
 		private final ApplicationContext applicationContext;
 
 		/**
-		 * Null parameters imply platform defaults.
+		 * 
+		 * @param wdServiceTemplate WdServiceTemplate
+		 * @param referContext ReferContext
+		 * @param applicationContext ApplicationContext
 		 */
 		public Default(WdServiceTemplate wdServiceTemplate, ReferContext referContext, ApplicationContext applicationContext) {
 			this.wdServiceTemplate = wdServiceTemplate;
@@ -119,10 +122,11 @@ public interface DomainExecutor {
 		
 		/**
 		 * 根据名称查找bean,不存在返回null
-		 * @param domain
-		 * @param beanName
-		 * @param tClass
-		 * @return
+		 * @param domain domain
+		 * @param beanName beanName
+		 * @param tClass tClass
+		 * @param <T> 对象泛型
+		 * @return 对象实例
 		 */
 		@SuppressWarnings("unchecked")
 		private <T> T getByNameOptional(String beanName, Class<T> tClass) {
@@ -152,9 +156,10 @@ public interface DomainExecutor {
 		/**
 		 * 根据beanName和构造方法的参数查找bean
 		 * 不存在抛出NoSuchBeanDefinitionException异常
-		 * @param domain
-		 * @param args
-		 * @return
+		 * @param domain domain
+		 * @param args args
+		 * @param <T> 对象泛型
+		 * @return 对象实例
 		 */
 		@SuppressWarnings("unchecked")
 		private <T> T getByNameAndArgs(String beanName, Object... args) {

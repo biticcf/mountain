@@ -58,18 +58,19 @@ public @interface EnableShackleTemplates {
 	 * <code>@Bean</code> definition for the pieces that make up the shackle.
 	 *
 	 * @see ShackleTemplatesConfiguration for the defaults
+	 * @return the array of 'defaultConfiguration'.
 	 */
 	Class<?>[] defaultConfiguration() default {};
 
 	/**
 	 * List of classes annotated with @ShackleTemplate. If not empty, disables classpath scanning.
-	 * @return
+	 * @return the array of 'templates'.
 	 */
 	Class<?>[] templates() default {};
 	
 	/**
 	 * 默认事务模板名称,如果定义了多个事务模板,这里需要用存在的一个模板名称覆盖
-	 * @return
+	 * @return defaultServiceTemplateBeanName
 	 */
 	String defaultServiceTemplateBeanName() default "wdServiceTemplate";
 }

@@ -24,46 +24,45 @@ import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 @Documented
 public @interface ShackleDomain {
 	/**
-	 * The name of the service with optional protocol prefix. Synonym for {@link #name()
-	 * name}. A name must be specified for all domains, whether or not a url is provided.
-	 * Can be specified as property key, eg: ${propertyKey}.
+	 * The name of the service with optional protocol prefix. 
+	 * @return value
 	 */
 	@AliasFor("name")
 	String value() default "";
+	
 	/**
-	 * The name of the method with optional protocol prefix. Synonym for {@link #value() value}.
+	 * The name of the method with optional protocol prefix.
+	 * @return name
 	 */
 	@AliasFor("value")
 	String name() default "";
 	
 	/**
-	 * Sets the <code>@Qualifier</code> value for the shackle domain.
+	 * Sets the Qualifier value for the shackle domain.
+	 * @return qualifier
 	 */
 	String qualifier() default "";
-
 	/**
-	 * A custom <code>@Configuration</code> for the shackle domain. Can contain override
-	 * <code>@Bean</code> definition for the pieces that make up the domain.
-	 *
-	 * @see ShackleTemplatesConfiguration for the defaults
+	 * 
+	 * @return configurations
 	 */
 	Class<?>[] configuration() default {};
 	
 	/**
 	 * The bean id/name of domain
-	 * @return
+	 * @return domainName
 	 */
 	String domainName() default "";
-
+	
 	/**
-	 * Business domain class for the specified business interface. The domain class must
-	 * implement the WdServiceCallback<?> interface and be a valid @Scope("prototype") spring bean.
+	 * 
+	 * @return domain
 	 */
 	Class<? extends WdServiceCallback<?>> domain();
 	
 	/**
 	 * +是否启用事务
-	 * @return 启用事务标志
+	 * @return withTrans 启用事务标志
 	 */
 	boolean withTrans() default true;
 	
@@ -71,12 +70,13 @@ public @interface ShackleDomain {
 	 * 自定义事务模板bean名称
 	 * 默认是用系统定义的bean
 	 * 需要多数据源，可以在此指定自定义的模板bean名称
-	 * @return 事务明半bean名称
+	 * @return wdServiceTemplateBeanName 事务明半bean名称
 	 */
 	String wdServiceTemplateBeanName() default "";
 	
 	/**
 	 * Whether to mark the shackle domain proxy as a primary bean. Defaults to true.
+	 * @return primary
 	 */
 	boolean primary() default true;
 }

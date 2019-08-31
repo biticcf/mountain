@@ -24,11 +24,11 @@ public final class MethodMetadata implements Serializable {
 	}
 
 	/**
-	 * Used as a reference to this method. For example,
-	 * {@link Logger#log(String, String, Object...) logging} or
-	 * {@link ReflectiveShackle reflective dispatch}.
+	 * Used as a reference to this method. 
 	 *
 	 * @see Shackle#configKey(Class, java.lang.reflect.Method)
+	 * 
+	 * @return configKey
 	 */
 	public String configKey() {
 		return configKey;
