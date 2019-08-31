@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月13日
- * @Time:   上午10:53:08
+ * author: Daniel.Cao
+ * date:   2019年3月13日
+ * time:   上午10:53:08
  *
  */
 class ContextMetaGenerator extends GeneratorBase implements Generator {

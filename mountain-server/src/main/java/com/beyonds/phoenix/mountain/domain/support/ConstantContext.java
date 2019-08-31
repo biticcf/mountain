@@ -11,9 +11,9 @@ import com.beyonds.phoenix.mountain.core.common.service.ReferContext;
 import com.beyonds.phoenix.mountain.domain.repository.DemoDomainRepository;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午6:27:27
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午6:27:27
  *
  */
 @Service("constantContext")

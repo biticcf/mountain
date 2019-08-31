@@ -9,9 +9,9 @@ import java.lang.reflect.Type;
 import com.beyonds.phoenix.mountain.shackle.ReflectiveShackle.ParseHandlersByName;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午7:23:01
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午7:23:01
  *
  */
 public abstract class Shackle {

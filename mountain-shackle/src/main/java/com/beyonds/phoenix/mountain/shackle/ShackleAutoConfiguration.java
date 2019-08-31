@@ -17,9 +17,9 @@ import com.beyonds.phoenix.mountain.core.common.service.ReferContext;
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceTemplate;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月4日
- * @Time:   上午1:06:34
+ * author: Daniel.Cao
+ * date:   2019年1月4日
+ * time:   上午1:06:34
  *
  */
 @Configuration

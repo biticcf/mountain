@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import com.beyonds.phoenix.mountain.core.common.util.LogModel;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午2:46:00
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午2:46:00
  *
  */
 public class AbstractService {

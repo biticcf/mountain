@@ -4,9 +4,9 @@
 package com.beyonds.phoenix.mountain.generator.annotation;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月13日
- * @Time:   上午9:09:00
+ * author: Daniel.Cao
+ * date:   2019年3月13日
+ * time:   上午9:09:00
  *
  */
 public enum EnuFKAction {

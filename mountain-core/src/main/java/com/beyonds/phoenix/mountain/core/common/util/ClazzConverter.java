@@ -10,13 +10,13 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 
 /**
- * @author  DanielCao
- * @date    2014年6月26日
- * @time    上午10:10:59
- * 类转化器
- * 借助FastJson从一个类转化为另一个类
- * 主要是用来转化同一个模型的Model和DO
- * 他们具有基本相同的属性名称
+ * author  DanielCao
+ * date    2014年6月26日
+ * time    上午10:10:59
+ * +类转化器
+ * +借助FastJson从一个类转化为另一个类
+ * +主要是用来转化同一个模型的Model和DO
+ * +他们具有基本相同的属性名称
  */
 public final class ClazzConverter {
 	private ClazzConverter() {

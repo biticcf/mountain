@@ -10,14 +10,15 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月12日
- * @Time:   上午12:18:57
+ * author: Daniel.Cao
+ * date:   2019年1月12日
+ * time:   上午12:18:57
  *
  */
 public class MainGenerator extends GeneratorBase {
 	/**
 	 * @param args
+	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
 		if (args == null || args.length < 2) {

@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 一致性hash算法
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午8:01:45
+ * +一致性hash算法
+ * author  DanielCao
+ * date    2015年4月1日
+ * time    下午8:01:45
  *
  * @param <T> 节点类型
  */

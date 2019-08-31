@@ -17,10 +17,10 @@ import com.beyonds.phoenix.mountain.core.common.lang.WdServiceException;
 import com.beyonds.phoenix.mountain.core.common.result.WdCallbackResult;
 
 /**
- * 事务相关模板实现
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午1:55:34
+ * +事务相关模板实现
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午1:55:34
  *
  */
 public class WdServiceTemplateImpl implements WdServiceTemplate {

@@ -6,9 +6,9 @@ package com.beyonds.phoenix.mountain.generator;
 import java.util.List;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月9日
- * @Time:   下午9:41:00
+ * author: Daniel.Cao
+ * date:   2019年1月9日
+ * time:   下午9:41:00
  * +方法元文件
  */
 class MethodMeta {

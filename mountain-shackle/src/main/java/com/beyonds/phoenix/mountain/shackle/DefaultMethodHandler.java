@@ -11,9 +11,9 @@ import java.lang.reflect.Method;
 import com.beyonds.phoenix.mountain.shackle.InvocationHandlerFactory.MethodHandler;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月4日
- * @Time: 上午12:28:58
+ * author: Daniel.Cao
+ * date: 2019年1月4日
+ * time: 上午12:28:58
  *
  */
 final class DefaultMethodHandler implements MethodHandler {

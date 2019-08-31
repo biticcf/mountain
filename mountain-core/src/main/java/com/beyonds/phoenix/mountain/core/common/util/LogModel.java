@@ -10,10 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * @author  DanielCao
- * @date    2015年2月4日
- * @time    下午4:10:40
- * 日志系统
+ * author  DanielCao
+ * date    2015年2月4日
+ * time    下午4:10:40
+ * +日志系统
  */
 public final class LogModel {
 	/** 附加信息集 */

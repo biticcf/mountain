@@ -438,12 +438,12 @@
 	<distributionManagement>
 		<!-- 依赖包中心服上传 -->
 		<repository>
-			<id>releases</id>
+			<id>sonatype-nexus-staging</id>
 			<name>internal releases</name>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
-			<id>snapshots</id>
+			<id>sonatype-nexus-snapshots</id>
 			<name>internal snapshot</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>

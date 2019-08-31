@@ -8,10 +8,11 @@ import java.util.Date;
 import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
 
 /**
- * @author  DanielCao
- * @date    2015年4月8日
- * @time    下午6:23:10
- * 商品基本信息数据模型,对应于WD_DEMO_INFO表(不存在的表,实际应用时替换为实际表)
+ * 
+ * author: Daniel.Cao
+ * date:   2019年8月31日
+ * time:   下午2:02:42
+ *
  */
 public class DemoPo extends WdBaseModel {
 	private static final long serialVersionUID = -3690814072354261953L;

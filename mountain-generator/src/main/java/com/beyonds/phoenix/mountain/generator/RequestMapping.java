@@ -6,9 +6,9 @@ package com.beyonds.phoenix.mountain.generator;
 import java.util.List;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月12日
- * @Time:   上午12:01:02
+ * author: Daniel.Cao
+ * date:   2019年1月12日
+ * time:   上午12:01:02
  *
  */
 class RequestMapping {

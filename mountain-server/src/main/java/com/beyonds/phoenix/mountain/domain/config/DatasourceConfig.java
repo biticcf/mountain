@@ -47,11 +47,12 @@ import com.github.pagehelper.PageInterceptor;
 import com.github.pagehelper.autoconfigure.PageHelperProperties;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月3日
- * @Time:   下午11:04:35
- * 配置自定义数据库连接池和自定义事务模板
- * 单数据源配置
+ * author: DanielCao
+ * date:   2017年5月3日
+ * time:   下午11:04:35
+ * 
+ * +配置自定义数据库连接池和自定义事务模板
+ * +单数据源配置
  */
 @Configuration
 @MapperScan(basePackages = {"${mybatis.type-dao-package:com.beyonds.phoenix.mountain.domain.dao}"}, 

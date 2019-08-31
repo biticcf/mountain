@@ -14,9 +14,9 @@ import org.springframework.core.annotation.AliasFor;
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月3日
- * @Time:   下午4:15:03
+ * author: Daniel.Cao
+ * date:   2019年1月3日
+ * time:   下午4:15:03
  *
  */
 @Target(ElementType.METHOD)

@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 
 /**
- * @author DanielCao
- * @date 2016年12月9日
- * @time 下午1:41:01
- * 处理输入日期类型
+ * author DanielCao
+ * date 2016年12月9日
+ * time 下午1:41:01
+ * +处理输入日期类型
  */
 public class StringDateConverter implements Converter<String, Date> {
 	private static Logger logger = LoggerFactory.getLogger(StringDateConverter.class);

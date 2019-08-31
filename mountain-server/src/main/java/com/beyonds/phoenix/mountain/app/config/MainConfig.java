@@ -11,9 +11,9 @@ import org.springframework.core.Ordered;
 import org.springframework.stereotype.Controller;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月1日
- * @Time:   下午8:26:31
+ * author: DanielCao
+ * date:   2017年5月1日
+ * time:   下午8:26:31
  *
  */
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)

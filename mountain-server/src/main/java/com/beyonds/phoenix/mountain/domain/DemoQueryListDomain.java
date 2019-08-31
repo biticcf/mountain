@@ -13,9 +13,9 @@ import com.beyonds.phoenix.mountain.model.DemoModel;
 import com.beyonds.phoenix.mountain.model.enums.ResultEnum;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   下午5:09:04
+ * author: DanielCao
+ * date:   2017年5月9日
+ * time:   下午5:09:04
  *
  */
 @Service("demoQueryListDomain")

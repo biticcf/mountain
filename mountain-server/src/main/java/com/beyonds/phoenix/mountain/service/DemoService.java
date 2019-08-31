@@ -14,9 +14,9 @@ import com.beyonds.phoenix.mountain.shackle.ShackleTemplate;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午1:41:07
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午1:41:07
  *
  */
 @ShackleTemplate(name = "demoService", wdServiceTemplateBeanName = "wdServiceTemplate")

@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月13日
- * @Time:   上午11:45:05
+ * author: Daniel.Cao
+ * date:   2019年1月13日
+ * time:   上午11:45:05
  * +解析生成Service接口定义文件
  */
 class ServiceMetaGenerator extends GeneratorBase implements Generator {

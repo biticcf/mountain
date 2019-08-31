@@ -5,9 +5,9 @@ package com.beyonds.phoenix.mountain.core.common.hash;
 
 /**
  * 
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午8:02:35
+ * author  DanielCao
+ * date    2015年4月1日
+ * time    下午8:02:35
  *
  */
 public interface HashFunction {

@@ -8,11 +8,11 @@ import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2018年7月20日
- * @Time:   下午3:11:34
+ * author: DanielCao
+ * date:   2018年7月20日
+ * time:   下午3:11:34
  * 
- * 添加自定义最大分页大小功能
+ * +添加自定义最大分页大小功能
  * 
  * @param <T>
  */

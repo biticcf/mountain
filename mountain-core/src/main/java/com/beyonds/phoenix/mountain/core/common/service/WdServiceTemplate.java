@@ -6,10 +6,10 @@ package com.beyonds.phoenix.mountain.core.common.service;
 import com.beyonds.phoenix.mountain.core.common.result.WdCallbackResult;
 
 /**
- * 服务模板定义
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午1:53:45
+ * +服务模板定义
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午1:53:45
  *
  */
 public interface WdServiceTemplate {

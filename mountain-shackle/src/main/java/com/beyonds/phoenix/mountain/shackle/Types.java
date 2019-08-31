@@ -14,9 +14,9 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午7:23:39
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午7:23:39
  *
  */
 public final class Types {

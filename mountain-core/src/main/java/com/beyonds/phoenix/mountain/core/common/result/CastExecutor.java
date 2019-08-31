@@ -10,9 +10,9 @@ import com.beyonds.phoenix.mountain.core.common.util.ClazzConverter;
 
 /**
  * 
- * @Author: Daniel.Cao
- * @Date:   2018年11月20日
- * @Time:   下午3:49:42
+ * author: Daniel.Cao
+ * date:   2018年11月20日
+ * time:   下午3:49:42
  *
  * @param <T1> 结果对象类型
  * @param <T2> 原对象类型

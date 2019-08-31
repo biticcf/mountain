@@ -19,9 +19,9 @@ import com.beyonds.phoenix.mountain.generator.annotation.MethodConfig;
 import com.beyonds.phoenix.mountain.model.DemoModel;
 
 /**
- * @Author: DanielCao
- * @Date:   2019-02-27
- * @Time:   09:21:17
+ * author: DanielCao
+ * date:   2019-02-27
+ * time:   09:21:17
  * +Demo接口定义说明
  */
 

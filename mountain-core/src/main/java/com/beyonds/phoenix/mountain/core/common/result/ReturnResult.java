@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 /**
  * web返回结果定义
- * @Author: Daniel.Cao
- * @Date:   2018年11月19日
- * @Time:   下午8:59:57
+ * author: Daniel.Cao
+ * date:   2018年11月19日
+ * time:   下午8:59:57
  *
  * @param <T> 业务类型
  */

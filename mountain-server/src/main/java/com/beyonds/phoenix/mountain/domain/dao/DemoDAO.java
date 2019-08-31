@@ -22,9 +22,9 @@ import com.beyonds.phoenix.mountain.domain.dao.po.DemoPo;
 import com.beyonds.phoenix.mountain.domain.dao.sqlprovider.DemoSqlProvider;
 
 /**
- * @author  DanielCao
- * @date    2015年6月29日
- * @time    上午10:20:48
+ * author  DanielCao
+ * date    2015年6月29日
+ * time    上午10:20:48
  *
  */
 @CacheNamespace(eviction = LruCache.class, flushInterval = 60000L, size = 1024, readWrite = true)

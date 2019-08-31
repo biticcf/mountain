@@ -7,9 +7,9 @@ import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   下午7:11:24
+ * author: DanielCao
+ * date:   2017年5月9日
+ * time:   下午7:11:24
  *
  * @param <T> 结果对象类型
  */

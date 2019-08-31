@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月13日
- * @Time:   上午10:53:08
+ * author: Daniel.Cao
+ * date:   2019年3月13日
+ * time:   上午10:53:08
  *
  */
 class DomainRepositoryMetaGenerator extends GeneratorBase implements Generator {

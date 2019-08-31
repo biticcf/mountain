@@ -11,9 +11,9 @@ import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   上午8:20:20
+ * author: DanielCao
+ * date:   2017年5月9日
+ * time:   上午8:20:20
  *
  */
 public class InterceptorChain implements MethodInterceptor {

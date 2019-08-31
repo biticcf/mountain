@@ -12,9 +12,9 @@ import java.lang.annotation.Target;
 import org.springframework.core.annotation.AliasFor;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月3日
- * @Time:   下午4:15:03
+ * author: Daniel.Cao
+ * date:   2019年1月3日
+ * time:   下午4:15:03
  *
  */
 @Target(ElementType.TYPE)

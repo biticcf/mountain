@@ -22,9 +22,9 @@ import com.beyonds.phoenix.mountain.core.common.aop.PerformanceMonitorIntercepto
 import com.beyonds.phoenix.mountain.core.common.aop.ProductCodeAnnotationInterceptor;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   上午8:22:09
+ * author: DanielCao
+ * date:   2017年5月9日
+ * time:   上午8:22:09
  *
  */
 @Configuration

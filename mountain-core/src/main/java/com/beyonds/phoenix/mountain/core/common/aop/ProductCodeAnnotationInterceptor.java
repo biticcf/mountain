@@ -15,9 +15,9 @@ import com.beyonds.phoenix.mountain.core.common.annotation.ProductLogLevelEnum;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   上午8:20:36
+ * author: DanielCao
+ * date:   2017年5月9日
+ * time:   上午8:20:36
  *
  */
 public class ProductCodeAnnotationInterceptor implements MethodInterceptor {

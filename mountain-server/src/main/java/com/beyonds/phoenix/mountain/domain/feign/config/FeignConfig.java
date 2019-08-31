@@ -19,9 +19,9 @@ import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年6月29日
- * @Time:   上午1:21:36
+ * author: DanielCao
+ * date:   2017年6月29日
+ * time:   上午1:21:36
  *
  */
 @Import(FeignAutoConfiguration.class)

@@ -17,9 +17,9 @@ import org.springframework.core.io.Resource;
 import org.xml.sax.SAXException;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月14日
- * @Time:   上午10:25:56
+ * author: Daniel.Cao
+ * date:   2019年1月14日
+ * time:   上午10:25:56
  *
  */
 public class XMLValidation {

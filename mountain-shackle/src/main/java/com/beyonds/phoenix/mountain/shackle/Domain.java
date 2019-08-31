@@ -6,9 +6,9 @@ package com.beyonds.phoenix.mountain.shackle;
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月3日
- * @Time:   下午8:02:06
+ * author: Daniel.Cao
+ * date:   2019年1月3日
+ * time:   下午8:02:06
  *
  */
 public final class Domain {

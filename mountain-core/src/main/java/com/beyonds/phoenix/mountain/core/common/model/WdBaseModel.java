@@ -15,9 +15,9 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   下午7:11:02
+ * author: Daniel.Cao
+ * date:   2019年8月31日
+ * time:   下午1:44:00
  *
  */
 public abstract class WdBaseModel implements Serializable {

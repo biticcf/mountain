@@ -11,9 +11,9 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月13日
- * @Time:   上午11:45:05
+ * author: Daniel.Cao
+ * date:   2019年1月13日
+ * time:   上午11:45:05
  * +解析生成Facade对应的Controller实现文件
  */
 class ControllerMetaGenerator extends GeneratorBase implements Generator {

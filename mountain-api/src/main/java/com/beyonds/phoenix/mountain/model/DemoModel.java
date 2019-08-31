@@ -18,9 +18,9 @@ import com.beyonds.phoenix.mountain.core.common.validator.GroupCreate;
 import com.beyonds.phoenix.mountain.core.common.validator.GroupUpdate;
 
 /**
- * @author  DanielCao
- * @date    2015年4月8日
- * @time    下午6:23:10
+ * author  DanielCao
+ * date    2015年4月8日
+ * time    下午6:23:10
  * 注意：1,错误信息里的message请使用#ResultEnum里对应的code值!!!
  *      2,@NotBlank表示不允许null且长度不允许0,无此约束则只有非空时才校验其他约束
  */

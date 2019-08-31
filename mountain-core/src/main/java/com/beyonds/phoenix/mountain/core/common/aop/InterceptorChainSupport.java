@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   下午3:18:33
+ * author: DanielCao
+ * date:   2017年5月9日
+ * time:   下午3:18:33
  *
  */
 public class InterceptorChainSupport implements MethodInvocation {

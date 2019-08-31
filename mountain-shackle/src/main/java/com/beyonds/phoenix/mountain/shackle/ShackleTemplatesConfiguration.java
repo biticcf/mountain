@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月3日
- * @Time:   下午4:08:41
+ * author: Daniel.Cao
+ * date:   2019年1月3日
+ * time:   下午4:08:41
  *
  */
 @Configuration

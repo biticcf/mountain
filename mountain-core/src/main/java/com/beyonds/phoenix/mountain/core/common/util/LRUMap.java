@@ -7,9 +7,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 
- * @Author: Daniel.Cao
- * @Date:   2018年11月19日
- * @Time:   上午10:25:45
+ * Author: Daniel.Cao
+ * Date:   2018年11月19日
+ * Time:   上午10:25:45
  *
  * @param <K>
  * @param <V>

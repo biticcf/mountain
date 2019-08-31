@@ -5,12 +5,12 @@ package com.beyonds.phoenix.mountain.core.common.util;
 
 import java.util.UUID;
 /**
- * @author  DanielCao
- * @date    2015年3月11日
- * @time    下午4:44:23
+ * author  DanielCao
+ * date    2015年3月11日
+ * time    下午4:44:23
  * Code代码生成器
  * code代码结构定义：
- * 前缀(2位) + 当前时间毫秒数(13位) + 序号(6位,每毫秒从000000开始)
+ * +前缀(2位) + 当前时间毫秒数(13位) + 序号(6位,每毫秒从000000开始)
  */
 public final class CodeGenerator {
 	//默认前缀(99)

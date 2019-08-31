@@ -6,11 +6,11 @@ package com.beyonds.phoenix.mountain.core.common.result;
 import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
 
 /**
- * 分页信息
- * @Author: DanielCao
- * @Date:   2018年7月24日
- * @Time:   下午2:44:38
- * 用于结果返回
+ * +分页信息
+ * author: DanielCao
+ * date:   2018年7月24日
+ * time:   下午2:44:38
+ * +用于结果返回
  */
 public class PaginationMeta extends WdBaseModel {
 	private static final long serialVersionUID = -2260013026657548176L;

@@ -15,9 +15,9 @@ import com.beyonds.phoenix.mountain.app.config.MainConfig;
 import com.beyonds.phoenix.mountain.domain.support.ConstantContext;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年12月9日
- * @Time:   下午3:24:09
+ * author: DanielCao
+ * date:   2017年12月9日
+ * time:   下午3:24:09
  *
  */
 @RunWith(SpringRunner.class)

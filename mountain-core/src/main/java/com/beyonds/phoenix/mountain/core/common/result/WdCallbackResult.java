@@ -4,10 +4,10 @@
 package com.beyonds.phoenix.mountain.core.common.result;
 
 /**
- * 返回结果数据结构定义
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午1:51:51
+ * +返回结果数据结构定义
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午1:51:51
  *
  * @param <T> 结果对象类型
  */

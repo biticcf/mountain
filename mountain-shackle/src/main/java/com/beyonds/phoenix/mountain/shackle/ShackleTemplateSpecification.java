@@ -9,9 +9,9 @@ import java.util.Objects;
 import org.springframework.cloud.context.named.NamedContextFactory;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月3日
- * @Time:   下午6:59:39
+ * author: Daniel.Cao
+ * date:   2019年1月3日
+ * time:   下午6:59:39
  *
  */
 class ShackleTemplateSpecification implements NamedContextFactory.Specification {

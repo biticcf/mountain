@@ -16,9 +16,9 @@ import com.alibaba.fastjson.JSON;
 import com.beyonds.phoenix.mountain.domain.config.KafkaConfig;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2018年12月13日
- * @Time:   下午8:17:47
+ * author: Daniel.Cao
+ * date:   2018年12月13日
+ * time:   下午8:17:47
  *
  */
 @Component

@@ -8,9 +8,9 @@ import java.io.Serializable;
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月3日
- * @Time:   下午7:58:34
+ * author: Daniel.Cao
+ * date:   2019年1月3日
+ * time:   下午7:58:34
  *
  */
 public final class DomainTemplate implements Serializable {

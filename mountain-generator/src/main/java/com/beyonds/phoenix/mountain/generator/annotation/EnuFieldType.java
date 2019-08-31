@@ -4,9 +4,9 @@
 package com.beyonds.phoenix.mountain.generator.annotation;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月12日
- * @Time:   下午5:14:07
+ * author: Daniel.Cao
+ * date:   2019年3月12日
+ * time:   下午5:14:07
  * +Java、MySql、Mybatis数据类型对应枚举
  */
 public enum EnuFieldType {

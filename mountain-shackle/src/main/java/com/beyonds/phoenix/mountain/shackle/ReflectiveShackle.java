@@ -14,9 +14,9 @@ import java.util.Map;
 import com.beyonds.phoenix.mountain.shackle.InvocationHandlerFactory.MethodHandler;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午11:40:19
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午11:40:19
  *
  */
 public class ReflectiveShackle extends Shackle {

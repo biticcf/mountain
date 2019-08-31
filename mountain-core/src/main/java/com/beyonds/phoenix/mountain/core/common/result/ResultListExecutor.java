@@ -16,9 +16,9 @@ import com.beyonds.phoenix.mountain.core.common.util.LogModel;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2018年7月24日
- * @Time:   下午7:25:16
+ * author: DanielCao
+ * date:   2018年7月24日
+ * time:   下午7:25:16
  *
  * @param <T1> 结果数据类型
  * @param <T2> 原数据类型

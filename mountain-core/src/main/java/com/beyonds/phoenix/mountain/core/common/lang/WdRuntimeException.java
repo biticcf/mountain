@@ -5,9 +5,9 @@ package com.beyonds.phoenix.mountain.core.common.lang;
 
 /**
  * 
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午8:03:56
+ * author: Daniel.Cao
+ * date:   2019年8月31日
+ * time:   下午1:43:33
  *
  */
 public class WdRuntimeException extends RuntimeException {

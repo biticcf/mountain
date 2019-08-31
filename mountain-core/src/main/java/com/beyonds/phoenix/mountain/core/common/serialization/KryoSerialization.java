@@ -16,9 +16,9 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
 /**
- * @Author: DanielCao
- * @Date:   2018年5月16日
- * @Time:   上午9:05:13
+ * author: DanielCao
+ * date:   2018年5月16日
+ * time:   上午9:05:13
  *
  */
 public class KryoSerialization implements Serialization {

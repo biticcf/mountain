@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午7:58:58
+ * author  DanielCao
+ * date    2015年4月1日
+ * time    下午7:58:58
  *
  */
 public final class Profiler {

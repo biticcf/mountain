@@ -10,9 +10,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月12日
- * @Time:   上午12:15:57
+ * author: Daniel.Cao
+ * date:   2019年1月12日
+ * time:   上午12:15:57
  *
  */
 @JacksonXmlRootElement(localName = "project", namespace = "project")

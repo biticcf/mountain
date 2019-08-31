@@ -13,9 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月13日
- * @Time:   上午10:27:46
+ * author: Daniel.Cao
+ * date:   2019年1月13日
+ * time:   上午10:27:46
  *
  */
 class FileGeneratorUtils {

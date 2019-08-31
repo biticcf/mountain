@@ -6,9 +6,9 @@ package com.beyonds.phoenix.mountain.generator;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月11日
- * @Time:   下午11:37:33
+ * author: Daniel.Cao
+ * date:   2019年1月11日
+ * time:   下午11:37:33
  *
  */
 @JacksonXmlRootElement(localName = "dir", namespace = "dir")

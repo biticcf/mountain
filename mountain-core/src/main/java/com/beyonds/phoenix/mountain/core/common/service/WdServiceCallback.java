@@ -6,10 +6,10 @@ package com.beyonds.phoenix.mountain.core.common.service;
 import com.beyonds.phoenix.mountain.core.common.result.WdCallbackResult;
 
 /**
- * 回调方法定义
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午1:52:26
+ * +回调方法定义
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午1:52:26
  *
  * @param <T> 结果对象类型
  */

@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 
 /**
  * 
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午8:09:09
+ * author: Daniel.Cao
+ * date:   2019年8月31日
+ * time:   下午1:48:52
  *
  */
 public final class StringUtils {

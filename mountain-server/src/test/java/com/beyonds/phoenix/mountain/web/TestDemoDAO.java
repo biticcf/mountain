@@ -13,9 +13,9 @@ import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
 import com.beyonds.phoenix.mountain.model.DemoModel;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月16日
- * @Time:   下午9:54:04
+ * author: Daniel.Cao
+ * date:   2019年3月16日
+ * time:   下午9:54:04
  *
  */
 public class TestDemoDAO extends AbstTestController {

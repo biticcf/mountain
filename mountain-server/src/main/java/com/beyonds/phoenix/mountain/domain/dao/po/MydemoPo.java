@@ -12,9 +12,10 @@ import com.beyonds.phoenix.mountain.generator.annotation.EnuFieldType;
 import com.beyonds.phoenix.mountain.generator.annotation.TableConfig;
 
 /**
- * @Author: DanielCao
- * @Date:   2019-04-05
- * @Time:   14:24:15
+ * author: DanielCao
+ * date:   2019-04-05
+ * time:   14:24:15
+ * 
  * +MydemoPo
  */
 @TableConfig(poName = "MydemoPo", tableName = "WD_MY_DEMO_INFO")

@@ -19,9 +19,9 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @Author: DanielCao
- * @Date:   2018年7月25日
- * @Time:   下午7:39:02
+ * author: DanielCao
+ * date:   2018年7月25日
+ * time:   下午7:39:02
  *
  */
 @EnableSwagger2

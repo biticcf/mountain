@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午7:57:53
+ * author  DanielCao
+ * date    2015年4月1日
+ * time    下午7:57:53
  *
  */
 public class PerformanceMonitorInterceptor implements MethodInterceptor {

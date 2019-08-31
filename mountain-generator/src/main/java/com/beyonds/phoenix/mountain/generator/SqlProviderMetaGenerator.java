@@ -14,9 +14,9 @@ import com.beyonds.phoenix.mountain.generator.annotation.ColumnConfig;
 import com.beyonds.phoenix.mountain.generator.annotation.TableConfig;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月13日
- * @Time:   上午10:53:08
+ * author: Daniel.Cao
+ * date:   2019年3月13日
+ * time:   上午10:53:08
  *
  */
 class SqlProviderMetaGenerator extends GeneratorBase implements Generator {

@@ -9,9 +9,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午10:41:15
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午10:41:15
  *
  */
 public class Util {

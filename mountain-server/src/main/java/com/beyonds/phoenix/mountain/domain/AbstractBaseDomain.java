@@ -10,9 +10,9 @@ import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 import com.beyonds.phoenix.mountain.domain.support.ConstantContext;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月9日
- * @Time:   下午5:00:52
+ * author: DanielCao
+ * date:   2017年5月9日
+ * time:   下午5:00:52
  *
  * @param <T> 数据类型
  */

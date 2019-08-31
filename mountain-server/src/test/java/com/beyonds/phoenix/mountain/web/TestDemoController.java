@@ -17,9 +17,9 @@ import org.springframework.http.ResponseEntity;
 import com.alibaba.fastjson.JSON;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月15日
- * @Time:   上午8:28:34
+ * author: DanielCao
+ * date:   2017年5月15日
+ * time:   上午8:28:34
  *
  */
 public class TestDemoController extends AbstTestController {

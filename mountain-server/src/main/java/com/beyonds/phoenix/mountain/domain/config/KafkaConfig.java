@@ -20,9 +20,9 @@ import org.springframework.kafka.support.converter.RecordMessageConverter;
 
 /**
  * 
- * @Author: Daniel.Cao
- * @Date:   2018年12月13日
- * @Time:   下午3:05:12
+ * author: Daniel.Cao
+ * date:   2018年12月13日
+ * time:   下午3:05:12
  *
  */
 @EnableKafka

@@ -3,9 +3,9 @@ package com.beyonds.phoenix.mountain.core.common.util;
 
 /**
  * 
- * @Author: Daniel.Cao
- * @Date:   2018年11月19日
- * @Time:   上午11:38:59
+ * author: Daniel.Cao
+ * date:   2018年11月19日
+ * time:   上午11:38:59
  *
  */
 public final class ArraysUtil {

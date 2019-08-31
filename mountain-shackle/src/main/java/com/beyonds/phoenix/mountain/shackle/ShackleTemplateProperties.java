@@ -10,9 +10,9 @@ import java.util.Objects;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月4日
- * @Time:   上午12:42:16
+ * author: Daniel.Cao
+ * date:   2019年1月4日
+ * time:   上午12:42:16
  *
  */
 @ConfigurationProperties("shackle.template")

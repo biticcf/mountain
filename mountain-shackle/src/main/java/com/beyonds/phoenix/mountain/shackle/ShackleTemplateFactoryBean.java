@@ -22,9 +22,9 @@ import com.beyonds.phoenix.mountain.core.common.service.WdServiceTemplate;
 
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月3日
- * @Time:   下午7:05:13
+ * author: Daniel.Cao
+ * date:   2019年1月3日
+ * time:   下午7:05:13
  *
  */
 class ShackleTemplateFactoryBean implements FactoryBean<Object>, 

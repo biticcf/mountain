@@ -18,9 +18,9 @@ import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2018年7月18日
- * @Time:   下午7:49:20
+ * author: DanielCao
+ * date:   2018年7月18日
+ * time:   下午7:49:20
  *
  * @param <T1> 结果类型
  * @param <T2> 原始类型

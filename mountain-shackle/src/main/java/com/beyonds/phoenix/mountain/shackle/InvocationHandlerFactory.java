@@ -8,9 +8,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午11:37:56
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午11:37:56
  *
  */
 public interface InvocationHandlerFactory {

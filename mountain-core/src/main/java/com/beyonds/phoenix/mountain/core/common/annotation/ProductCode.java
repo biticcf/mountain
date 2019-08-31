@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
 
 /**
  * 产品码注解
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午7:55:36
+ * author  DanielCao
+ * date    2015年4月1日
+ * time    下午7:55:36
  *
  */
 @Retention(RetentionPolicy.RUNTIME) 

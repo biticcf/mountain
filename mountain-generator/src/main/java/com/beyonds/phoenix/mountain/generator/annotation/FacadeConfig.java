@@ -11,9 +11,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年2月27日
- * @Time:   上午9:53:47
+ * author: Daniel.Cao
+ * date:   2019年2月27日
+ * time:   上午9:53:47
  *
  */
 @Documented

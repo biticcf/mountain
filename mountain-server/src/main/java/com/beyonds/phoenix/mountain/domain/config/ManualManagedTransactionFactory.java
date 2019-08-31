@@ -11,9 +11,9 @@ import org.apache.ibatis.transaction.Transaction;
 import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月25日
- * @Time:   下午4:32:35
+ * author: Daniel.Cao
+ * date:   2019年3月25日
+ * time:   下午4:32:35
  *
  */
 public class ManualManagedTransactionFactory extends SpringManagedTransactionFactory {

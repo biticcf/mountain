@@ -32,9 +32,10 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.beyonds.phoenix.mountain.core.common.service.StringDateConverter;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月11日
- * @Time:   下午3:35:28
+ * 
+ * author: Daniel.Cao
+ * date:   2019年8月31日
+ * time:   下午2:05:08
  *
  */
 @Configuration

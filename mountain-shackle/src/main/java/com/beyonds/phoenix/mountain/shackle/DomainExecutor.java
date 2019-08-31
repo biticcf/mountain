@@ -18,9 +18,9 @@ import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceTemplate;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午11:09:16
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午11:09:16
  *
  */
 public interface DomainExecutor {

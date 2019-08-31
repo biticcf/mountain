@@ -8,9 +8,9 @@ import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月12日
- * @Time:   上午12:06:30
+ * author: Daniel.Cao
+ * date:   2019年1月12日
+ * time:   上午12:06:30
  *
  */
 @JacksonXmlRootElement(localName = "method", namespace = "method")

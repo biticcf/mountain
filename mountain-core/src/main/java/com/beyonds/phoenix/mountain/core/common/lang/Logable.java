@@ -6,14 +6,14 @@ package com.beyonds.phoenix.mountain.core.common.lang;
 import org.slf4j.Logger;
 
 /**
- * @Author: DanielCao
- * @Date:   2018年5月28日
- * @Time:   上午9:35:38
+ * author: DanielCao
+ * date:   2018年5月28日
+ * time:   上午9:35:38
  *
  */
 public interface Logable {
 	/**
-	 * 输出错误日志
+	 * +输出错误日志
 	 * @param logger 输出器
 	 * @param message 输出消息
 	 * @param t 异常信息

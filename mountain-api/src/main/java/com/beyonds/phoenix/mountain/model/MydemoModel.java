@@ -9,9 +9,9 @@ import java.util.Date;
 import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
 
 /**
- * @Author: DanielCao
- * @Date:   2019-04-05
- * @Time:   17:44:21
+ * author: DanielCao
+ * date:   2019-04-05
+ * time:   17:44:21
  * +MydemoModel
  */
 

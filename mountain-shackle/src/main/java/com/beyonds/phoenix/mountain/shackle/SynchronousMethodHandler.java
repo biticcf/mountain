@@ -6,9 +6,9 @@ package com.beyonds.phoenix.mountain.shackle;
 import com.beyonds.phoenix.mountain.shackle.InvocationHandlerFactory.MethodHandler;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午11:45:37
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午11:45:37
  *
  */
 final class SynchronousMethodHandler implements MethodHandler {

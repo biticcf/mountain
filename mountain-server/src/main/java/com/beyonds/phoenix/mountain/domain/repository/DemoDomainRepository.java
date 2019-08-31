@@ -18,9 +18,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 /**
- * @author  DanielCao
- * @date    2015年6月29日
- * @time    上午10:53:27
+ * author  DanielCao
+ * date    2015年6月29日
+ * time    上午10:53:27
  *
  */
 @Repository("demoDomainRepository")

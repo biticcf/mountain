@@ -7,9 +7,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午8:51:03
+ * author  DanielCao
+ * date    2015年4月1日
+ * time    下午8:51:03
  *
  */
 public enum ResultEnum {

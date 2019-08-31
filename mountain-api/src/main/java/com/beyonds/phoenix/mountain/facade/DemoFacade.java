@@ -19,9 +19,9 @@ import com.beyonds.phoenix.mountain.core.common.result.ReturnResult;
 import com.beyonds.phoenix.mountain.model.DemoModel;
 
 /**
- * @Author: DanielCao
- * @Date:   2018年5月20日
- * @Time:   下午8:33:39
+ * author: DanielCao
+ * date:   2018年5月20日
+ * time:   下午8:33:39
  *
  */
 @RequestMapping(value = "/phoenix/mountain/v1")

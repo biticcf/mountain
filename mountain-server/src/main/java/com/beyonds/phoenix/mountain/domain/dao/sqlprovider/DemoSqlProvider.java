@@ -11,9 +11,10 @@ import org.apache.ibatis.jdbc.SQL;
 import com.beyonds.phoenix.mountain.domain.dao.po.DemoPo;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月16日
- * @Time:   下午8:52:52
+ * author: Daniel.Cao
+ * date:   2019年3月16日
+ * time:   下午8:52:52
+ * 
  * +注意:方法中只能有一个参数Map或对象bean
  */
 public class DemoSqlProvider {

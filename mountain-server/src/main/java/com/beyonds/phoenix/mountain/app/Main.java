@@ -14,12 +14,13 @@ import com.beyonds.phoenix.mountain.shackle.EnableShackleTemplates;
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年5月1日
- * @Time:   下午5:39:52
+ * author: DanielCao
+ * date:   2017年5月1日
+ * time:   下午5:39:52
+ * 
  * SpringBoot 主方法
- * @SpringBootApplication相当于
- *     @Configuration+@EnableAutoConfiguration+@ComponentScan
+ * SpringBootApplication相当于
+ *     Configuration+EnableAutoConfiguration+ComponentScan
  * 
  */
 @SpringBootApplication(scanBasePackages = {"com.beyonds.phoenix.mountain"}, exclude = {PageHelperAutoConfiguration.class})

@@ -12,9 +12,9 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.util.StringUtils;
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年10月28日
- * @Time:   下午8:27:15
+ * author: DanielCao
+ * date:   2017年10月28日
+ * time:   下午8:27:15
  *
  */
 public class FilterBeanNameAutoProxyCreator extends BeanNameAutoProxyCreator {

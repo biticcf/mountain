@@ -12,9 +12,9 @@ import com.beyonds.phoenix.mountain.domain.feign.config.FeignConfig;
 import com.beyonds.phoenix.mountain.domain.feign.fallback.CategoryFeignClientFallback;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年6月28日
- * @Time:   下午11:50:11
+ * author: DanielCao
+ * date:   2017年6月28日
+ * time:   下午11:50:11
  *
  */
 @FeignClient(name = "categoryFeignClient",

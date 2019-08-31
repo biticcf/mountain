@@ -15,9 +15,9 @@ import com.caucho.hessian.io.Hessian2Input;
 import com.caucho.hessian.io.Hessian2Output;
 
 /**
- * @Author: DanielCao
- * @Date:   2018年5月16日
- * @Time:   上午9:14:48
+ * author: DanielCao
+ * date:   2018年5月16日
+ * time:   上午9:14:48
  *
  */
 public class Hessian2Serialization implements Serialization {

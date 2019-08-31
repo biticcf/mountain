@@ -30,9 +30,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * @Author: DanielCao
- * @Date:   2017年6月1日
- * @Time:   下午1:41:53
+ * author: DanielCao
+ * date:   2017年6月1日
+ * time:   下午1:41:53
  *
  */
 @Configuration

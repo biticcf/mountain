@@ -14,9 +14,9 @@ import java.util.Map;
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 
 /**
- * @Author: Daniel.Cao
- * @Date: 2019年1月3日
- * @Time: 下午10:37:19
+ * author: Daniel.Cao
+ * date: 2019年1月3日
+ * time: 下午10:37:19
  *
  */
 public interface Contract {

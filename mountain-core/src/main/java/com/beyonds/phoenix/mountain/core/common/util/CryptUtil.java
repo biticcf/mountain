@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * </li>
  * <ul>
  * 
- * @author CaoChaofeng
+ * author CaoChaofeng
  */
 public final class CryptUtil {
 	private static final String KEY_MD5 = "MD5";

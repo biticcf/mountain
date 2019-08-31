@@ -15,9 +15,9 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 /**
- * @Author: DanielCao
- * @Date:   2018年5月16日
- * @Time:   上午9:36:18
+ * author: DanielCao
+ * date:   2018年5月16日
+ * time:   上午9:36:18
  *
  */
 public class FastJsonSerialization implements Serialization {

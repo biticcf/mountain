@@ -7,10 +7,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 保密码、序列号生成工具
- * @author  DanielCao
- * @date    2015年4月1日
- * @time    下午8:07:53
+ * +保密码、序列号生成工具
+ * author  DanielCao
+ * date    2015年4月1日
+ * time    下午8:07:53
  *
  */
 public final class KeyCodeGenerator {

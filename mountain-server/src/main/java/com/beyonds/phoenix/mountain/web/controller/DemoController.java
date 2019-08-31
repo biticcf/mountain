@@ -32,9 +32,9 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * 
- * @Author: DanielCao
- * @Date:   2017年5月8日
- * @Time:   下午2:54:19
+ * author: DanielCao
+ * date:   2017年5月8日
+ * time:   下午2:54:19
  *
  */
 @Api(value = "测试服务接口", description = "测试信息")

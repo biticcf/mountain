@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月5日
- * @Time:   下午2:36:56
+ * author: Daniel.Cao
+ * date:   2019年1月5日
+ * time:   下午2:36:56
  *
  */
 @RestController

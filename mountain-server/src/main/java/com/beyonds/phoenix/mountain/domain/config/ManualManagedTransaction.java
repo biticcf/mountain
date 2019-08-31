@@ -19,9 +19,9 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年3月25日
- * @Time:   下午3:24:44
+ * author: Daniel.Cao
+ * date:   2019年3月25日
+ * time:   下午3:24:44
  *
  */
 public class ManualManagedTransaction implements Transaction {

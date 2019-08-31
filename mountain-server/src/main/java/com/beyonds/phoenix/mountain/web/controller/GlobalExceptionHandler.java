@@ -25,9 +25,9 @@ import com.beyonds.phoenix.mountain.model.enums.ResultEnum;
 
 /**
  * +统一异常处理
- * @Author: Daniel.Cao
- * @Date:   2019年8月2日
- * @Time:   下午5:34:26
+ * author: Daniel.Cao
+ * date:   2019年8月2日
+ * time:   下午5:34:26
  *
  */
 @ControllerAdvice

@@ -12,10 +12,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.lang.Nullable;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月17日
- * @Time:   下午2:16:23
- * 解析spring的代理对象，获取原被代理对象
+ * author: Daniel.Cao
+ * date:   2019年1月17日
+ * time:   下午2:16:23
+ * +解析spring的代理对象，获取原被代理对象
  */
 public class AopTargetUtils {
 	/** 

@@ -7,9 +7,9 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 /**
  * 
- * @Author: Daniel.Cao
- * @Date:   2019年1月13日
- * @Time:   上午10:39:30
+ * author: Daniel.Cao
+ * date:   2019年1月13日
+ * time:   上午10:39:30
  *
  */
 class XmlUtil {

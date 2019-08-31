@@ -14,9 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @Author: DanielCao
- * @Date:   2018年5月16日
- * @Time:   上午10:16:10
+ * author: DanielCao
+ * date:   2018年5月16日
+ * time:   上午10:16:10
  *
  */
 public class JDKSerialization implements Serialization {

@@ -26,9 +26,9 @@ import com.beyonds.phoenix.mountain.generator.annotation.FacadeConfig;
 import com.beyonds.phoenix.mountain.generator.annotation.MethodConfig;
 
 /**
- * @Author: Daniel.Cao
- * @Date:   2019年1月13日
- * @Time:   上午11:49:48
+ * author: Daniel.Cao
+ * date:   2019年1月13日
+ * time:   上午11:49:48
  *
  */
 @SuppressWarnings("restriction")
@@ -825,9 +825,9 @@ abstract class GeneratorBase {
 		DateFormat dateT = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		classContentList.add("/**");
-		classContentList.add(" * @Author: DanielCao");
-		classContentList.add(" * @Date:   " + dateD.format(date));
-		classContentList.add(" * @Time:   " + dateT.format(date));
+		classContentList.add(" * author: DanielCao");
+		classContentList.add(" * date:   " + dateD.format(date));
+		classContentList.add(" * time:   " + dateT.format(date));
 		classContentList.add(" * +" + _msg);
 		classContentList.add(" */");
 		
