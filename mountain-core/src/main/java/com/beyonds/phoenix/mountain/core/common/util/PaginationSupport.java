@@ -14,7 +14,7 @@ import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
  * 
  * +添加自定义最大分页大小功能
  * 
- * @param <T>
+ * @param <T> 实际对象类型
  */
 public class PaginationSupport<T> extends WdBaseModel {
 	private static final long serialVersionUID = 5630859931214794398L;
