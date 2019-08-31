@@ -26,18 +26,14 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * <ul>
- * <li>BASE64的加密解密是双向的，可以求反解。</li>
- * <li>MD5、SHA以及HMAC是单向加密，任何数据加密后只会产生唯一的一个加密串，通常用来校验数据在传输过程中是否被修改。</li>
- * <li>HMAC算法有一个密钥，增强了数据传输过程中的安全性，强化了算法外的不可控因素。</li>
- * <li>DES DES-Data Encryption Standard,即数据加密算法。 DES算法的入口参数有三个:Key、Data、Mode。
- * <ul>
- * <li>Key:8个字节共64位,是DES算法的工作密钥;</li>
- * <li>Data:8个字节64位,是要被加密或被解密的数据;</li>
- * <li>Mode:DES的工作方式,有两种:加密或解密。</li>
- * </ul>
- * </li>
- * <ul>
+ * BASE64的加密解密是双向的，可以求反解。
+ * MD5、SHA以及HMAC是单向加密，任何数据加密后只会产生唯一的一个加密串，通常用来校验数据在传输过程中是否被修改。
+ * HMAC算法有一个密钥，增强了数据传输过程中的安全性，强化了算法外的不可控因素。
+ * DES DES-Data Encryption Standard,即数据加密算法。 DES算法的入口参数有三个:Key、Data、Mode。
+ * 
+ * Key:8个字节共64位,是DES算法的工作密钥;
+ * Data:8个字节64位,是要被加密或被解密的数据;
+ * Mode:DES的工作方式,有两种:加密或解密。
  * 
  * author CaoChaofeng
  */
@@ -49,14 +45,12 @@ public final class CryptUtil {
 	/**
 	 * MAC算法可选以下多种算法
 	 * 
-	 * <pre>
-	 * 
 	 * HmacMD5  
 	 * HmacSHA1  
 	 * HmacSHA256  
 	 * HmacSHA384  
 	 * HmacSHA512
-	 * </pre>
+	 * 
 	 */
 	public static final String KEY_MAC = "HmacMD5";
 	
@@ -171,17 +165,16 @@ public final class CryptUtil {
 	}
 
 	/**
-	 * DES 算法 <br>
+	 * DES 算法 
 	 * 可替换为以下任意一种算法，同时key值的size相应改变。
 	 * 
-	 * <pre>
 	 * DES                  key size must be equal to 56 
 	 * DESede(TripleDES)    key size must be equal to 112 or 168 
 	 * AES                  key size must be equal to 128, 192 or 256,but 192 and 256 bits may not be available 
 	 * Blowfish             key size must be multiple of 8, and can only range from 32 to 448 (inclusive) 
 	 * RC2                  key size must be between 40 and 1024 bits 
 	 * RC4(ARCFOUR)         key size must be between 40 and 1024 bits
-	 * </pre>
+	 * 
 	 */
 	public static final String ALGORITHM = "DES";
 

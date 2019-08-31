@@ -200,9 +200,9 @@ public final class Profiler {
     
     /**
      * 信息实体定义
-     * @Author: Daniel.Cao
-     * @Date:   2018年11月19日
-     * @Time:   下午8:13:47
+     * author: Daniel.Cao
+     * date:   2018年11月19日
+     * time:   下午8:13:47
      *
      */
     public static final class Entry {

@@ -7,12 +7,12 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 
- * Author: Daniel.Cao
- * Date:   2018年11月19日
- * Time:   上午10:25:45
+ * author: Daniel.Cao
+ * date:   2018年11月19日
+ * time:   上午10:25:45
  *
- * @param <K>
- * @param <V>
+ * @param <K> key
+ * @param <V> value
  */
 public class LRUMap<K, V> extends LinkedHashMap<K, V> {
 	private static final long serialVersionUID = -4918749001071414905L;

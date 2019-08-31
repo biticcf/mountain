@@ -22,7 +22,7 @@ public class AopTargetUtils {
 	 * 获取 目标对象 
 	 * @param proxy 代理对象 
 	 * @return 目标对象
-	 * @throws Exception 
+	 * @throws ProxyBeansException 代理异常 
 	 */
 	public static Object getTarget(Object proxy) throws ProxyBeansException {
 		if (!AopUtils.isAopProxy(proxy)) {
