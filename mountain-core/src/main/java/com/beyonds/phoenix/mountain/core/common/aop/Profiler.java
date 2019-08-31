@@ -480,9 +480,9 @@ public final class Profiler {
     
     /**
      * 消息接口定义
-     * @Author: Daniel.Cao
-     * @Date:   2018年11月19日
-     * @Time:   下午8:32:26
+     * author: Daniel.Cao
+     * date:   2018年11月19日
+     * time:   下午8:32:26
      *
      */
     public interface Message {
