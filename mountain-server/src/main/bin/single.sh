@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP_NAME="proj_phoenix-mountain"
+APP_NAME="proj_mountain"
 
 #取当前目录
 BASE_PATH=`cd "$(dirname "$0")"; pwd`

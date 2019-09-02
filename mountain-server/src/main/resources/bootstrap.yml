@@ -56,12 +56,12 @@ spring:
 #            type: git # git数据源配置
 #            order: 2
 #            uri: http://git.xxx.com/config/config-server.git
-#            search-paths: phoenix-mountain/${spring.custom.default-env}
+#            search-paths: mountain/${spring.custom.default-env}
 #            skip-ssl-validation: true
 #            force-pull: true
 #            clone-on-start: true
 #            delete-untracked-branches: true
-#            basedir: /var/config/phoenix-mountain-config-repo #远程文件本地保存位置
+#            basedir: /var/config/mountain-config-repo #远程文件本地保存位置
 #            timeout: 5 #单位秒
 #            #username: user
 #            #password: secret
@@ -166,7 +166,7 @@ ribbon:
 #     NFLoadBalancerPingClassName: com.netflix.loadbalancer.PingUrl
 
 logging: 
-  #path: ${LOGGING.PATH:/var/logs/phoenix-mountain_logs/}
+  #path: ${LOGGING.PATH:/var/logs/mountain_logs/}
   path: ${LOGGING_PATH}
   register-shutdown-hook: false
 
@@ -175,13 +175,13 @@ management:
   server: 
     # address: 127.0.0.1
     # http://localhost:19988/actuator/info 默认地址
-    # http://localhost:19988/phoenix/mountain/info 配置base-path后的地址
+    # http://localhost:19988/info 配置base-path后的地址
     # port: 19988
     servlet: 
       context-path: /
   endpoints: 
     web: 
-      base-path: /phoenix/mountain
+      base-path: /mountain
       exposure: 
         include: '*'
         #exclude: env

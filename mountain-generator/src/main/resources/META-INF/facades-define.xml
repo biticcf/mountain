@@ -7,9 +7,9 @@
     <!-- 非空,项目名称 -->
     <name>MyProj</name>
     <!-- 非空,只允许出现小写字母 -->
-    <company>beyonds</company>
+    <company>github</company>
     <!-- 非空 -->
-    <scope>phoenix</scope>
+    <scope>biticcf</scope>
     <!-- 非空 -->
     <template>mountain</template>
     <!-- 可空,默认是false,true表示覆盖已存在的文件,false表示先做备份再做覆盖 -->
@@ -18,23 +18,23 @@
     <dirs>
       <dir>
         <name>model</name>
-        <value>com/beyonds/phoenix/mountain/model</value>
+        <value>com/github/biticcf/mountain/model</value>
       </dir>
       <dir>
         <name>facade</name>
-        <value>com/beyonds/phoenix/mountain/facade</value>
+        <value>com/github/biticcf/mountain/facade</value>
       </dir>
       <dir>
         <name>controller</name>
-        <value>com/beyonds/phoenix/mountain/web/controller</value>
+        <value>com/github/biticcf/mountain/web/controller</value>
       </dir>
       <dir>
         <name>service</name>
-        <value>com/beyonds/phoenix/mountain/service</value>
+        <value>com/github/biticcf/mountain/service</value>
       </dir>
       <dir>
         <name>domain</name>
-        <value>com/beyonds/phoenix/mountain/domain</value>
+        <value>com/github/biticcf/mountain/domain</value>
       </dir>
     </dirs>
   </properties>

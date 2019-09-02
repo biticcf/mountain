@@ -1,6 +1,6 @@
 spring: 
   application: 
-    name: ${TENANT_GROUP:}phoenix-mountain
+    name: ${TENANT_GROUP:}mountain
   http: 
     converters: 
       preferred-json-mapper: jackson
@@ -64,7 +64,7 @@ spring:
 
 server: 
   port: ${SERVER_PORT:10000}
-  display-name: ${TENANT_GROUP:}phoenix-mountain
+  display-name: ${TENANT_GROUP:}mountain
   connection-timeout: 12000
   server-header: 
   servlet: 
@@ -164,8 +164,8 @@ datasource:
 mybatis: 
   master: 
     # 注意不要配置config-location
-    type-aliases-package: com.beyonds.phoenix.mountain.domain.dao.po
-    type-dao-package: com.beyonds.phoenix.mountain.domain.dao
+    type-aliases-package: com.github.biticcf.mountain.domain.dao.po
+    type-dao-package: com.github.biticcf.mountain.domain.dao
     executorType: REUSE
     configuration: 
       cache-enabled: true

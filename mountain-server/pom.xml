@@ -236,7 +236,7 @@
 	
 	<build>
         <!-- 自定义该模块的jar包名称,用于发布 -->
-        <finalName>${build.final.name}.${phoenix-mountain.version}</finalName>
+        <finalName>${build.final.name}.${mountain.version}</finalName>
     	<filters>
 			<filter>src/main/filters/filter-${env}-${profile}.properties</filter>
 		</filters>
@@ -343,7 +343,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.beyonds.phoenix.mountain.app.Main</mainClass>
+                    <mainClass>com.github.biticcf.mountain.app.Main</mainClass>
                     <layout>ZIP</layout>
                     <attach>false</attach>
                 </configuration>

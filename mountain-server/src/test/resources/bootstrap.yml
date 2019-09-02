@@ -95,7 +95,7 @@ server:
       suffix: .log
 
 logging: 
-  path: ${LOGGING.PATH:/var/logs/phoenix-mountain_logs/}
+  path: ${LOGGING.PATH:/var/logs/mountain_logs/}
   register-shutdown-hook: false
 
 # ACTUATOR PROPERTIES

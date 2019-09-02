@@ -65,7 +65,7 @@
 		<docker.repostory>xxxxxx.tencentyun.com</docker.repostory>
 		<docker.repostory.user>xxxxxxxx</docker.repostory.user>
 		<docker.repostory.password>xxxxxxxxx</docker.repostory.password>
-		<docker.registry.name>phoenix</docker.registry.name>
+		<docker.registry.name>biticcf</docker.registry.name>
 		<docker.image.name>mountain</docker.image.name>
 		
 		<!-- git.version.name -->
@@ -74,7 +74,7 @@
 		<java.version>1.8</java.version>
 		
 		<!-- 定义版本号 -->
-		<mountain.version>1.0.RELEASE</mountain.version>
+		<mountain.version>2.0.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.1.7.RELEASE</spring.boot.version>
@@ -421,7 +421,7 @@
             			<argument>dir=${basedir}</argument>
             			<argument>file=/src/generator/facades-define.xml</argument>
         			</arguments>
-        			<mainClass>com.beyonds.phoenix.mountain.generator.MainGenerator</mainClass>
+        			<mainClass>com.github.biticcf.mountain.generator.MainGenerator</mainClass>
     			</configuration>
     			<dependencies>
 					<dependency>
