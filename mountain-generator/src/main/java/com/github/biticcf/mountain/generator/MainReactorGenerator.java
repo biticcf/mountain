@@ -66,7 +66,7 @@ public class MainReactorGenerator extends GeneratorBase {
 		
 		// 2,校验配置文件
 		mainGenerator.checkProject(project, file, baseDir);
-System.out.println("xml校验成功!");
+		System.out.println("xml校验成功!");
 		
 		// 3.生成Po文件元文件
 		List<FileMeta> poFileMetaList = new PoMetaGenerator().generatorFileMeta(project, null, null);

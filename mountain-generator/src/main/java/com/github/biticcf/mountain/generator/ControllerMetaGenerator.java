@@ -258,6 +258,9 @@ class ControllerMetaGenerator extends GeneratorBase implements Generator {
 		Boolean listResultFlag = method.getListResultFlag();
 		Boolean pagination = method.getPagination();
 		execType = PLUGIN_BASE_DIR + ".core.common.result.";
+		if (type != null && type.intValue() == 2) { //WebFlux
+			execType += "reactor.";
+		}
 		if (listResultFlag.booleanValue()) {
 			if (pagination.booleanValue()) { // 分页查询
 				execType += "ResultPaginationExecutor";
@@ -306,12 +309,7 @@ class ControllerMetaGenerator extends GeneratorBase implements Generator {
 		if (requestMethods != null && !requestMethods.isEmpty()) {
 			methodName = requestMethods.get(0);
 		}
-		
-		if (type != null && type.intValue() == 2) { //WebFlux
-			bodyList.add("}.processReactorResult(\"" + facade.getName() + "Controller." + method.getName() + "\", \"" + methodName + "\", _paramValueMap, " + returnRealTypeName1 + ".class);");
-		} else {
-			bodyList.add("}.processResult(\"" + facade.getName() + "Controller." + method.getName() + "\", \"" + methodName + "\", _paramValueMap, " + returnRealTypeName1 + ".class);");
-		}
+		bodyList.add("}.processResult(\"" + facade.getName() + "Controller." + method.getName() + "\", \"" + methodName + "\", _paramValueMap, " + returnRealTypeName1 + ".class);");
 		
 		return bodyList;
 	}

@@ -242,7 +242,25 @@ abstract class GeneratorBase {
 				throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法返回类型错误!");
 			}
 			ParameterizedType type1 = (ParameterizedType) rtType;
+			Type _rawType = type1.getRawType();
+			if (_rawType == null) {
+				throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法返回类型错误!");
+			}
+			if ("reactor.core.publisher.Mono".equals(_rawType.getTypeName())) {
+				Type[] _rts = type1.getActualTypeArguments();
+				if (_rts == null || _rts.length == 0) {
+					throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法返回类型错误!");
+				}
+				Type tmpType = _rts[0];
+				if (!(tmpType instanceof ParameterizedType)) {
+					throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法返回类型错误!");
+				}
+				type1 = (ParameterizedType) tmpType;
+			}
 			Type[] rts = type1.getActualTypeArguments();
+			if (rts == null || rts.length == 0) {
+				throw new RuntimeException("Facade[" + facadeClz.getName() + "." + _md.getName() + "]定义的方法返回类型错误!");
+			}
 			method.setReturnRealType(rts[0].getTypeName());
 			
 			// exceptions
