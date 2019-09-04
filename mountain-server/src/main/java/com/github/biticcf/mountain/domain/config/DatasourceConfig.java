@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -66,8 +67,6 @@ public class DatasourceConfig {
 	
 	@Value("${spring.datasource.type}")
 	private Class<? extends DataSource> datasourceType;
-	@Value("${spring.transaction.with-strict-flag:false}")
-	private boolean withStrictFlag;
 	
 	/**
 	 * 定义服务模板
@@ -146,8 +145,7 @@ public class DatasourceConfig {
         factory.setDataSource(dataSource);
         
          // 自定义事务处理器
-        System.out.println(withStrictFlag);
-        if (withStrictFlag && manualManagedTransactionFactory != null) {
+        if (manualManagedTransactionFactory != null) {
 			factory.setTransactionFactory(manualManagedTransactionFactory);
 		}
         
@@ -194,6 +192,7 @@ public class DatasourceConfig {
 	 * +自定义事务管理工厂,用以管理事务的生命周期
 	 * @return TransactionFactory
 	 */
+    @ConditionalOnExpression("${spring.transaction.with-strict-flag:true}")
 	@Bean(name = "manualManagedTransactionFactory")
 	public ManualManagedTransactionFactory manualManagedTransactionFactory() {
 		return new ManualManagedTransactionFactory();
