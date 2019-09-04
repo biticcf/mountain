@@ -2,7 +2,7 @@
  * @Info:      ManualManagedTransaction.java
  * @Copyright: 2019
  */
-package com.github.biticcf.mountain.domain.config;
+package com.github.biticcf.mountain.core.common.transaction;
 
 import static org.springframework.util.Assert.notNull;
 
