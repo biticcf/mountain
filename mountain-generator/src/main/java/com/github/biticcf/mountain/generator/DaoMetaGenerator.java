@@ -233,7 +233,7 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 			genericReturnType = poNameTmp;
 			parameterList.add("final " + poNameTmp + " " + poNameTmpShort);
 			contentList.add(" * +根据条件分页查询记录");
-			contentList.add(" * @param " + poNameTmp + " " + poNameTmpShort);
+			contentList.add(" * @param " + poNameTmpShort + " " + poNameTmpShort);
 			
 			// annotationList
 			makeQueryListAnnotation(annotationList, javaNameMap, importList, prefix, resultMapName);
