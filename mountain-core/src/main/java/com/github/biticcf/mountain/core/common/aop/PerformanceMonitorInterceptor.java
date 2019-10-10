@@ -3,22 +3,24 @@
  */
 package com.github.biticcf.mountain.core.common.aop;
 
+import java.time.Duration;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
- * author  DanielCao
- * date    2015年4月1日
- * time    下午7:57:53
+ * +性能监控阈值
+ * author: Daniel.Cao
+ * date:   2019年10月10日
+ * time:   上午10:19:07
  *
  */
 public class PerformanceMonitorInterceptor implements MethodInterceptor {
 	private static Logger logger = LoggerFactory.getLogger(PerformanceMonitorInterceptor.class);
-
-	private int threshold = 100; // 以毫秒表示的阈值
+	
+	private Duration threshold = Duration.ofMillis(100); //时间阈值
 
 	public PerformanceMonitorInterceptor() {
 		super();
@@ -44,10 +46,10 @@ public class PerformanceMonitorInterceptor implements MethodInterceptor {
 				 * 保证了PerformanceMonitorInterceptor兼容了PerformanceInstrumentInterceptor的功能
 				 */
 				long elapseTime = Profiler.getDuration();
-				if (elapseTime > threshold) {
+				if (elapseTime > threshold.toMillis()) {
 					StringBuilder builder = new StringBuilder();
 					builder.append(" ").append(name); // 方法
-					builder.append(" ").append(threshold).append(" (ms)"); // 阈值(ms)
+					builder.append(" ").append(threshold.toMillis()).append(" (ms)"); // 阈值(ms)
 					builder.append(" ").append(elapseTime).append(" (ms)\r\n"); // 实际执行时间(ms)
 					builder.append(Profiler.dump());
 					logger.info(builder.toString());
@@ -68,14 +70,14 @@ public class PerformanceMonitorInterceptor implements MethodInterceptor {
 	/**
 	 * @return the threshold
 	 */
-	public int getThreshold() {
+	public Duration getThreshold() {
 		return threshold;
 	}
 
 	/**
 	 * @param threshold the threshold to set
 	 */
-	public void setThreshold(int threshold) {
+	public void setThreshold(Duration threshold) {
 		this.threshold = threshold;
 	}
 }
