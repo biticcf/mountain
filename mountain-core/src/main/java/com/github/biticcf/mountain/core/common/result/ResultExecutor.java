@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import com.github.biticcf.mountain.core.common.lang.Logable;
+import com.github.biticcf.mountain.core.common.model.LogLevelEnum;
 import com.github.biticcf.mountain.core.common.util.CodeGenerator;
 import com.github.biticcf.mountain.core.common.util.LogModel;
 
@@ -31,7 +32,7 @@ public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 	CallResult<T2> execute();
 	
 	/**
-	 * +结果类型转化
+	 * +结果类型转化,默认输出所有参数
 	 * @param name 调用者名称
 	 * @param method 调用接口的method方法
 	 * @param paramValueMap 参数列表
@@ -39,39 +40,66 @@ public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 	 * @return 转换后的结果集
 	 */
 	default ReturnResult<T1> processResult(String name, String method, Map<String, Object> paramValueMap, Class<T1> clazz) {
-        final LogModel lm = LogModel.newLogModel(name);
-        lm.addMetaData("method", method);
-        if (paramValueMap != null && !paramValueMap.isEmpty()) {
-        	for (String _key : paramValueMap.keySet()) {
-        		lm.addMetaData(_key, paramValueMap.get(_key));
+		return processResult(name, method, paramValueMap, LogLevelEnum.ALL, clazz);
+	}
+	
+	/**
+	 * +结果类型转化
+	 * @param name 调用者名称
+	 * @param method 调用接口的method方法
+	 * @param paramValueMap 参数列表
+	 * @param logLevel 输出日志级别，详见 #LogLevelEnu
+	 * @param clazz 结果对象
+	 * @return 转换后的结果集
+	 */
+	default ReturnResult<T1> processResult(String name, String method, Map<String, Object> paramValueMap, LogLevelEnum logLevel, Class<T1> clazz) {
+		// 默认是ALL
+		if (logLevel == null) {
+        	logLevel = LogLevelEnum.ALL;
+        }
+		LogModel lm = null;
+        if (!LogLevelEnum.NEVER.equals(logLevel)) {
+        	lm = LogModel.newLogModel(name);
+        	
+        	lm.addMetaData("method", method);
+        	if (paramValueMap != null && !paramValueMap.isEmpty()) {
+        		for (String _key : paramValueMap.keySet()) {
+        			lm.addMetaData(_key, paramValueMap.get(_key));
+        		}
         	}
+        	
+        	String traceId = CodeGenerator.generateCode(CodeGenerator.CODE_PREFIX_TRACE_ID);
+            MDC.put(TRACE_ID, traceId);
+            
+        	writeInfoLog(LOGGER, lm.toJson(false));
         }
         
-        String traceId = CodeGenerator.generateCode(CodeGenerator.CODE_PREFIX_TRACE_ID);
-        MDC.put(TRACE_ID, traceId);
-        
-        writeInfoLog(LOGGER, lm.toJson(false));
-        
         CallResult<T2> callResult = execute();
-        lm.addMetaData("callResult", callResult);
+        if (LogLevelEnum.ALL.equals(logLevel)) {
+        	lm.addMetaData("callResult", callResult);
+        }
         
         if (callResult == null) {
-			writeErrorLog(LOGGER, lm.toJson());
-			
-			MDC.remove(TRACE_ID);
+        	if (!LogLevelEnum.NEVER.equals(logLevel) && !LogLevelEnum.INPUT.equals(logLevel)) {
+        		writeErrorLog(LOGGER, lm.toJson());
+        		
+        		MDC.remove(TRACE_ID);
+        	}
 			
 			return new ReturnResult<T1>(-1, "UNKNOWN ERROR");
         }
 		
 		if (!callResult.isSuccess()) {
 			Throwable throwable = callResult.getThrowable();
-			if (throwable == null) {
-				writeInfoLog(LOGGER, lm.toJson());
-			} else {
-				writeErrorLog(LOGGER, lm.toJson(), throwable);
+			if (!LogLevelEnum.NEVER.equals(logLevel)) {
+				if (throwable == null) {
+					writeInfoLog(LOGGER, lm.toJson());
+				} else {
+					writeErrorLog(LOGGER, lm.toJson(), throwable);
+				}
+				
+				MDC.remove(TRACE_ID);
 			}
-			
-			MDC.remove(TRACE_ID);
 			
 			return new ReturnResult<T1>(callResult.getResultCode(), callResult.getResultMessage());
 		}
@@ -81,11 +109,15 @@ public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 		ReturnResult<T1> returnResult = new ReturnResult<T1>(
 				callResult.getResultCode(), callResult.getResultMessage(), resultT1);
 		
-		lm.addMetaData("returnResult", returnResult);
-		writeInfoLog(LOGGER, lm.toJson());
+		if (!LogLevelEnum.NEVER.equals(logLevel)) {
+			if (LogLevelEnum.ALL.equals(logLevel)) {
+				lm.addMetaData("returnResult", returnResult);
+			}
+			writeInfoLog(LOGGER, lm.toJson());
+			
+			MDC.remove(TRACE_ID);
+		}
 		
-		MDC.remove(TRACE_ID);
-        
         return returnResult;
     }
 }
