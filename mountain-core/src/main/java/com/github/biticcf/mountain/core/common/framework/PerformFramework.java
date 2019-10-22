@@ -27,7 +27,7 @@ import com.github.biticcf.mountain.core.common.aop.ProductCodeAnnotationIntercep
  * time:   上午8:22:09
  *
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableAsync
 public class PerformFramework {
 	

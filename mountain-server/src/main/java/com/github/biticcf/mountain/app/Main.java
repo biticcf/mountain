@@ -22,7 +22,7 @@ import com.github.biticcf.mountain.shackle.EnableShackleTemplates;
  *     Configuration+EnableAutoConfiguration+ComponentScan
  * 
  */
-@SpringBootApplication(scanBasePackages = {"com.github.biticcf.mountain"})
+@SpringBootApplication(scanBasePackages = {"com.github.biticcf.mountain"}, proxyBeanMethods = false)
 @EnableFeignClients(basePackages = {"com.github.biticcf.mountain.domain.feign"})
 @EnableShackleTemplates(basePackages = {"com.github.biticcf.mountain.service"})
 @EnableEurekaClient

@@ -39,7 +39,7 @@ import com.github.biticcf.mountain.core.common.service.StringDateConverter;
  * time:   下午2:05:08
  *
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Import({ WebMvcAutoConfiguration.class })
 @ComponentScan(
         value = "com.github.biticcf.mountain.web",
