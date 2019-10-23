@@ -53,7 +53,7 @@ public class Swagger2Configuration implements WebMvcConfigurer {
                 .description("Mountain相关API调用方式及参数详解")
                 .termsOfServiceUrl("")
                 .contact(contact)
-                .version("2.0.RELEASE")
+                .version("3.0.RELEASE")
                 .build();
     }
     

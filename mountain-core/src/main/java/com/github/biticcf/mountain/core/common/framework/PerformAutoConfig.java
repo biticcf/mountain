@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aopalliance.intercept.MethodInterceptor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,21 +22,22 @@ import com.github.biticcf.mountain.core.common.aop.PerformanceMonitorInterceptor
 import com.github.biticcf.mountain.core.common.aop.ProductCodeAnnotationInterceptor;
 
 /**
- * author: DanielCao
- * date:   2017年5月9日
- * time:   上午8:22:09
+ * +框架性能监控配置
+ * author: Daniel.Cao
+ * date:   2019年10月23日
+ * time:   上午9:29:36
  *
  */
 @Configuration(proxyBeanMethods = false)
 @EnableAsync
-public class PerformFramework {
+public class PerformAutoConfig {
 	
 	/**
-	 * 定义bean 
+	 * +定义bean 
 	 * @return PerformanceMonitorInterceptor实例
 	 */
-		@Bean(name = "performanceMonitorInterceptor")
-	@Qualifier(value = "performanceMonitorInterceptor")
+	@ConditionalOnMissingBean(PerformanceMonitorInterceptor.class)
+	@Bean
 	@ConfigurationProperties(prefix = "performframework")
 	public PerformanceMonitorInterceptor performanceMonitorInterceptor() {
 		// ${performframework.threshold}
@@ -44,33 +45,33 @@ public class PerformFramework {
 	}
 	
 	/**
-	 * 定义bean 
+	 * +定义bean 
 	 * @return ProductCodeAnnotationInterceptor实例
 	 */
-	@Bean(name = "productCodeAnnotationInterceptor")
-	@Qualifier(value = "productCodeAnnotationInterceptor")
+	@ConditionalOnMissingBean(ProductCodeAnnotationInterceptor.class)
+	@Bean
 	public ProductCodeAnnotationInterceptor productCodeAnnotationInterceptor() {
 		return new ProductCodeAnnotationInterceptor();
 	}
 	
 	/**
-	 * 定义bean 
+	 * +定义bean 
 	 * @return PerformanceInstrumentInterceptor实例
 	 */
-	@Bean(name = "performanceInstrumentInterceptor")
-	@Qualifier(value = "performanceInstrumentInterceptor")
+	@ConditionalOnMissingBean(PerformanceInstrumentInterceptor.class)
+	@Bean
 	public PerformanceInstrumentInterceptor performanceInstrumentInterceptor() {
 		return new PerformanceInstrumentInterceptor();
 	}
 	
 	/**
-	 * 定义bean 
+	 * +定义bean 
 	 * @param productCodeAnnotationInterceptor productCodeAnnotationInterceptor实例
 	 * @param performanceMonitorInterceptor performanceMonitorInterceptor实例
 	 * @return InterceptorChain实例
 	 */
+	@ConditionalOnMissingBean(name = "interceptorChain")
 	@Bean(name = "interceptorChain")
-	@Qualifier(value = "interceptorChain")
 	@ConfigurationProperties(prefix = "performframework")
 	public InterceptorChain interceptorChain(
 	        ProductCodeAnnotationInterceptor productCodeAnnotationInterceptor,
@@ -86,9 +87,10 @@ public class PerformFramework {
 	}
 	
 	/**
-	 * 定义bean
+	 * +定义bean
 	 * @return FilterBeanNameAutoProxyCreator实例
 	 */
+	@ConditionalOnMissingBean(name = "entranceProxyCreator")
 	@Bean(name = "entranceProxyCreator")
 	@ConfigurationProperties(prefix = "performframework.entrance")
 	public FilterBeanNameAutoProxyCreator entranceProxyCreator() {
@@ -99,9 +101,10 @@ public class PerformFramework {
 	}
 	
 	/**
-	 * 定义bean
+	 * +定义bean
 	 * @return FilterBeanNameAutoProxyCreator实例
 	 */
+	@ConditionalOnMissingBean(name = "chainProxyCreator")
 	@Bean(name = "chainProxyCreator")
 	@ConfigurationProperties(prefix = "performframework.chain")
 	public FilterBeanNameAutoProxyCreator chainProxyCreator() {
@@ -112,22 +115,22 @@ public class PerformFramework {
 	}
 	
 	/**
-	 * 高效线程池
+	 * +高效线程池
 	 * @return 线程池
 	 */
+	@ConditionalOnMissingBean(name = "asyncEffective")
 	@Bean(name = "asyncEffective", initMethod = "initialize", destroyMethod = "destroy")
-	@Qualifier(value = "asyncEffective")
 	@ConfigurationProperties(prefix = "async.effective")
 	public AsyncTaskExecutor asyncEffective() {
 		return new ThreadPoolTaskExecutor();
 	}
 	
 	/**
-	 * 常规线程池
+	 * +常规线程池
 	 * @return 线程池
 	 */
+	@ConditionalOnMissingBean(name = "asyncCommon")
 	@Bean(name = "asyncCommon", initMethod = "initialize", destroyMethod = "destroy")
-	@Qualifier(value = "asyncCommon")
 	@ConfigurationProperties(prefix = "async.common")
 	public AsyncTaskExecutor asyncCommon() {
 		return new ThreadPoolTaskExecutor();
