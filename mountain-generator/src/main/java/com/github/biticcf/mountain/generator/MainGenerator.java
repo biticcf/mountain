@@ -89,7 +89,7 @@ public class MainGenerator extends GeneratorBase {
 		// 9.生成DomainRepository定义文件元文件
 		List<FileMeta> domainRepositoryFileMetaList = new DomainRepositoryMetaGenerator().generatorFileMeta(project, poFileMetaList, null);
 		
-		// 10.生成DaoRepository定义文件元文件
+		// 10.生成Dao定义文件元文件
 		List<FileMeta> daoFileMetaList = new DaoMetaGenerator().generatorFileMeta(project, domainRepositoryFileMetaList, null);
 		
 		// 11.生成SqlProvider定义文件元文件

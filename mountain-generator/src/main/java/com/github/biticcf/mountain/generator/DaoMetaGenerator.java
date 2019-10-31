@@ -43,10 +43,16 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 			String packageName = MODEL_PACKAGE_MAP.get(PROJECT_MODEL_DOMAIN ) + ".dao";
 			fileMeta.setPackageName(packageName);
 			
+            // superInterfaceList
+            List<String> superInteefaceList = new ArrayList<String>();
+            String _superInterface = "import com.github.biticcf.mountain.core.common.service.MountainBaseMapper";
+            facadeName = getJavaNameAndImport(_superInterface, javaNameMap, importList);
+            superInteefaceList.add(facadeName + "<" + facadeName + "Po>");
+            fileMeta.setSuperInterfaceList(superInteefaceList);
+			
 			// null
 			fileMeta.setGenericName(null);
 			fileMeta.setParentClass(null);
-			fileMeta.setSuperInterfaceList(null);
 			fileMeta.setMemberList(null);
 			// null end
 			

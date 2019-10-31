@@ -18,6 +18,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.cache.decorators.LruCache;
 import org.apache.ibatis.type.JdbcType;
 
+import com.github.biticcf.mountain.core.common.service.MountainBaseMapper;
 import com.github.biticcf.mountain.domain.dao.po.DemoPo;
 import com.github.biticcf.mountain.domain.dao.sqlprovider.DemoSqlProvider;
 
@@ -29,9 +30,9 @@ import com.github.biticcf.mountain.domain.dao.sqlprovider.DemoSqlProvider;
  */
 @CacheNamespace(eviction = LruCache.class, flushInterval = 60000L, size = 1024, readWrite = true)
 @Mapper
-public interface DemoDAO {
+public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	/**
-	 * 根据id查询
+	 * +根据id查询
 	 * @param id ID值
 	 * @return 查询结果
 	 */
@@ -48,7 +49,7 @@ public interface DemoDAO {
 	@Select("SELECT * FROM `WD_DEMO_INFO` WHERE `ID` = #{id}")
 	DemoPo queryById(@Param("id") long id);
 	/**
-	 * 分页查询
+	 * +分页查询
 	 * @return 查询结果
 	 */
 	@Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 60000)
@@ -56,7 +57,7 @@ public interface DemoDAO {
 	@ResultMap(value = {"demoMap"})
 	List<DemoPo> queryList();
 	/**
-	 * 保存一条记录
+	 * +保存一条记录
 	 * @param demoPo 数据记录
 	 * @return 保存成功条数
 	 */
@@ -64,7 +65,7 @@ public interface DemoDAO {
 	@InsertProvider(type = DemoSqlProvider.class, method = "insert")
 	int insert(DemoPo demoPo);
 	/**
-	 * 批量保存
+	 * +批量保存
 	 * @param demoList 对象集
 	 * @return 保存成功条数
 	 */
