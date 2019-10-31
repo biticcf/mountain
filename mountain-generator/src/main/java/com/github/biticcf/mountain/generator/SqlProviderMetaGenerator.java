@@ -10,8 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.biticcf.mountain.generator.annotation.ColumnConfig;
-import com.github.biticcf.mountain.generator.annotation.TableConfig;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 /**
  * author: Daniel.Cao
@@ -144,11 +145,11 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 		contentList.add(" * @param " + poNameTmpShort + " " + poNameTmpShort);
 		
 		// bodyList
-		TableConfig tableConfig = poClz.getAnnotationsByType(TableConfig.class)[0];
+		TableName tableNameAnn = poClz.getAnnotation(TableName.class);
 		String sqlType  = getJavaNameAndImport("org.apache.ibatis.jdbc.SQL", javaNameMap, importList);
 		bodyList.add("return new " + sqlType + "() {");
 		bodyList.add("    {");
-		bodyList.add("        INSERT_INTO(\"`" + tableConfig.tableName() + "`\");");
+		bodyList.add("        INSERT_INTO(\"`" + tableNameAnn.value() + "`\");");
 		Field[] fields = poClz.getDeclaredFields();
 		String columns = "", values = "";
 		int length = fields.length;
@@ -161,12 +162,13 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 			if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers) || Modifier.isFinal(modifiers)) {
 				continue;
 			}
-			ColumnConfig columnConfig = field.getAnnotationsByType(ColumnConfig.class)[0];
-			if (columnConfig.primaryKeyFlag()) {
+			TableField tableField = field.getAnnotation(TableField.class);
+			TableId tableId = field.getAnnotation(TableId.class);
+			if (tableId != null) {
 				continue;
 			}
-			String propertyName = columnConfig.propertyName();
-			String columnName = columnConfig.columnName();
+			String propertyName = field.getName();
+			String columnName = tableField.value();
 			if (i < length - 1) {
 				columns += "\"`" + columnName + "`\",";
 				if (propertyName.equalsIgnoreCase("createTime") || propertyName.equalsIgnoreCase("updateTime")) {
@@ -247,7 +249,7 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 		contentList.add(" * @param map map");
 		
 		// bodyList
-		TableConfig tableConfig = poClz.getAnnotationsByType(TableConfig.class)[0];
+		TableName tableNameAnn = poClz.getAnnotation(TableName.class);
 		
 		bodyList.add(listType + "<" + poNameTmp + "> tmpList = map.get(\"list\");");
 		bodyList.add("if (tmpList == null || tmpList.isEmpty()) {");
@@ -255,7 +257,7 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 		bodyList.add("}");
 		bodyList.add("");
 		bodyList.add("StringBuilder sql = new StringBuilder(\"\");");
-		bodyList.add("sql.append(\"INSERT INTO `" + tableConfig.tableName() + "`\");");
+		bodyList.add("sql.append(\"INSERT INTO `" + tableNameAnn.value() + "`\");");
 		
 		Field[] fields = poClz.getDeclaredFields();
 		int length = fields.length;
@@ -269,12 +271,13 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 			if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers) || Modifier.isFinal(modifiers)) {
 				continue;
 			}
-			ColumnConfig columnConfig = field.getAnnotationsByType(ColumnConfig.class)[0];
-			if (columnConfig.primaryKeyFlag()) {
+			TableField tableField = field.getAnnotation(TableField.class);
+			TableId tableId = field.getAnnotation(TableId.class);
+			if (tableId != null) {
 				continue;
 			}
-			String propertyName = columnConfig.propertyName();
-			String columnName = columnConfig.columnName();
+			String propertyName = field.getName();
+			String columnName = tableField.value();
 			if (i < length - 1) {
 				columns += "`" + columnName + "`,";
 				if (propertyName.equalsIgnoreCase("createTime") || propertyName.equalsIgnoreCase("updateTime")) {
@@ -366,10 +369,10 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 		contentList.add(" * @param " + poNameTmpShort + " " + poNameTmpShort);
 		
 		// bodyList
-		TableConfig tableConfig = poClz.getAnnotationsByType(TableConfig.class)[0];
+		TableName tableNameAnn = poClz.getAnnotation(TableName.class);
 		
 		bodyList.add("StringBuilder sql = new StringBuilder(\"\");");
-		bodyList.add("sql.append(\"UPDATE `" + tableConfig.tableName() + "` SET `id` = #{id}\");");
+		bodyList.add("sql.append(\"UPDATE `" + tableNameAnn.value() + "` SET `id` = #{id}\");");
 		Field[] fields = poClz.getDeclaredFields();
 		boolean hasVersion = false;
 		for (int i = 0; i < fields.length; i ++) {
@@ -382,16 +385,17 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 				continue;
 			}
 			
-			ColumnConfig columnConfig = field.getAnnotationsByType(ColumnConfig.class)[0];
-			String propertyName = columnConfig.propertyName();
-			String columnName = columnConfig.columnName();
+			TableField tableField = field.getAnnotation(TableField.class);
+			TableId tableId = field.getAnnotation(TableId.class);
+			String propertyName = field.getName();
+			String columnName = tableField.value();
 			if (propertyName.equalsIgnoreCase("updateTime")) {
 				bodyList.add("sql.append(\", `update_time` = now()\");");
 			} else if (propertyName.equalsIgnoreCase("version")) {
 				hasVersion = true;
 				bodyList.add("sql.append(\", `version` = `version` + 1\");");
 			} else {
-				if (columnConfig.primaryKeyFlag() || propertyName.equalsIgnoreCase("createTime")) {
+				if (tableId != null || propertyName.equalsIgnoreCase("createTime")) {
 					continue;
 				}
 				bodyList.add("if (" + poNameTmpShort + ".get" + makePropertyName(propertyName) + "() != null) {");
@@ -462,10 +466,10 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 		contentList.add(" * @param " + poNameTmpShort + " " + poNameTmpShort);
 		
 		// bodyList
-		TableConfig tableConfig = poClz.getAnnotationsByType(TableConfig.class)[0];
+		TableName tableNameAnn = poClz.getAnnotation(TableName.class);
 		
 		bodyList.add("StringBuilder sql = new StringBuilder(\"\");");
-		bodyList.add("sql.append(\"SELECT * FROM `" + tableConfig.tableName() + "` WHERE 1 = 1\");");
+		bodyList.add("sql.append(\"SELECT * FROM `" + tableNameAnn.value() + "` WHERE 1 = 1\");");
 		Field[] fields = poClz.getDeclaredFields();
 		for (int i = 0; i < fields.length; i ++) {
 			Field field = fields[i];
@@ -477,9 +481,9 @@ class SqlProviderMetaGenerator extends GeneratorBase implements Generator {
 				continue;
 			}
 			
-			ColumnConfig columnConfig = field.getAnnotationsByType(ColumnConfig.class)[0];
-			String propertyName = columnConfig.propertyName();
-			String columnName = columnConfig.columnName();
+			TableField tableField = field.getAnnotation(TableField.class);
+			String propertyName = field.getName();
+			String columnName = tableField.value();
 			
 			bodyList.add("if (" + poNameTmpShort + ".get" + makePropertyName(propertyName) + "() != null) {");
 			//EnuFieldType enuFieldType = columnConfig.columnType();

@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.github.biticcf.mountain.generator.annotation.TableConfig;
-
 /**
  * author: Daniel.Cao
  * date:   2019年3月13日
@@ -26,15 +24,6 @@ class PoMetaGenerator extends GeneratorBase implements Generator {
 		
 		for (String facadeName : PO_ALL_NAME_MAP.keySet()) {
 			Class<?> poClz = PO_ALL_NAME_MAP.get(facadeName);
-			
-			TableConfig[] tableConfigs = poClz.getAnnotationsByType(TableConfig.class);
-			TableConfig tableConfig = null;
-			if (tableConfigs != null && tableConfigs.length > 0) {
-				tableConfig = tableConfigs[0];
-			}
-			if (tableConfig == null || !tableConfig.reGeneratorPo()) {
-				continue;
-			}
 			
 			FileMeta fileMeta = new FileMeta();
 			// importList

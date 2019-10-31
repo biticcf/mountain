@@ -10,9 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.biticcf.mountain.generator.annotation.ColumnConfig;
-import com.github.biticcf.mountain.generator.annotation.EnuFieldType;
-import com.github.biticcf.mountain.generator.annotation.TableConfig;
+import org.apache.ibatis.type.JdbcType;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 /**
  * author: Daniel.Cao
@@ -46,8 +48,8 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
             // superInterfaceList
             List<String> superInteefaceList = new ArrayList<String>();
             String _superInterface = "import com.github.biticcf.mountain.core.common.service.MountainBaseMapper";
-            facadeName = getJavaNameAndImport(_superInterface, javaNameMap, importList);
-            superInteefaceList.add(facadeName + "<" + facadeName + "Po>");
+            _superInterface = getJavaNameAndImport(_superInterface, javaNameMap, importList);
+            superInteefaceList.add(_superInterface + "<" + facadeName + "Po>");
             fileMeta.setSuperInterfaceList(superInteefaceList);
 			
 			// null
@@ -176,17 +178,13 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 		String poNameTmpShort  = _idx < 0 ? poNameTmp : poNameTmp.substring(_idx + 1);
 		poNameTmpShort = this.makePropertyName(poNameTmpShort);
 		
-		TableConfig[] tableConfigs = poClz.getAnnotationsByType(TableConfig.class);
-		if (tableConfigs == null || tableConfigs.length == 0) {
-			throw new Exception("[" + poClz.getName() + "]Can Not Found TableConfig Annotations!");
+		TableName tableNameAnn = poClz.getAnnotation(TableName.class);
+		if (tableNameAnn == null) {
+			throw new Exception("[" + poClz.getName() + "]Can Not Found TableName Annotations!");
 		}
-		if (tableConfigs.length > 1) {
-			throw new Exception("[" + poClz.getName() + "]Found More than One TableConfig Annotations!");
-		}
-		TableConfig tableConfig = tableConfigs[0];
-		String tableName = tableConfig.tableName();
+		String tableName = tableNameAnn.value();
 		if (tableName == null || tableName.trim().equals("")) {
-			throw new Exception("[" + poClz.getName() + "]TableName Cannot Null On TableConfig Annotations!");
+			throw new Exception("[" + poClz.getName() + "]value Cannot Null On TableName Annotations!");
 		}
 		
 		String methodName = "";
@@ -214,7 +212,7 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 			contentList.add(" * @param id id");
 			
 			// annotationList
-			makeDeleteAnnotation(annotationList, javaNameMap, importList, tableConfig);
+			makeDeleteAnnotation(annotationList, javaNameMap, importList, tableNameAnn);
 		} else if (type == 3) {
 			methodName = "update";
 			returnName = "int";
@@ -232,7 +230,7 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 			contentList.add(" * @param id id");
 			
 			// annotationList
-			makeQueryByIdAnnotation(annotationList, javaNameMap, importList, tableConfig, resultMapName, poClz);
+			makeQueryByIdAnnotation(annotationList, javaNameMap, importList, tableNameAnn, resultMapName, poClz);
 		} else if (type == 5) {
 			methodName = "queryList";
 			returnName = listType + "<" + poNameTmp + ">";
@@ -354,17 +352,17 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 	 * @param annotationList annotationList
 	 * @param javaNameMap javaNameMap
 	 * @param importList importList
-	 * @param tableConfig tableConfig
+	 * @param tableNameAnn tableNameAnn
 	 */
 	private void makeDeleteAnnotation(List<String> annotationList, Map<String, String> javaNameMap, 
-			List<String> importList, TableConfig tableConfig) {
+			List<String> importList, TableName tableNameAnn) {
 		// 1.options
 		String optionType =  getJavaNameAndImport("org.apache.ibatis.annotations.Options", javaNameMap, importList);
 		annotationList.add(makeOptionAnnotation(true, true, false, optionType, false));
 		// 2.sqlprovider
 		String deleteType = getJavaNameAndImport("org.apache.ibatis.annotations.Delete", javaNameMap, importList);
 	
-		String tableName = tableConfig.tableName();
+		String tableName = tableNameAnn.value();
 		
 		annotationList.add("@" + deleteType + "(\"DELETE FROM `" + tableName + "` WHERE `id` = #{id}\")");
 	}
@@ -392,13 +390,13 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 	 * @param annotationList annotationList
 	 * @param javaNameMap javaNameMap
 	 * @param importList importList
-	 * @param tableConfig tableConfig
+	 * @param tableNameAnn tableNameAnn
 	 * @param resultMapName resultMapName
 	 * @param poClz poClz
 	 * @exception Exception
 	 */
 	private void makeQueryByIdAnnotation(List<String> annotationList, Map<String, String> javaNameMap, 
-			List<String> importList, TableConfig tableConfig, String resultMapName, Class<?> poClz) throws Exception {
+			List<String> importList, TableName tableNameAnn, String resultMapName, Class<?> poClz) throws Exception {
 		// 1.options
 		String optionType =  getJavaNameAndImport("org.apache.ibatis.annotations.Options", javaNameMap, importList);
 		annotationList.add(makeOptionAnnotation(true, false, false, optionType, true));
@@ -421,32 +419,26 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 			if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers) || Modifier.isFinal(modifiers)) {
 				continue;
 			}
-			ColumnConfig[] columnConfigs = _field.getAnnotationsByType(ColumnConfig.class);
-			if (columnConfigs == null || columnConfigs.length == 0) {
-				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] Can Not Found @ColumnConfig!");
+			TableField tableField = _field.getAnnotation(TableField.class);
+			if (tableField == null) {
+				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] Can Not Found @TableField!");
 			}
-			if (columnConfigs.length > 1) {
-				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] Found More Than One @ColumnConfig!");
-			}
-			ColumnConfig columnConfig = columnConfigs[0];
-			String propertyName = columnConfig.propertyName();
-			String columnName = columnConfig.columnName();
-			EnuFieldType columnType = columnConfig.columnType();
-			if (propertyName == null || propertyName.trim().equals("")) {
-				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] ColumnConfig.propertyName Error!");
-			}
+			String propertyName = _field.getName();
+			String columnName = tableField.value();
+			JdbcType columnType = tableField.jdbcType();
 			if (columnName == null || columnName.trim().equals("")) {
-				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] ColumnConfig.columnName Error!");
+				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] TableField.value Error!");
 			}
 			if (columnType == null) {
-				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] ColumnConfig.columnType Error!");
+				throw new Exception("[" + poClz.getName() + "." + _field.getName() + "] TableField.jdbcType Error!");
 			}
-			String javaType = getJavaNameAndImport(columnType.getJavaType(), javaNameMap, importList);
+			String javaType = getJavaNameAndImport(_field.getType().getName(), javaNameMap, importList);
+			TableId tableId = _field.getAnnotation(TableId.class);
 			String tmp = "";
-			if (columnConfig.primaryKeyFlag()) {
-				tmp = "    @" + resultType + "(property = \"" + propertyName.trim() + "\", column = \"" + columnName.trim() + "\", id = true, javaType = " + javaType + ".class, jdbcType = " + jdbcType + "." + columnType.getMybatisType() + ")";
+			if (tableId != null) {
+				tmp = "    @" + resultType + "(property = \"" + propertyName.trim() + "\", column = \"" + columnName.trim() + "\", id = true, javaType = " + javaType + ".class, jdbcType = " + jdbcType + "." + columnType + ")";
 			} else {
-				tmp = "    @" + resultType + "(property = \"" + propertyName.trim() + "\", column = \"" + columnName.trim() + "\", javaType = " + javaType + ".class, jdbcType = " + jdbcType + "." + columnType.getMybatisType() + ")";
+				tmp = "    @" + resultType + "(property = \"" + propertyName.trim() + "\", column = \"" + columnName.trim() + "\", javaType = " + javaType + ".class, jdbcType = " + jdbcType + "." + columnType + ")";
 			}
 			
 			if (i < length - 1) {
@@ -458,7 +450,7 @@ class DaoMetaGenerator extends GeneratorBase implements Generator {
 		
 		// 3.sqlprovider
 		String selectType = getJavaNameAndImport("org.apache.ibatis.annotations.Select", javaNameMap, importList);
-		String tableName = tableConfig.tableName();
+		String tableName = tableNameAnn.value();
 		annotationList.add("@" + selectType + "(\"SELECT * FROM `" + tableName + "` WHERE `id` = #{id}\")");
 	}
 	

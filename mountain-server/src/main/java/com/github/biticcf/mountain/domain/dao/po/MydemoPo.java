@@ -14,9 +14,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import com.github.biticcf.mountain.core.common.model.WdBaseModel;
-import com.github.biticcf.mountain.generator.annotation.ColumnConfig;
-import com.github.biticcf.mountain.generator.annotation.EnuFieldType;
-import com.github.biticcf.mountain.generator.annotation.TableConfig;
 
 /**
  * author: DanielCao
@@ -25,31 +22,23 @@ import com.github.biticcf.mountain.generator.annotation.TableConfig;
  * 
  * +MydemoPo
  */
-@TableConfig(poName = "MydemoPo", tableName = "WD_MY_DEMO_INFO")
 @TableName(value = "WD_MY_DEMO_INFO")
 public class MydemoPo extends WdBaseModel {
     private static final long serialVersionUID = 2219364663353079254L;
     
-    @ColumnConfig(propertyName = "id", columnName = "id", primaryKeyFlag = true, columnType = EnuFieldType.BIGINT)
     @TableId(value = "id", type = IdType.AUTO)
     @TableField(value = "id", jdbcType = JdbcType.BIGINT)
     private Long id;
-    @ColumnConfig(propertyName = "goodsCode", columnName = "goods_code", columnType = EnuFieldType.VARCHAR)
     @TableField(value = "goods_code", jdbcType = JdbcType.VARCHAR)
     private String goodsCode;
-    @ColumnConfig(propertyName = "goodsSn", columnName = "goods_sn", columnType = EnuFieldType.VARCHAR)
     @TableField(value = "goods_sn", jdbcType = JdbcType.VARCHAR)
     private String goodsSn;
-    @ColumnConfig(propertyName = "status", columnName = "status", columnType = EnuFieldType.TINYINT)
     @TableField(value = "status", jdbcType = JdbcType.TINYINT)
     private Byte status;
-    @ColumnConfig(propertyName = "createTime", columnName = "create_time", columnType = EnuFieldType.DATETIME)
     @TableField(value = "create_time", jdbcType = JdbcType.TIMESTAMP_WITH_TIMEZONE)
     private Date createTime;
-    @ColumnConfig(propertyName = "updateTime", columnName = "update_time", columnType = EnuFieldType.TIMESTAMP)
     @TableField(value = "update_time", jdbcType = JdbcType.TIMESTAMP_WITH_TIMEZONE)
     private Date updateTime;
-    @ColumnConfig(propertyName = "version", columnName = "version", columnType = EnuFieldType.INTEGER)
     @TableField(value = "version", jdbcType = JdbcType.INTEGER)
     private Integer version;
 

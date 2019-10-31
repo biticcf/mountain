@@ -102,12 +102,12 @@ public class MainGenerator extends GeneratorBase {
 		
 		// 7,使用元文件生成实际文件
 		// 生成Po文件
-		for (FileMeta fileMeta : poFileMetaList) {
-			if (fileMeta.isReGenerator()) {
-				String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/dao/po";
-				FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
-			}
-		}
+		//for (FileMeta fileMeta : poFileMetaList) {
+		//	if (fileMeta.isReGenerator()) {
+		//		String destDir = MODEL_ALL_DIR_MAP.get(PROJECT_MODEL_DOMAIN) + "/dao/po";
+		//		FileGeneratorUtils.generatorFile(fileMeta, destDir, true, 1);
+		//	}
+		//}
 		
 		// 生成Model文件
 		for (FileMeta fileMeta : modelFileMetaList) {

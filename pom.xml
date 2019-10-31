@@ -74,7 +74,7 @@
 		<java.version>1.8</java.version>
 		
 		<!-- 定义版本号 -->
-		<mountain.version>4.0.RELEASE</mountain.version>
+		<mountain.version>5.0.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
