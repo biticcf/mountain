@@ -3,8 +3,6 @@
  */
 package com.github.biticcf.mountain.core.common.aop;
 
-import java.lang.annotation.Annotation;
-
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
@@ -30,22 +28,29 @@ public class ProductCodeAnnotationInterceptor implements MethodInterceptor {
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		String name = invocation.getMethod().getDeclaringClass().getName() 
 				+ "." + invocation.getMethod().getName();
-		Annotation[] annotation = invocation.getMethod().getAnnotations();
-		if (annotation != null && annotation.length > 0) {
-			for (Annotation annotations : annotation) {
-				if (annotations instanceof ProductCode) {
-					ProductCode productCode = (ProductCode) annotations;
-					// 级别为输出业务日志
-					if (productCode.logLevel().compareTo(ProductLogLevelEnum.INFO) == 0) {
-						StringBuilder builder = new StringBuilder();
-						builder.append("方法:");
-						builder.append(name).append(";");
-						builder.append("产品码：").append(productCode.code()).append(";");
-						log.info(builder.toString());
-					}
+		
+		ProductCode productCode = invocation.getMethod().getAnnotation(ProductCode.class);
+		if (productCode != null) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("方法:");
+			builder.append(name).append(";");
+			builder.append("产品码：").append(productCode.code()).append(";");
+			// 级别为输出业务日志
+			if (ProductLogLevelEnum.INFO.compareTo(productCode.logLevel()) == 0) {
+				if (log.isInfoEnabled()) {
+					log.info(builder.toString());
+				}
+			} else if (ProductLogLevelEnum.DEBUG.compareTo(productCode.logLevel()) == 0) {
+				if (log.isDebugEnabled()) {
+					log.debug(builder.toString());
+				}
+			} else if (ProductLogLevelEnum.WARN.compareTo(productCode.logLevel()) == 0) {
+				if (log.isWarnEnabled()) {
+					log.warn(builder.toString());
 				}
 			}
 		}
+		
 		return invocation.proceed();
 	}
 }

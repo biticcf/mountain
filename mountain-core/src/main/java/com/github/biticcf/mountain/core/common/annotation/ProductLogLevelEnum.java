@@ -11,5 +11,5 @@ package com.github.biticcf.mountain.core.common.annotation;
  *
  */
 public enum ProductLogLevelEnum {
-	DEBUG, INFO;
+	DEBUG, INFO, WARN;
 }

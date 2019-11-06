@@ -10,7 +10,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
  * 产品码注解
  * author  DanielCao
@@ -39,5 +38,5 @@ public @interface ProductCode {
 	 * 日志级别
 	 * @return 日志级别
 	 */
-	ProductLogLevelEnum logLevel();
+	ProductLogLevelEnum logLevel() default ProductLogLevelEnum.INFO;
 }
