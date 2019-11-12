@@ -52,9 +52,7 @@ public class FilterBeanNameAutoProxyCreator extends BeanNameAutoProxyCreator {
 					mappedName = mappedName.substring(BeanFactory.FACTORY_BEAN_PREFIX.length());
 				}
 				if (isMatch(beanName, mappedName)) {
-					if (this.beanNamesExclude.contains(beanName)) {
-						return true;
-					}
+					return true;
 				}
 				BeanFactory beanFactory = getBeanFactory();
 				if (beanFactory != null) {
