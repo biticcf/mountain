@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.github.biticcf.mountain.core.common.lang.WdRuntimeException;
@@ -26,7 +29,7 @@ import com.github.biticcf.mountain.model.enums.ResultEnum;
 /**
  * +统一异常处理
  * author: Daniel.Cao
- * date:   2019年8月2日
+ * date:   2019年11月19日
  * time:   下午5:34:26
  *
  */
@@ -201,6 +204,38 @@ public class GlobalExceptionHandler {
 		String errorMsg = "ConstraintViolationException Error!";
 		
 		return exceptionHandler(resultEnu.getCode(), resultEnu.getDesc() + "[ConstraintViolation]", errorMsg, ex);
+	}
+	
+	/**
+	 * HttpClientErrorException异常处理
+	 * @param ex HttpClientErrorException
+	 * @return 返回结果
+	 */
+	@ExceptionHandler(value = HttpClientErrorException.class)
+	public ReturnResult<Object> httpClientErrorExceptionHandler(HttpClientErrorException ex) {
+		HttpStatus statusCode = ex.getStatusCode();
+		if (statusCode == null) {
+			statusCode = HttpStatus.BAD_REQUEST;
+		}
+		String errorMsg = "HttpClientErrorException Error!";
+		
+		return exceptionHandler(statusCode.value(), statusCode.getReasonPhrase() + "[" + ex.getMessage() + "]", errorMsg, ex);
+	}
+	
+	/**
+	 * HttpServerErrorException异常处理
+	 * @param ex HttpServerErrorException
+	 * @return 返回结果
+	 */
+	@ExceptionHandler(value = HttpServerErrorException.class)
+	public ReturnResult<Object> httpServerErrorExceptionHandler(HttpServerErrorException ex) {
+		HttpStatus statusCode = ex.getStatusCode();
+		if (statusCode == null) {
+			statusCode = HttpStatus.SERVICE_UNAVAILABLE;
+		}
+		String errorMsg = "HttpServerErrorException Error!";
+		
+		return exceptionHandler(statusCode.value(), statusCode.getReasonPhrase() + "[" + ex.getMessage() + "]", errorMsg, ex);
 	}
 	
 	/**
