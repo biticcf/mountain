@@ -1,3 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.biticcf.mountain.core.common.framework.PerformAutoConfig
+com.beyonds.phoenix.mountain.core.common.framework.PerformConfig,\
+com.beyonds.phoenix.mountain.core.common.tomcat.FiltedAccessLogAutoConfiguration
