@@ -74,23 +74,23 @@
 		<java.version>1.8</java.version>
 		
 		<!-- 定义版本号 -->
-		<mountain.version>5.5.RELEASE</mountain.version>
+		<mountain.version>6.0.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.2.2.RELEASE</spring.boot.version>
 		<spring.cloud.version>Hoxton.RELEASE</spring.cloud.version>
 		
 		<!-- mybatis -->
-		<mybatis.spring.boot.starter.version>2.1.0</mybatis.spring.boot.starter.version>
-		<mybatis.spring.version>2.0.2</mybatis.spring.version>
-		<mybatis.version>3.5.2</mybatis.version>
+		<mybatis.spring.boot.starter.version>2.1.1</mybatis.spring.boot.starter.version>
+		<mybatis.spring.version>2.0.3</mybatis.spring.version>
+		<mybatis.version>3.5.3</mybatis.version>
 		<druid.version>1.1.21</druid.version>
 		
 		<!-- fastjson -->
 		<fastjson.version>1.2.62</fastjson.version>
 		
 		<!-- swagger -->
-		<guava.version>28.1-jre</guava.version>
+		<guava.version>28.2-jre</guava.version>
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 		<springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
 		
@@ -180,12 +180,12 @@
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>1.2.12</version>
+                <version>1.2.13</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.0</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.springframework.boot</groupId>

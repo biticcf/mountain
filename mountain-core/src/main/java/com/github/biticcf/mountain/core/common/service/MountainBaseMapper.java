@@ -7,9 +7,12 @@ package com.github.biticcf.mountain.core.common.service;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 
 /**
  * +MybatisPlus自定义基类，主要是禁用默认的带有分页功能的方法
@@ -26,7 +29,7 @@ public interface MountainBaseMapper<T> extends BaseMapper<T> {
 	// 禁用MybatisPlus的分页功能，使用PageHelper的分页功能
 	@Deprecated
 	@Override
-	default IPage<T> selectPage(IPage<T> page, Wrapper<T> queryWrapper) {
+	default <E extends IPage<T>> E selectPage(E page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper) {
 		try {
 			throw new SQLException("Not Supported Method[selectPage]!");
 		} catch (SQLException e) {
@@ -39,7 +42,7 @@ public interface MountainBaseMapper<T> extends BaseMapper<T> {
 	// 禁用MybatisPlus的分页功能，使用PageHelper的分页功能
 	@Deprecated
 	@Override
-	default IPage<Map<String, Object>> selectMapsPage(IPage<T> page, Wrapper<T> queryWrapper) {
+	default <E extends IPage<Map<String, Object>>> E selectMapsPage(E page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper) {
 		try {
 			throw new SQLException("Not Supported Method[selectMapsPage]!");
 		} catch (SQLException e) {
