@@ -27,6 +27,9 @@ spring:
   mandatory-file-encoding: UTF-8
   output.ansi.enabled: detect
   cloud: 
+    bootstrap: 
+      enabled: true
+      name: bootstrap
     refresh: 
       enabled: true
     # RestTemplate和LoadBalancerClient的负载均衡重试策略
