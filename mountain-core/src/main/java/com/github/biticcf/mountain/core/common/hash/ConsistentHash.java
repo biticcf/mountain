@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * +一致性hash算法
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class ConsistentHash<T> {
 	private static final int DEFAULT_NUMBER_REPLICAS = 100;
 	
-	protected static Logger logger = LoggerFactory.getLogger(ConsistentHash.class);
+	protected static Log logger = LogFactory.getLog(ConsistentHash.class);
 	
 	private final HashFunction hashFunction; 
 	private final int numberOfReplicas; 

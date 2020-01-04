@@ -5,8 +5,8 @@ package com.github.biticcf.mountain.shackle;
 
 import java.lang.reflect.Constructor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 
@@ -33,7 +33,7 @@ public interface DomainExecutor {
 	}
 
 	public static class Default implements DomainExecutor, Logable {
-		private static Logger logger = LoggerFactory.getLogger(Default.class);
+		private static Log logger = LogFactory.getLog(Default.class);
 
 		private final WdServiceTemplate wdServiceTemplate;
 		private final ReferContext referContext;

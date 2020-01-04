@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public final class Profiler {
-	private static Logger logger = LoggerFactory.getLogger(Profiler.class);
+	private static Log logger = LogFactory.getLog(Profiler.class);
 	
 	//private static final ThreadLocal<Entry> ENTRY_STACK = new ThreadLocal<Entry>();
 	private static final InheritableThreadLocal<Entry> ENTRY_STACK = new InheritableThreadLocal<Entry>();

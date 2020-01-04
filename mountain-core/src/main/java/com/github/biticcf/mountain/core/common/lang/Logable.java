@@ -3,7 +3,7 @@
  */
 package com.github.biticcf.mountain.core.common.lang;
 
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 
 /**
  * author: DanielCao
@@ -18,7 +18,7 @@ public interface Logable {
 	 * @param message 输出消息
 	 * @param t 异常信息
 	 */
-	default void writeErrorLog(Logger logger, String message, Throwable t) {
+	default void writeErrorLog(Log logger, String message, Throwable t) {
 		if (logger.isErrorEnabled()) {
 			logger.error(message, t);
 		}
@@ -29,7 +29,7 @@ public interface Logable {
 	 * @param logger 输出器
 	 * @param message 输出消息
 	 */
-	default void writeErrorLog(Logger logger, String message) {
+	default void writeErrorLog(Log logger, String message) {
 		if (logger.isErrorEnabled()) {
 			logger.error(message);
 		}
@@ -40,7 +40,7 @@ public interface Logable {
 	 * @param logger 输出器
 	 * @param message 输出消息
 	 */
-	default void writeWarnLog(Logger logger, String message) {
+	default void writeWarnLog(Log logger, String message) {
 		if (logger.isWarnEnabled()) {
 			logger.warn(message);
 		}
@@ -51,7 +51,7 @@ public interface Logable {
 	 * @param logger 输出器
 	 * @param message 输出消息
 	 */
-	default void writeInfoLog(Logger logger, String message) {
+	default void writeInfoLog(Log logger, String message) {
 		if (logger.isInfoEnabled()) {
 			logger.info(message);
 		}
@@ -62,7 +62,7 @@ public interface Logable {
 	 * @param logger 输出器
 	 * @param message 输出消息
 	 */
-	default void writeDebugLog(Logger logger, String message) {
+	default void writeDebugLog(Log logger, String message) {
 		if (logger.isDebugEnabled()) {
 			logger.debug(message);
 		}

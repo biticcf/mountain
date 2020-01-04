@@ -5,8 +5,8 @@ package com.github.biticcf.mountain.core.common.service;
 
 import java.sql.SQLException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -24,7 +24,7 @@ import com.github.biticcf.mountain.core.common.result.WdCallbackResult;
  *
  */
 public class WdServiceTemplateImpl implements WdServiceTemplate {
-	private static Logger logger = LoggerFactory.getLogger(WdServiceTemplateImpl.class);
+	private static Log logger = LogFactory.getLog(WdServiceTemplateImpl.class);
 	
 	public static final int    SERVICE_NO_RESULT                = 0xFF0001;
     public static final int    SERVICE_SYSTEM_FALIURE           = 0xFF0002;
@@ -193,7 +193,7 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 	 * @param tmpLogger logger
 	 * @param message 消息
 	 */
-	private void writeDebugInfo(final Logger tmpLogger, final String message) {
+	private void writeDebugInfo(final Log tmpLogger, final String message) {
 		if (tmpLogger.isDebugEnabled()) {
 			tmpLogger.debug(message);
 		}
@@ -205,7 +205,7 @@ public class WdServiceTemplateImpl implements WdServiceTemplate {
 	 * @param message 消息
 	 * @param e 异常
 	 */
-	private void writeErrorInfo(final Logger tmpLogger, final String message, final Throwable e) {
+	private void writeErrorInfo(final Log tmpLogger, final String message, final Throwable e) {
 		tmpLogger.error(message, e);
 	}
 }

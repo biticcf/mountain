@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class InterceptorChainSupport implements MethodInvocation {
-	private static Logger  logger = LoggerFactory.getLogger(InterceptorChainSupport.class);
+	private static Log  logger = LogFactory.getLog(InterceptorChainSupport.class);
 
     private MethodInvocation  proxy;
     private List<MethodInterceptor> chains;

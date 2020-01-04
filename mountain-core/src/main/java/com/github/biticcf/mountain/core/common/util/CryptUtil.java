@@ -21,8 +21,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -41,7 +41,7 @@ public final class CryptUtil {
 	private static final String KEY_MD5 = "MD5";
 	private static final String KEY_SHA = "SHA";
 	
-	private static Logger logger = LoggerFactory.getLogger(CryptUtil.class);
+	private static Log logger = LogFactory.getLog(CryptUtil.class);
 	/**
 	 * MAC算法可选以下多种算法
 	 * 

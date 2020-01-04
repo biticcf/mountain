@@ -6,8 +6,8 @@ package com.github.biticcf.mountain.core.common.result.reactor;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.slf4j.MDC;
 
 import com.github.biticcf.mountain.core.common.lang.Logable;
@@ -30,7 +30,7 @@ import reactor.core.publisher.Mono;
  * @param <T2> 原对象类型
  */
 public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
-	Logger LOGGER = LoggerFactory.getLogger("WEB.LOG");
+	Log LOGGER = LogFactory.getLog("WEB.LOG");
 	/**
      * 结果回调
      * @return 结果对象

@@ -9,8 +9,8 @@ import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 import org.springframework.lang.Nullable;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
  * + 解码header中的汉字
  */
 public class StringDecoderForHeaderConverter implements GenericConverter {
-	private Logger logger = LoggerFactory.getLogger(StringDecoderForHeaderConverter.class);
+	private Log logger = LogFactory.getLog(StringDecoderForHeaderConverter.class);
 	
 	private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	private static final String NO_NAME = "NO_NAME";

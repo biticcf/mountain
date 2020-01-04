@@ -5,8 +5,8 @@ package com.github.biticcf.mountain.shackle;
 
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
@@ -31,7 +31,7 @@ class ShackleTemplateFactoryBean implements FactoryBean<Object>,
                                             InitializingBean, 
                                             ApplicationContextAware,
                                             Logable {
-	private static Logger logger = LoggerFactory.getLogger(ShackleTemplateFactoryBean.class);
+	private static Log logger = LogFactory.getLog(ShackleTemplateFactoryBean.class);
 	
 	private Class<?> type;
 	private String name;

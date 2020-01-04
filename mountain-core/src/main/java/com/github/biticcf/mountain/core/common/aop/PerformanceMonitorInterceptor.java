@@ -7,8 +7,8 @@ import java.time.Duration;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * +性能监控阈值
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class PerformanceMonitorInterceptor implements MethodInterceptor {
-	private static Logger logger = LoggerFactory.getLogger(PerformanceMonitorInterceptor.class);
+	private static Log logger = LogFactory.getLog(PerformanceMonitorInterceptor.class);
 	
 	private Duration threshold = Duration.ofMillis(100); //时间阈值
 

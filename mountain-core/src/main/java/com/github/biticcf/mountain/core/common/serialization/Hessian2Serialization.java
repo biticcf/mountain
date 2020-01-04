@@ -8,8 +8,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.caucho.hessian.io.Hessian2Input;
 import com.caucho.hessian.io.Hessian2Output;
@@ -21,7 +21,7 @@ import com.caucho.hessian.io.Hessian2Output;
  *
  */
 public class Hessian2Serialization implements Serialization {
-	private static Logger logger = LoggerFactory.getLogger(Hessian2Serialization.class);
+	private static Log logger = LogFactory.getLog(Hessian2Serialization.class);
 	
 	public Hessian2Serialization() {
 		

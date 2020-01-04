@@ -6,8 +6,8 @@ package com.github.biticcf.mountain.core.common.serialization;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.JSONSerializer;
@@ -21,7 +21,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  *
  */
 public class FastJsonSerialization implements Serialization {
-	private static Logger logger = LoggerFactory.getLogger(FastJsonSerialization.class);
+	private static Log logger = LogFactory.getLog(FastJsonSerialization.class);
 	
 	private static final String CHARSET_NAME = "UTF-8";
 	

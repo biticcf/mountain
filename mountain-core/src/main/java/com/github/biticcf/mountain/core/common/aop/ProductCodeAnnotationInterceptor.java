@@ -5,8 +5,8 @@ package com.github.biticcf.mountain.core.common.aop;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.github.biticcf.mountain.core.common.annotation.ProductCode;
 import com.github.biticcf.mountain.core.common.annotation.ProductLogLevelEnum;
@@ -19,7 +19,7 @@ import com.github.biticcf.mountain.core.common.annotation.ProductLogLevelEnum;
  *
  */
 public class ProductCodeAnnotationInterceptor implements MethodInterceptor {
-	private static Logger log = LoggerFactory.getLogger(ProductCodeAnnotationInterceptor.class);
+	private static Log log = LogFactory.getLog(ProductCodeAnnotationInterceptor.class);
 
 	/**
 	 * 输出业务日志，日志分两种级别，一种为开发时候debug,正式环境为info。info会输出业务日志

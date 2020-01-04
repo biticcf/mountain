@@ -10,8 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * author: DanielCao
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class JDKSerialization implements Serialization {
-	private static Logger logger = LoggerFactory.getLogger(JDKSerialization.class);
+	private static Log logger = LogFactory.getLog(JDKSerialization.class);
 	
 	public JDKSerialization() {
 		

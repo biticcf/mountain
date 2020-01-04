@@ -8,8 +8,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -22,7 +22,7 @@ import com.esotericsoftware.kryo.io.Output;
  *
  */
 public class KryoSerialization implements Serialization {
-	private static Logger logger = LoggerFactory.getLogger(KryoSerialization.class);
+	private static Log logger = LogFactory.getLog(KryoSerialization.class);
 	
 	private final ThreadLocal<Kryo> kryoLocal = new ThreadLocal<Kryo>() {
 		@Override

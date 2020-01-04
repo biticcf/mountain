@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.slf4j.MDC;
 
 import com.github.biticcf.mountain.core.common.lang.Logable;
@@ -27,7 +27,7 @@ import com.github.biticcf.mountain.core.common.util.PaginationSupport;
  * @param <T2> 原始类型
  */
 public interface ResultPaginationExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
-	Logger LOGGER = LoggerFactory.getLogger("WEB.LOG");
+	Log LOGGER = LogFactory.getLog("WEB.LOG");
 	/**
      * +结果回调
      * @return 回调结果

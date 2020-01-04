@@ -7,8 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.convert.converter.Converter;
 
 /**
@@ -18,7 +18,7 @@ import org.springframework.core.convert.converter.Converter;
  * +处理输入日期类型
  */
 public class StringDateConverter implements Converter<String, Date> {
-	private static Logger logger = LoggerFactory.getLogger(StringDateConverter.class);
+	private static Log logger = LogFactory.getLog(StringDateConverter.class);
 	
 	private static final String TIME_PATTERN_REGEX = "^\\d{1,13}$";
 	
