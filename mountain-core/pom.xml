@@ -85,6 +85,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.apache.logging.log4j</groupId>
+            		<artifactId>log4j-api</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
         	<groupId>org.springframework.boot</groupId>
@@ -102,10 +108,12 @@
             <artifactId>hessian</artifactId>
         </dependency>
         
+        <!-- 
         <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter</artifactId>
 		</dependency>
+		-->
 		
 		<dependency>
             <groupId>io.projectreactor</groupId>
