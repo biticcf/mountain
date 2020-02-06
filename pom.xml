@@ -77,8 +77,8 @@
 		<mountain.version>7.2.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
-		<spring.boot.version>2.2.3.RELEASE</spring.boot.version>
-		<spring.cloud.version>Hoxton.RELEASE</spring.cloud.version>
+		<spring.boot.version>2.2.4.RELEASE</spring.boot.version>
+		<spring.cloud.version>Hoxton.SR1</spring.cloud.version>
 		
 		<!-- mybatis -->
 		<mybatis.spring.boot.starter.version>2.1.1</mybatis.spring.boot.starter.version>
