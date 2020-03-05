@@ -6,7 +6,6 @@ package com.github.biticcf.mountain.generator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -19,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.asm.ClassReader;
+import org.springframework.cglib.core.ReflectUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ValueConstants;
 
@@ -31,7 +32,6 @@ import com.github.biticcf.mountain.generator.annotation.MethodConfig;
  * time:   上午11:49:48
  *
  */
-@SuppressWarnings("restriction")
 abstract class GeneratorBase {
 	// 组件基础路径
 	public static final String PLUGIN_BASE_DIR = "com.github.biticcf.mountain";
@@ -1044,8 +1044,17 @@ abstract class GeneratorBase {
 	public Class<?> getClassUnsafe(final String absoluteFilePath) throws Exception {
 		byte[] classContents = getClassContent(absoluteFilePath);
 		
-		Class<?> c = getUnsafe().defineClass(null, classContents, 0, classContents.length, 
-				GeneratorBase.class.getClassLoader(), null);
+		ClassReader reader = new ClassReader(classContents);
+        String fileName = reader.getClassName();
+            
+        String className = null;
+        int index = fileName.lastIndexOf('/');
+        if (index == -1) {
+        	className = fileName;
+        } else {
+        	className = fileName.replace('/', '.');
+        }
+		Class<?> c = ReflectUtils.defineClass(className, classContents, getClass().getClassLoader());
 		if (c == null) {
 			throw new Exception("Load File[" + absoluteFilePath + "] Error!");
 		}
@@ -1077,16 +1086,5 @@ abstract class GeneratorBase {
 	    }
 	    
 	    return content;
-	}
-	
-	/**
-	 * +通过反射加载sun.misc.Unsafe
-	 * @return sun.misc.Unsafe
-	 */
-	private static sun.misc.Unsafe getUnsafe() throws Exception {
-		Field field = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
-		field.setAccessible(true);
-		
-		return (sun.misc.Unsafe) field.get(null);
 	}
 }
