@@ -25,8 +25,8 @@ import org.xml.sax.SAXException;
 public class XMLValidation {
 	/**
 	 * 用xsd验证xml文件
-	 * @param xmlPath
-	 * @throws Exception
+	 * @param xmlPath 配置文件
+	 * @throws Exception 抛出异常
 	 */
 	public static void validateXMLSchema(String xmlPath) throws Exception {
         try {

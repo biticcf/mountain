@@ -1038,8 +1038,8 @@ abstract class GeneratorBase {
 	/**
 	 * +动态加载类
 	 * @param absoluteFilePath .class文件路径
-	 * @return Class
-	 * @throws Exception
+	 * @return Class 加载的类
+	 * @throws Exception 抛出异常
 	 */
 	public Class<?> getClassUnsafe(final String absoluteFilePath) throws Exception {
 		byte[] classContents = getClassContent(absoluteFilePath);

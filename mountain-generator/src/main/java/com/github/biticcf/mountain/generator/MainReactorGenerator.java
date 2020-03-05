@@ -17,8 +17,8 @@ import org.apache.commons.io.FileUtils;
  */
 public class MainReactorGenerator extends GeneratorBase {
 	/**
-	 * @param args
-	 * @throws Exception
+	 * @param args 命令行参数
+	 * @throws Exception 抛出异常
 	 */
 	public static void main(String[] args) throws Exception {
 		if (args == null || args.length < 2) {
