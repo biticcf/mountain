@@ -466,6 +466,7 @@
         			<buildArgs>
 						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
 						<VERSION_FILE>${git.version.name}</VERSION_FILE>
+						<BASE_IMAGE>${docker.image.base}</BASE_IMAGE>
 					</buildArgs>
 					
         			<repository>${docker.repostory}/${docker.registry.name}/${docker.image.name}</repository>

@@ -1,15 +1,19 @@
 
-FROM xxxx.tencentyun.com/base/java8:1.0
+FROM openjdk:8u242-jdk
 
 #定义变量
 ARG JAR_FILE
 ARG VERSION_FILE
+ARG BASE_IMAGE
 
 VOLUME ${LOGGING_PATH}
 VOLUME ${TOMCAT_BASE}
 
-CMD [ "/bin/bash", "-c", "java ${DEFAULT_JAVA_OPTS} -Dsjdbc.self.id.generator.worker.id=$RANDOM$RANDOM -Djava.security.egd=file:/dev/./urandom -jar /var/wd/app.jar" ]
-
 # 拷贝jar
 COPY ./lib/${JAR_FILE} /var/wd/app.jar
 COPY ./${VERSION_FILE} /var/wd/${VERSION_FILE}
+
+#EXPOSE 映射端口
+EXPOSE 10000 19988
+
+CMD [ "/bin/bash", "-c", "java ${DEFAULT_JAVA_OPTS} -jar /var/wd/app.jar" ]
