@@ -328,7 +328,7 @@ public class DatasourceConfig {
      * +Mybatis Plus 拦截器
      * @return 自定义的PaginationInterceptor
      */
-    @Bean
+    @Bean(name = "paginationInterceptor")
     public Interceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
