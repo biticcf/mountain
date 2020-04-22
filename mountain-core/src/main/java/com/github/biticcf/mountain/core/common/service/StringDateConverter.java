@@ -3,13 +3,13 @@
  */
 package com.github.biticcf.mountain.core.common.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.convert.converter.Converter;
+
+import com.github.biticcf.mountain.core.common.util.DatetimeUtils;
 
 /**
  * author DanielCao
@@ -22,16 +22,11 @@ public class StringDateConverter implements Converter<String, Date> {
 	
 	private static final String TIME_PATTERN_REGEX = "^\\d{1,13}$";
 	
-	private static ThreadLocal<SimpleDateFormat[]> dateFormatLocal = new ThreadLocal<SimpleDateFormat[]>() {
-		@Override
-		protected SimpleDateFormat[] initialValue() {
-			return new SimpleDateFormat[] {
-					new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-					new SimpleDateFormat("yyyy-MM-dd HH:mm"),
-					new SimpleDateFormat("yyyy-MM-dd HH"),
-					new SimpleDateFormat("yyyy-MM-dd")
-				};
-		}
+	private static final String[] DATE_TIME_PATTERNS = new String[] {
+			"yyyy-MM-dd HH:mm:ss",
+			"yyyy-MM-dd HH:mm",
+			"yyyy-MM-dd HH",
+			"yyyy-MM-dd"
 	};
 	
 	@Override
@@ -60,16 +55,13 @@ public class StringDateConverter implements Converter<String, Date> {
 			return result;
 		}
 		// 2,日期类型
-		SimpleDateFormat[] dateFormats = dateFormatLocal.get();
-		for (SimpleDateFormat dateFormat : dateFormats) {
-			try {
-				dateFormat.setLenient(false);
-				
-				return dateFormat.parse(source);
-			} catch (ParseException e) {
-				logger.warn("[" + source + "]无法转化为" + dateFormat.toPattern() + "格式的日期!");
+		for (String _pattern : DATE_TIME_PATTERNS) {
+			result = DatetimeUtils.parseDatetimeSafely(_src, _pattern);
+			if (result != null) {
+				return result;
 			}
 		}
+		logger.warn("[" + source + "]无法转化为日期!");
 		
 		return null;
 	}
