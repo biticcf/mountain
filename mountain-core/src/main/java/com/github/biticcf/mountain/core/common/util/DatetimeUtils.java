@@ -222,10 +222,13 @@ public final class DatetimeUtils {
 		
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		if (weekStyle == 1) {
-			c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY); //第一天(周日)
-		} else {
-			c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); //第一天(周一)
+		if (weekStyle == 1) { //第一天(周日)
+			c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		} else { //第一天(周一),遇到周日,需要前移一周
+			if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+				c.add(Calendar.DAY_OF_MONTH, -7);
+			}
+			c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		}
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
@@ -271,12 +274,15 @@ public final class DatetimeUtils {
 		
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		if (weekStyle == 1) {
-			c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY); //第一天(周日)
-		} else {
-			c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); //第一天(周一)
+		if (weekStyle == 1) { //第一天(周日)
+			c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		} else {  //第一天(周一),遇到周日,需要前移一周
+			if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+				c.add(Calendar.DAY_OF_MONTH, -7);
+			}
+			c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		}
-		c.add(Calendar.DAY_OF_YEAR, +7); //下周第一天
+		c.add(Calendar.DAY_OF_MONTH, +7); //下周第一天
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
