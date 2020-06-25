@@ -12,7 +12,7 @@ import javax.transaction.UserTransaction;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
 import org.springframework.boot.autoconfigure.transaction.jta.JtaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -85,7 +85,11 @@ public class TransactionAutoConfig {
 	 *
 	 */
 	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnExpression("${spring.transaction.xa.enabled:false} == false")
+	@ConditionalOnProperty(
+			prefix = "spring.transaction.xa", 
+			name = "enabled", 
+			havingValue = "false",
+			matchIfMissing = true)
 	public static class NonXATransactionManager {
 		/**
 		 * +定义本地事务管理器
@@ -106,7 +110,11 @@ public class TransactionAutoConfig {
 	 * time:   下午12:06:05
 	 *
 	 */
-	@ConditionalOnExpression("${spring.transaction.xa.enabled:false}")
+	@ConditionalOnProperty(
+			prefix = "spring.transaction.xa", 
+			name = "enabled", 
+			havingValue = "true",
+			matchIfMissing = false)
 	@Configuration(proxyBeanMethods = false)
 	public static class XATransactionManager {
 		/**
