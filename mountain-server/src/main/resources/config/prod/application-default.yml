@@ -163,7 +163,7 @@ datasource:
   master: 
     name: master
     initializationMode: ALWAYS
-    url: jdbc:mysql:replication://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?allowMultiQueries=true&useSSL=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql:replication://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
     username: ${DRUID.USERNAME:demotest}
     password: ${DRUID.PASSWORD:WutsSSUIsOhxkenBOJJy61jVpfYONBY5lSl6uDk1AWSlbMtO4BfCtNhUBSIZPPhQZXEfwe7ZzIDrCcgtE5cOtA==} #demotest
     generateUniqueName: true # Whether to generate a random datasource name.
