@@ -272,6 +272,13 @@
 				</includes>
 			</resource>
 			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>jks/mountain_ks.jks</include>
+				</includes>
+			</resource>
+			<resource>
 				<directory>src/main/bin</directory>
 				<filtering>true</filtering>
 			</resource>
