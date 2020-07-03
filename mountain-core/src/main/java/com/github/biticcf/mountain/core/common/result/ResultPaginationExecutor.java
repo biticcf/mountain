@@ -13,7 +13,7 @@ import org.slf4j.MDC;
 
 import com.github.biticcf.mountain.core.common.lang.Logable;
 import com.github.biticcf.mountain.core.common.model.LogLevelEnum;
-import com.github.biticcf.mountain.core.common.util.CodeGenerator;
+import com.github.biticcf.mountain.core.common.trace.TraceContext;
 import com.github.biticcf.mountain.core.common.util.LogModel;
 import com.github.biticcf.mountain.core.common.util.PaginationSupport;
 
@@ -74,23 +74,25 @@ public interface ResultPaginationExecutor<T1, T2> extends CastExecutor<T1, T2>, 
 				}
 			}
 			
-			String traceId = CodeGenerator.generateCode(CodeGenerator.CODE_PREFIX_TRACE_ID);
+			String traceId = TraceContext.getTrace();
 			MDC.put(TRACE_ID, traceId);
+			
+			lm.addMetaData(TRACE_ID, traceId);
 			
 			writeInfoLog(LOGGER, lm.toJson(false));
 		}
         
         CallResult<PaginationSupport<T2>> callResult = execute();
-        if (LogLevelEnum.ALL.equals(logLevel)) {
-        	lm.addMetaData("callResult", callResult);
-        }
         
         if (callResult == null) {
         	if (!LogLevelEnum.NEVER.equals(logLevel) && !LogLevelEnum.INPUT.equals(logLevel)) {
+        		lm.addMetaData("callResult", callResult);
         		writeErrorLog(LOGGER, lm.toJson());
         		
         		MDC.remove(TRACE_ID);
         	}
+        	
+        	TraceContext.deleteTrace();
 			
 			return new ReturnResult<List<T1>>(-1, "UNKNOWN ERROR");
         }
@@ -98,6 +100,7 @@ public interface ResultPaginationExecutor<T1, T2> extends CastExecutor<T1, T2>, 
 		if (!callResult.isSuccess()) {
 			Throwable throwable = callResult.getThrowable();
 			if (!LogLevelEnum.NEVER.equals(logLevel)) {
+				lm.addMetaData("callResult", callResult);
 				if (throwable == null) {
 					writeInfoLog(LOGGER, lm.toJson());
 				} else {
@@ -106,6 +109,8 @@ public interface ResultPaginationExecutor<T1, T2> extends CastExecutor<T1, T2>, 
 				
 				MDC.remove(TRACE_ID);
 			}
+			
+			TraceContext.deleteTrace();
 			
 			return new ReturnResult<List<T1>>(callResult.getResultCode(), callResult.getResultMessage());
 		}
@@ -124,6 +129,8 @@ public interface ResultPaginationExecutor<T1, T2> extends CastExecutor<T1, T2>, 
 			
 			MDC.remove(TRACE_ID);
 		}
+		
+		TraceContext.deleteTrace();
         
         return returnResult;
     }

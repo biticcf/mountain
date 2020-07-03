@@ -138,8 +138,8 @@ public class TransactionAutoConfig {
 		
 		/**
 		 * + 定义UserTransactionService
-		 * @param atomikosProperties
-		 * @param jtaProperties
+		 * @param atomikosProperties atomikos属性配置
+		 * @param jtaProperties jta属性配置
 		 * @return UserTransactionServiceImp
 		 */
 		@Bean(initMethod = "init", destroyMethod = "shutdownWait")
@@ -157,7 +157,7 @@ public class TransactionAutoConfig {
 		
 		/**
 		 * + jta日志路径
-		 * @param jtaProperties
+		 * @param jtaProperties jta属性配置
 		 * @return 日志路径
 		 */
 		private String getLogBaseDir(JtaProperties jtaProperties) {
@@ -171,10 +171,10 @@ public class TransactionAutoConfig {
 		
 		/**
 		 * + 初始化UserTransactionManager
-		 * @param userTransactionService
+		 * @param userTransactionService userTransactionService
 		 * @return UserTransactionManager
 		 * 
-		 * @throws Exception
+		 * @throws Exception 抛出异常
 		 */
 		@Bean(initMethod = "init", destroyMethod = "close")
 		@Primary

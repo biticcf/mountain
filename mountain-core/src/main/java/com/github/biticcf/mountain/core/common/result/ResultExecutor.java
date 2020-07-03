@@ -11,14 +11,14 @@ import org.slf4j.MDC;
 
 import com.github.biticcf.mountain.core.common.lang.Logable;
 import com.github.biticcf.mountain.core.common.model.LogLevelEnum;
-import com.github.biticcf.mountain.core.common.util.CodeGenerator;
+import com.github.biticcf.mountain.core.common.trace.TraceContext;
 import com.github.biticcf.mountain.core.common.util.LogModel;
 
 /**
  * 
  * author: Daniel.Cao
- * date:   2018年11月20日
- * time:   下午3:45:04
+ * date:   2020年07月03日
+ * time:   上午09:16:04
  *
  * @param <T1> 结果对象类型
  * @param <T2> 原对象类型
@@ -57,6 +57,7 @@ public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 		if (logLevel == null) {
         	logLevel = LogLevelEnum.ALL;
         }
+		
 		LogModel lm = null;
         if (!LogLevelEnum.NEVER.equals(logLevel)) {
         	lm = LogModel.newLogModel(name);
@@ -68,30 +69,33 @@ public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
         		}
         	}
         	
-        	String traceId = CodeGenerator.generateCode(CodeGenerator.CODE_PREFIX_TRACE_ID);
+        	String traceId = TraceContext.getTrace();
             MDC.put(TRACE_ID, traceId);
+            
+            lm.addMetaData(TRACE_ID, traceId);
             
         	writeInfoLog(LOGGER, lm.toJson(false));
         }
         
         CallResult<T2> callResult = execute();
-        if (LogLevelEnum.ALL.equals(logLevel)) {
-        	lm.addMetaData("callResult", callResult);
-        }
         
         if (callResult == null) {
         	if (!LogLevelEnum.NEVER.equals(logLevel) && !LogLevelEnum.INPUT.equals(logLevel)) {
+        		lm.addMetaData("callResult", callResult);
         		writeErrorLog(LOGGER, lm.toJson());
         		
         		MDC.remove(TRACE_ID);
         	}
 			
+        	TraceContext.deleteTrace();
+        	
 			return new ReturnResult<T1>(-1, "UNKNOWN ERROR");
         }
 		
 		if (!callResult.isSuccess()) {
 			Throwable throwable = callResult.getThrowable();
 			if (!LogLevelEnum.NEVER.equals(logLevel)) {
+				lm.addMetaData("callResult", callResult);
 				if (throwable == null) {
 					writeInfoLog(LOGGER, lm.toJson());
 				} else {
@@ -100,6 +104,8 @@ public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 				
 				MDC.remove(TRACE_ID);
 			}
+			
+			TraceContext.deleteTrace();
 			
 			return new ReturnResult<T1>(callResult.getResultCode(), callResult.getResultMessage());
 		}
@@ -117,6 +123,8 @@ public interface ResultExecutor<T1, T2> extends CastExecutor<T1, T2>, Logable {
 			
 			MDC.remove(TRACE_ID);
 		}
+		
+		TraceContext.deleteTrace();
 		
         return returnResult;
     }

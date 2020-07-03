@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import com.github.biticcf.mountain.core.common.trace.TraceContext;
 import com.github.biticcf.mountain.domain.feign.fallback.CategoryFeignClientFallback;
 
 import feign.Client;
@@ -101,7 +102,7 @@ public class FeignConfig {
 	}
 	
     /**
-     * +定制请求中的User-Agent
+     * +定制请求中的User-Agent和_trace_id_
      * @param userAgent
      * @return RequestInterceptor
      */
@@ -111,6 +112,7 @@ public class FeignConfig {
 			@Override
 			public void apply(RequestTemplate template) {
 				template.header("User-Agent", userAgent);
+				template.header(TraceContext.TRACE_ID, TraceContext.getTrace());
 			}
     	};
     	
